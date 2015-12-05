@@ -26,6 +26,7 @@ def createPost():
 @app.route("/<topic_name>/<post_slug>/createComment", methods=["POST"])
 def createPost():
     return "ok"
+
 if __name__ == "__main__":
     mysql.do()
     #app.run()
