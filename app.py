@@ -1,11 +1,9 @@
-import time, base64, os
+import time, base64, os, urllib
 from flask import Flask, render_template, jsonify, g, request
-from flask.ext.cors import CORS
 from utils import mysql
 from slugify import slugify
-
+from configs import config
 app = Flask(__name__)
-cors = CORS(app, resources={r"*": {"origins": "*"}})
 
 success = [
     {
@@ -79,10 +77,41 @@ def createTopic():
 
 @app.route("/<topic_name>/createPost", methods=["POST"])
 def createPost(topic_name):
+    url = request.form['url']
     name = request.form['name']
     email = request.form['email']
     topic_id = request.form['topic_id']
+    post_file_name = "post.png"
 
+    count = mysql.getPostCount(topic_id)
+    filename = config.dirs["pic_dir"]+topic_name+"/"+str(count)+"/"+post_file_name
+    try:
+        if not os.path.exists(os.path.dirname(filename)):
+            os.makedirs(os.path.dirname(filename))
+        with open(filename, "w") as text_file:
+            try:
+                url_contents = urllib.urlopen(url).read()
+            except Exception as e:
+                error = [
+                    {
+                        "error": True,
+                        "data": "url could not be read"
+                    }
+                ]
+                return jsonify(results=error)
+
+            text_file.write(url_contents)
+    except Exception as e:
+        print e
+        error = [
+            {
+                "error": True,
+                "data": "file could not be saved, sorry"
+            }
+        ]
+
+        return jsonify(results=error)
+    
     if not name or not email:
         error = [
             {
@@ -93,7 +122,7 @@ def createPost(topic_name):
         return jsonify(results=error)
 
     slug = slugify(name)
-    mysql.upsertPost(topic_id, name, slug, email, 0)
+    mysql.upsertPost(topic_id, name, slug, email, filename, 0)
 
     return jsonify(results=success)
 
@@ -119,7 +148,7 @@ def createComment(topic_name, post_slug):
         error = [
             {
                 "error": True,
-                "data": "Not all data sent"
+                "data": "Not all data sent is defined"
             }
         ]
         return jsonify(results=error)
@@ -132,7 +161,7 @@ def createComment(topic_name, post_slug):
     print file_name
 
     try:
-        filename = "./"+topic_name+"/"+post_id+"/"+file_name
+        filename = config.dirs["pic_dir"]+topic_name+"/"+post_id+"/"+file_name
         if not os.path.exists(os.path.dirname(filename)):
             os.makedirs(os.path.dirname(filename))
         with open(filename, "w") as text_file:
