@@ -25,6 +25,7 @@
 </div>
 <script type="text/javascript">
 	var topic = JSON.parse(JSON.stringify({{current_topic|safe}}));
+	
 	$('.createPostForm > .submit-btn').click(function(){
 		var email = $('.createPostForm > .email-field').val();
 		var title = $('.createPostForm > .title-field').val();
