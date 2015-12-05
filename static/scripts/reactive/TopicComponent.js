@@ -9,7 +9,7 @@ var TopicItemComponent = React.createClass({
   },
   render: function(){
     var _className = this.props.isActive ? "topicItem active" : "topicItem";
-    var _href = "/c/"+this.props.name
+    var _href = "/c/"+this.props.topicName
     return (
         <li className={_className}>
           <a href={_href}>{this.props.topicName}</a>
@@ -29,10 +29,12 @@ var TopicComponent = React.createClass({
   render: function() {
     var _topics = [];
     for (var iteration in this.props.topics){
-      if(this.props.topics["iteration"]["id"] == this.state.topic_id)
-        _topics.unshift(<TopicItemComponent isActive={true} topicName={this.props.topics[iteration]["name"]} topicId={this.props.topics[iteration]["id"]} />)
+      var topic = this.props.topics[iteration];
+      console.log(topic)
+      if(topic["id"] == this.state.topic_id)
+        _topics.unshift(<TopicItemComponent isActive={true} topicName={topic["name"]} topicId={topic["id"]} />)
       else
-        _topics.push(<TopicItemComponent isActive={false} topicName={this.props.topics[iteration]["name"]} topicId={this.props.topics[iteration]["id"]} />);
+        _topics.push(<TopicItemComponent isActive={false} topicName={topic["name"]} topicId={topic["id"]} />);
     }
     return (
       <ul>
@@ -41,4 +43,4 @@ var TopicComponent = React.createClass({
     )
   }
 });
-CHAMPICS.reactive["topicComponent"] = React.render(<TopicComponent topics={[]}/>,document.getElementById("topicComponent"));
+CHAMPICS.reactive["topicComponent"] = React.render(<TopicComponent topics={CHAMPICS.data.topics}/>,document.getElementById("topicComponent"));
