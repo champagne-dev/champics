@@ -38,7 +38,6 @@ CHAMPICS.utils = {
 	  	}   
 	},
 	buildCommentThread: function(mut_array, comments, comment){
-		console.log(mut_array)
 		for(var it in comments){
 			var _comment = comments[it];
 			if(parseInt(_comment["id"]) == parseInt(comment.replied_id)){// found the next comment up.
