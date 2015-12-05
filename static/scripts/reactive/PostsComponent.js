@@ -146,6 +146,48 @@ var PostComponent = React.createClass({
 });
 
 // *************** CANVAS ***************
+var CanvasEditButton = React.createClass({
+  propTypes: {
+    type: React.PropTypes.number.isRequired, // 0 for color, 1 for stroke size
+    extra: React.PropTypes.string,
+    onClick: React.PropTypes.func,
+    isActive: React.PropTypes.bool
+  },
+  getInitialState: function(){
+    return {};
+  },
+  __onClick:function(event){
+    this.props.onClick(this.props.type, this.props.extra);
+    var s = '.edit-btn.active'+this.props.type;
+    $('.edit-btn.active'+this.props.type).removeClass('active'+this.props.type);
+    console.log(event);
+    $(event.target).addClass('active'+this.props.type);  
+  },
+  render: function(){
+    var className = "";
+    var style = {
+      backgroundColor: "black",
+      borderRadius: "50%",
+      width: "15px",
+      height: "15px",
+      position: "relative"
+    };
+    if(this.props.type == 0){
+      style["backgroundColor"] = this.props.extra;
+    }
+    else{
+      style["width"] = this.props.extra+"px";
+      style["height"] = this.props.extra+"px";
+      if(this.props.extra != 15)
+        style["left"] = "-"+parseInt((this.props.extra-15)/4)+"px";
+    }
+    if(this.props.isActive)
+      className= "active"+this.props.type
+    return (
+            <a className={"edit-btn " + className} onClick={this.__onClick} style={style}></a>
+    );
+  }
+})
 var DrawableCanvasComponent = React.createClass({
   propTypes: {
     inherited_styles: React.PropTypes.object.isRequired,
@@ -156,13 +198,14 @@ var DrawableCanvasComponent = React.createClass({
     onSubmit: React.PropTypes.func.isRequired
   },
   getInitialState: function(){
-    return {"comment_id": this.props.comment_id, "post_id": this.props.post_id, enabled: this.props.enabled, inherited_styles: this.props.inherited_styles, "drawing": true};
+    return {"stroke_color":"red", "stroke_width":7.5, "comment_id": this.props.comment_id, "post_id": this.props.post_id, enabled: this.props.enabled, inherited_styles: this.props.inherited_styles, "drawing": true};
   },
   componentDidMount: function(){
     // $("#submitEditBtn").click(function(){
     //   self.save();
     // });
     if(this.props.enabled && this.state.drawing){
+      var self = this;
       var canvas = this.refs.canvas.getDOMNode();
       var ctx = canvas.getContext('2d');
       var fillColor = "red";
@@ -187,13 +230,11 @@ var DrawableCanvasComponent = React.createClass({
         if (!canvas.isDrawing) {
            return;
         }
-        console.log(this.offsetLeft)
         var x = e.pageX - this.offsetLeft;
         var y = e.pageY - this.offsetTop;
-        var radius = 10; // or whatever
-        var fillColor = '#ff0000';
+        var radius = self.state.stroke_width; // or whatever
+        var fillColor = self.state.stroke_color;
         ctx.fillCircle(x, y, radius, fillColor);
-        console.log(x + " " + y)
       };
       canvas.onmousedown = function(e) {
         canvas.isDrawing = true;
@@ -205,6 +246,14 @@ var DrawableCanvasComponent = React.createClass({
         canvas.isDrawing = false;
       }
     }
+  },
+  __changeEditingTool: function(type, extra){
+    console.log(type);
+    console.log(extra);
+    if(type==0)
+      this.setState({"stroke_color": extra})
+    else
+      this.setState({"stroke_width": extra})
   },
   __onSave: function(){
     var canvas = this.refs.canvas.getDOMNode();
@@ -232,6 +281,14 @@ var DrawableCanvasComponent = React.createClass({
       if(this.state.drawing)
         content = <div className="canvasContainer">
                     <canvas className="drawableCanvasComponent" ref="canvas" style={style}></canvas>
+                    <div className="edit-buttons">
+                      <CanvasEditButton isActive={true} type={0} extra="red" onClick={this.__changeEditingTool}/>
+                      <CanvasEditButton type={0} extra="blue" onClick={this.__changeEditingTool}/>
+                      <CanvasEditButton type={0} extra="green" onClick={this.__changeEditingTool}/>
+                      <CanvasEditButton isActive={true} type={1} extra={15} onClick={this.__changeEditingTool}/>
+                      <CanvasEditButton type={1} extra={25} onClick={this.__changeEditingTool}/>
+                      <CanvasEditButton type={1} extra={35} onClick={this.__changeEditingTool}/>
+                    </div>
                     <a className="submit-btn" onClick={this.__onSubmitDrawing} style={{"position":"relative","left":-100}}>Submit Drawing</a>
                   </div>
       else
