@@ -1,0 +1,26 @@
+******************** INITIAL ********************
+********** CONFIG **********
+$ cp config.py config_local.py
+// Put in your local settings which will override the ones in config.py
+// Run the SQL commands in the DB you created.
+
+********** PYTHON REQUIREMENTS **********
+$ virtualenv venv
+$ source venv/bin/activate
+$ pip install -r docs/requirements.txt
+
+********** RUNNING IT **********
+// To test locally (from the root dir):
+$ python app.py --local
+// To run in production (from the root dir):
+$ python app.py
+
+
+
+
+
+******************** ADDING NEW REQUIREMENTS ********************
+$ source venv/bin/activate
+$ pip install [package-name]
+$ pip freeze > docs/requirements.txt
+// Commit and push.
