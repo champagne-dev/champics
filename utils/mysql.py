@@ -7,7 +7,25 @@ engine = create_engine(conn_str, echo=False)
 Session = sessionmaker(bind=engine)
 session = Session()
 records = session.query(Topic.Topic).all()
+print "Current Topics:"
 for record in records:
 	print record.name
-def do():
-	print config.db["host"]
+
+
+def upsertTopic():
+	return ""
+
+def upsertPost():
+	return ""
+
+def upsertComment():
+	return ""
+
+def selectTopics():
+	return ""
+
+def selectPostsByTopic():
+	return ""
+
+def selectCommentsByPost():
+	return ""

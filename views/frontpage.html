@@ -1,0 +1,44 @@
+<% extends layout.html %>
+<% block content %>
+<div class="addPostBtn">+</div>
+<div id="postListing">
+	<ul>
+		<li class="postItem">
+			<div class="float">
+				<div class="upvote"></div>
+				<label>{{votes}}</label>
+				<div class="downvote"></div>
+			</div>
+			<div class="float">
+				<a href="" class="title">Text for post</a>
+				<label class="date">posted {{timeSinceDate}} ago</label>
+				<label class="">{{commentTotal}} comments</label> 
+			</div>
+		</li>
+		<li class="postItem">
+			<div class="float">
+				<div class="upvote"></div>
+				<label>{{votes}}</label>
+				<div class="downvote"></div>
+			</div>
+			<div class="float">
+				<a href="" class="title">Another post and it's text</a>
+				<label class="date">posted {{timeSinceDate}} ago</label>
+				<label class="">{{commentTotal}} comments</label> 
+			</div>
+		</li>
+		<li class="postItem">
+			<div class="float">
+				<div class="upvote"></div>
+				<label>{{votes}}</label>
+				<div class="downvote"></div>
+			</div>
+			<div class="float">
+				<a href="" class="title">A third one just for the fans</a>
+				<label class="date">posted {{timeSinceDate}} ago</label>
+				<label class="">{{commentTotal}} comments</label> 
+			</div>
+		</li>
+	</ul>
+</div>
+<% endblock %>

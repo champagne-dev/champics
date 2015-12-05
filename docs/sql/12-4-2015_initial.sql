@@ -8,7 +8,7 @@ CREATE TABLE `topic` (
   `created_timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `post_count` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) DEFAULT CHARSET=latin1;
 
 CREATE TABLE `post` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -19,7 +19,7 @@ CREATE TABLE `post` (
   `slug` varchar(255) NOT NULL DEFAULT '',
   `score` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) DEFAULT CHARSET=latin1;
 
 CREATE TABLE `comment` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -29,7 +29,7 @@ CREATE TABLE `comment` (
   `score` int(11) NOT NULL DEFAULT '0',
   `created_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) DEFAULT CHARSET=latin1;
 
 INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('1', 'Funny', CURRENT_TIMESTAMP, '0');
 INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('2', 'Cats', CURRENT_TIMESTAMP, '0');
