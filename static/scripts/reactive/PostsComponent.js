@@ -275,7 +275,7 @@ var DrawableCanvasComponent = React.createClass({
   render: function() {
     if(this.state.enabled){
       var style = this.state.inherited_styles;
-      style.zIndex = 2;
+      style.zIndex = 1000;
       style.position = "absolute";
       var content;
       if(this.state.drawing)
@@ -289,18 +289,18 @@ var DrawableCanvasComponent = React.createClass({
                       <CanvasEditButton type={1} extra={25} onClick={this.__changeEditingTool}/>
                       <CanvasEditButton type={1} extra={35} onClick={this.__changeEditingTool}/>
                     </div>
-                    <a className="submit-btn" onClick={this.__onSubmitDrawing} style={{"position":"relative","left":-100}}>Submit Drawing</a>
+                    <a className="submit-btn btn-form" onClick={this.__onSubmitDrawing}>Submit Drawing</a>
                   </div>
       else
         content = <div className="writingPortion">
-                    <textarea className="title-field"></textarea>
-                    <input className="name-field"></input>
-                    <a className="submit-btn" onClick={this.__onSubmitEdit}>Submit EDIT</a>
+                    <textarea className="title-field  input-form"></textarea>
+                    <input className="name-field input-form"></input>
+                    <a className="submit-btn btn-form" onClick={this.__onSubmitEdit}>Submit EDIT</a>
                   </div>
         return (
             <div className="editingContainer">
               {content}
-              <a className="close" onClick={this.__onDisable} style={{"position":"relative","left":-100}}>Close</a>
+              <a className="close btn-form" onClick={this.__onDisable}>Close</a>
             </div>
           )
     }
