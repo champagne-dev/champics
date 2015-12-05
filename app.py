@@ -55,7 +55,7 @@ def postView(topic_name, post_slug):
             "replied_id": x.replied_id, 
             "score": str(int(x.score)), 
             "relative_url": x.relative_url,
-            "created_timestamp": x.created_timestamp
+            # "created_timestamp": x.created_timestamp
         }, comments))
     except:
         mapped_comments = list()

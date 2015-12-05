@@ -17,4 +17,3 @@ class Topic(Base):
 
     def __repr__(self):
         return "(Topic [%s])" % (self.name)
-
