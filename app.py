@@ -1,9 +1,9 @@
 import time, base64, os, urllib
-from flask import Flask, render_template, jsonify, g, request
+from flask import Flask, render_template, jsonify, g, request, send_from_directory
 from utils import mysql
 from slugify import slugify
 from configs import config
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/')
 
 success = [
     {
@@ -59,7 +59,7 @@ def postView(topic_name, post_slug):
     except:
         mapped_comments = list()
 
-    return render_template("post.html", topics=g.topics, current_topic={"name": topic.name, "id": str(topic.id)}, current_post={"name": post.name, "slug": post.slug, "relative_url": post.relative_url, "score": post.score, "created_timestamp": post.created_timestamp}, comments=mapped_comments)
+    return render_template("post.html", topics=g.topics, current_topic={"name": topic.name, "id": str(topic.id)}, current_post={"id": post.id, "name": post.name, "slug": post.slug, "relative_url": post.relative_url, "score": post.score, "created_timestamp": post.created_timestamp}, comments=mapped_comments)
 
 @app.route("/createTopic", methods=["POST"])
 def createTopic():
@@ -104,6 +104,7 @@ def createPost(topic_name):
                 return jsonify(results=error)
 
             text_file.write(url_contents)
+            os.chmod(filename, 0o777)
     except Exception as e:
         print e
         error = [
@@ -169,11 +170,16 @@ def createComment(topic_name, post_slug):
             os.makedirs(os.path.dirname(filename))
         with open(filename, "w") as text_file:
             text_file.write(base64_edit_data)
+            os.chmod(filename, 0o777)
     except Exception as e:
         print e
 
     mysql.upsertComment(text, author, post_id, replied_id, filename, 0)
     return jsonify(results=success)
+
+@app.route('/pics/<path:path>')
+def send_pics(path):
+    return send_from_directory('pics', path)
 
 @app.errorhandler(Exception)
 def all_exception_handler(error):
