@@ -27,7 +27,7 @@ def upsertComment(name, text, post_id, replied_id, relative_url, score):
 	comment = Comment(name, text, post_id, replied_id, relative_url, score)
 	session.add(comment)
 	session.commit()
-	
+
 def selectTopics():
 	records = session.query(Topic).all()
 	return records
@@ -44,10 +44,14 @@ def selectPostBySlug(post_slug):
 	record = session.query(Post).filter(Post.slug == post_slug).one()
 	return record
 
+def getPostCount(topic_id):
+	count = session.query(Post).filter(Post.topic_id == topic_id).count()
+	return count
+
 def selectCommentsByPost(post_id):
 	records = session.query(Comment).filter(Comment.post_id == post_id)
 	return records
 
-def getPostCount(topic_id):
-	count = session.query(Post).filter(Post.topic_id == topic_id).count()
+def getCommentCount(post_id):
+	count = session.query(Comment).filter(Comment.post_id == post_id).count()
 	return count
