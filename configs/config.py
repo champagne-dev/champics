@@ -1,7 +1,3 @@
-import sys
-# Override default config if config_local exists (if we are local).
-try:
-	from config_local import *
 except ImportError as e:
 	pass
 	
@@ -25,3 +21,7 @@ except ImportError as e:
 	,	logs				= "docs/logs"
 	)
 
+import sys
+# Override default config if config_local exists (if we are local).
+try:
+	from config_local import *
