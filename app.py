@@ -34,16 +34,26 @@ def topicView(topic_name):
         "relative_url": x.relative_url, 
         "score": x.score, 
         "created_timestamp": x.created_timestamp
-    }, topics))
+    }, posts))
 
-    return render_template("topic.html", topics=g.topics, current_topic={"name": topic.name, "topic": topic.id}, posts=mapped_posts)
+    return render_template("topic.html", topics=g.topics, current_topic={"name": topic.name, "id": topic.id}, posts=mapped_posts)
 
 @app.route("/c/<topic_name>/<post_slug>", methods=["GET"])
 def postView(topic_name, post_slug):
     topic = mysql.selectTopicByName(topic_name)
     post = mysql.selectTopicBySlug(post_slug)
-    
-    return render_template("post.html", topics=g.topics, current_topic={"name": topic.name, "topic": topic.id}, current_post=)
+    comments = mysql.selectCommentsByPost(post.id)
+
+    mapped_comments = list(map(lambda x: {
+        "text": x.text, 
+        "author": x.author, 
+        "replied_id": x.replied_id, 
+        "score": x.score, 
+        "relative_url" = x.relative_url,
+        "created_timestamp": x.created_timestamp
+    }, comments))
+
+    return render_template("post.html", topics=g.topics, current_topic={"name": topic.name, "id": topic.id}, current_post={"name": post.name, "slug": post.slug, "relative_url": post.relative_url, "score": post.score, "created_timestamp": created_timestamp}, comments=mapped_comments)
 
 @app.route("/createTopic", methods=["POST"])
 def createTopic():
