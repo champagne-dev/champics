@@ -32,14 +32,7 @@ def before_request():
         topics = mysql.selectTopics()
         mapped_topics = list(map(lambda x: {"name": x.name, "id": str(x.id)}, topics))
         g.topics = mapped_topics
-    else:
-        g.form = {}
-        for key in request.form:
-            if key == "url" or key == "edit_data":
-                g.form[key] = request.form[key]
-            else:   
-                g.form[key] = urllib.quote(request.form[key])
-
+    
 @app.route("/", methods=["GET"])
 def frontpageView():
     return render_template("frontpage.html", topics=g.topics)
@@ -103,10 +96,10 @@ def createTopic():
 
 @app.route("/<topic_name>/createPost", methods=["POST"])
 def createPost(topic_name):
-    url = g.form['url']
-    name = g.form['name']
-    email = g.form['email']
-    topic_id = g.form['topic_id']
+    url = request.form['url']
+    name = request.form['name']
+    email = request.form['email']
+    topic_id = request.form['topic_id']
     post_file_name = "post.png"
 
     count = mysql.getPostCount(topic_id)
@@ -170,11 +163,11 @@ def createPost(topic_name):
 @app.route("/<topic_name>/<post_slug>/createComment", methods=["POST"])
 def createComment(topic_name, post_slug):
     try:
-        text = g.form['text']
-        author = g.form['author']
-        replied_id = g.form['replied_id']
-        post_id = g.form['post_id']
-        edit_data = g.form['edit_data']
+        text = request.form['text']
+        author = request.form['author']
+        replied_id = request.form['replied_id']
+        post_id = request.form['post_id']
+        edit_data = request.form['edit_data']
     except KeyError as e:
         error = [
             {

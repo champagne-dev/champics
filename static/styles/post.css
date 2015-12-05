@@ -15,7 +15,7 @@
     background-clip: padding-box;
 	background-color: #fff;
 	top: 200px;
-	padding: 45px;
+	padding: 30px;
 	position: fixed;
 	width: 800px;
 	height: auto;
@@ -28,6 +28,7 @@
 
 .post-image {
 	opacity: 1;
+	max-height: 300px;
 	min-width: 300px;
 	max-width: 600px;
 	border: 1px solid rgb(200,200,200);
@@ -48,7 +49,7 @@
 .comments {
 	padding: 5px;
 	position: absolute;
-	top: 600px;
+	top: 500px;
 	z-index: 0;
 }
 
