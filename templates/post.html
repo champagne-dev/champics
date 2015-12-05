@@ -3,7 +3,7 @@
 <div id="postsComponent">
 	
 </div>
-<script src="/public/scripts/reactive/PostsComponent" type="text/jsx"></script>
+<script src="{{ url_for('static', filename='/public/scripts/reactive/PostsComponent') }}" type="text/jsx"></script>
 <script type="text/jsx">
 	CHAMPICS.reactive["postsComponent"] = React.render(<PostsComponent posts={[]}/>,document.getElementById("postsComponent"))
 </script>

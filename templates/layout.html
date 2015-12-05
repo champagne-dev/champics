@@ -1,11 +1,11 @@
 <html>
   <head>
     <title>champics</title>
-    <link href="/public/styles/layout.css" rel="stylesheet" type="text/css" ></link>
-    <script src="/public/scripts/vendor/jquery.min.js"></script>
-    <script src="/public/scripts/vendor/reactjs/react.min.js"></script>
-    <script src="/public/scripts/vendor/reactjs/react.dom.min.js"></script>
-    <script src="/public/scripts/reactive/TopicComponent.js" type="text/jsx"></script>
+    <link href="{{ url_for('static', filename='/styles/layout.css') }}" rel="stylesheet" type="text/css" ></link>
+    <script src="{{ url_for('static', filename='/scripts/vendor/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='/scripts/vendor/reactjs/react.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='/scripts/vendor/reactjs/react.dom.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='/scripts/reactive/TopicComponent.js') }}" type="text/jsx"></script>
     <script type="text/jsx">
       CHAMPICS = {};
       CHAMPICS.reactive = {};
