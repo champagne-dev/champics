@@ -52,7 +52,7 @@ CHAMPICS.ajax = {
 
 		$.ajax({
 			type: "POST",
-			url: "/"+topicName+"/createTopic",
+			url: "/createTopic",
             data: data,
             success: function(data) {
             	
