@@ -16,7 +16,7 @@ success = [
 def before_request():
     if request.method == "GET":
         topics = mysql.selectTopics()
-        mapped_topics = list(map(lambda x: {"name": x.name}, topics))
+        mapped_topics = list(map(lambda x: {"name": x.name, "id": x.id}, topics))
         g.topics = mapped_topics
 
 @app.route("/", methods=["GET"])
@@ -94,20 +94,22 @@ def createPost(topic_name):
 
 @app.route("/<topic_name>/<post_slug>/createComment", methods=["POST"])
 def createComment(topic_name, post_slug):
+    resp = flask.Response()
+    resp.headers['Access-Control-Allow-Origin'] = '*'
     text = request.form['text']
     author = request.form['author']
     replied_id = request.form['replied_id']
     post_id = request.form['post_id']
     edit_data = request.form['edit_data']
 
-    if not text or not post_id or not replied_id:
-        error = [
-            {
-                "error": True,
-                "data": "Not all data sent"
-            }
-        ]
-        return jsonify(results=error)
+    # if not text or not post_id or not replied_id:
+    #     error = [
+    #         {
+    #             "error": True,
+    #             "data": "Not all data sent"
+    #         }
+    #     ]
+    #     return jsonify(results=error)
 
     edit_data = edit_data.replace("data:image/png;base64,", "")
     edit_data = edit_data.replace(" ", "+")
@@ -115,10 +117,14 @@ def createComment(topic_name, post_slug):
     count = getCommentCount(post_id)
     file_name = count+".png"
 
-    with open("./"+topic_name+"/"+post_id+"/"+file_name, "w") as text_file:
-        text_file.write(base64_edit_data)
+    print file_name
+    try:
+        with open("./"+topic_name+"/"+post_id+"/"+file_name, "w") as text_file:
+            text_file.write(base64_edit_data)
+    except Exception as e:
+        print e
 
-    mysql.upsertComment(text, author, post_id, replied_id, 0)
+    # mysql.upsertComment(text, author, post_id, replied_id, 0)
     return jsonify(results=success)
 
 @app.errorhandler(Exception)
