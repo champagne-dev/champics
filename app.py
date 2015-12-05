@@ -25,12 +25,20 @@ def defaultDatetimeJSONDump(obj):
         obj.microsecond / 1000
     )
     return millis
+
 @app.before_request
 def before_request():
     if request.method == "GET":
         topics = mysql.selectTopics()
         mapped_topics = list(map(lambda x: {"name": x.name, "id": str(x.id)}, topics))
         g.topics = mapped_topics
+    else:
+        g.form = {}
+        for key in request.form:
+            if key == "url":
+                g.form[key] = request.form[key]
+            else:   
+                g.form[key] = urllib.quote(request.form[key])
 
 @app.route("/", methods=["GET"])
 def frontpageView():
@@ -95,10 +103,10 @@ def createTopic():
 
 @app.route("/<topic_name>/createPost", methods=["POST"])
 def createPost(topic_name):
-    url = request.form['url']
-    name = request.form['name']
-    email = request.form['email']
-    topic_id = request.form['topic_id']
+    url = g.form['url']
+    name = g.form['name']
+    email = g.form['email']
+    topic_id = g.form['topic_id']
     post_file_name = "post.png"
 
     count = mysql.getPostCount(topic_id)
@@ -162,11 +170,11 @@ def createPost(topic_name):
 @app.route("/<topic_name>/<post_slug>/createComment", methods=["POST"])
 def createComment(topic_name, post_slug):
     try:
-        text = request.form['text']
-        author = request.form['author']
-        replied_id = request.form['replied_id']
-        post_id = request.form['post_id']
-        edit_data = request.form['edit_data']
+        text = g.form['text']
+        author = g.form['author']
+        replied_id = g.form['replied_id']
+        post_id = g.form['post_id']
+        edit_data = g.form['edit_data']
     except KeyError as e:
         error = [
             {
@@ -218,8 +226,11 @@ def send_static(path):
 @app.errorhandler(Exception)
 def all_exception_handler(error):
     print error
-    topic = random.choice(g.topics)
-    return render_template("error.html", error_message="We messed up :(, here's a random page <a href=\"/c/"+topic["name"]+"\">"+topic["name"]+"</a>")
+    if request.method == "GET":
+        topic = random.choice(g.topics)
+        return render_template("error.html", error_message="We messed up :(, here's a random page <a href=\"/c/"+topic["name"]+"\">"+topic["name"]+"</a>")
+    else:
+        return error
 
 if __name__ == "__main__":
     app.run(debug=True)
