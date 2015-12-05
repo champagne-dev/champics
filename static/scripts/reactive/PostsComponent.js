@@ -98,18 +98,12 @@ var PostComponent = React.createClass({
       else{
         if(_commentsData[comment.replied_id]){
           _commentsOrdered = insertAfterKey(_commentsOrdered, comment.replied_id + "", iteration);
-          _commentsData[iteration].tabs = _commentsData[comment.replied_id].tabs + 1;
+          for(var _c in _commentsData)
+            if(_c.id == comment.replied_id)
+              _commentsData[iteration].tabs = _c.tabs + 1;
         }
       }
     }
-    for(var id in _commentsOrdered){
-      var index = _commentsOrdered[id];
-      if(parseInt(index)){
-        var comment = _commentsData[index];
-        _commentsDOM.push(<CommentComponent tabs={comment.tabs} onReply={this.__onCommentReplyClick} body={comment.body} user={comment.user} index={index} noReply={comment.noReply}/>)
-      }
-    }
-    var _comments = [];
     var _overlays = [];
     for(var id in _commentsOrdered){
       var index = _commentsOrdered[id];
@@ -120,7 +114,7 @@ var PostComponent = React.createClass({
           for(var _comment_overlaid in _comments_overlaid)
             _overlays.push(<img className="overlay-image" src={_comment_overlaid.image_path}></img>)
         }
-        _comments.push(<CommentComponent tabs={comment.tabs} noReply={comment.noReply} comment={comment} onHover={this.__addOverlay} onDisable={this.__removeOverlay} onClick={this.__addOverlay} onReply={this.props.onCommentReply}/>);
+        _commentsDOM.push(<CommentComponent tabs={comment.tabs} noReply={comment.noReply} comment={comment} onHover={this.__addOverlay} onDisable={this.__removeOverlay} onClick={this.__addOverlay} onReply={this.props.onCommentReply}/>);
       
       }
     }
@@ -131,15 +125,13 @@ var PostComponent = React.createClass({
           {_overlays}
         </div>
         <div className="comments">
-          {_comments}
+          {_commentsDOM}
         </div>
       </div>
     )
   },
 
 })
-
-
 
 
 
@@ -303,4 +295,4 @@ var PostsComponent = React.createClass({
     )
   }
 });
-CHAMPICS.reactive["postsComponent"] = React.render(<PostsComponent posts={[]}/>,document.getElementById("postsComponent"))
+CHAMPICS.reactive["postsComponent"] = React.render(<PostsComponent posts={[CHAMPICS.data.posts]}/>,document.getElementById("postsComponent"))

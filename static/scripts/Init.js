@@ -13,7 +13,7 @@ CHAMPICS.utils = {
 	        array_copy.splice(index, 0, o);
 	    }        
 	    return array_copy;
-	};
+	},
 	insertAfterKey: function(array, o, toInsert){
 	/**
 	* Add an element before another element
