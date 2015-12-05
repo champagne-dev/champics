@@ -1,3 +1,7 @@
+.createPostForm {
+	display: none;
+}
+
 #postPanel {
 	width: 100%;
 	height: 540px;
@@ -37,4 +41,129 @@
 #commentPanel {
 	min-height: 400px;
 }
+.wrapper {
+	max-width: 800px;
+	margin: auto;
+	height: 100%;
+}
+#header {
+	max-width: 800px;
+	margin: auto;
+	padding: 0px 5px;
+	padding-top: 5px;
+	border-bottom: 1px solid rgba(63, 184, 175, .1);
+	-webkit-background-clip: padding-box; /* for Safari */
+    background-clip: padding-box;
+}
+#header h1 {
+	font-size: 40px;
+	font-family: "Noto Sans";
+	color: #FF4E50;
+}
+#topicComponent, #content {
+	max-width: 800px;
+	margin: auto;
+}
+#topicComponent {
+	padding: 0px 5px;
+}
+ul {
+	-webkit-padding-start: 0px;
+}
+.topicItem {
+	cursor: pointer;
+	list-style-type: none;
+	display: inline-block;
+	margin-right: 10px;
+	border: 1px solid rgba(255, 78, 80, .2);
+    -webkit-background-clip: padding-box; /* for Safari */
+    background-clip: padding-box;
+	border-radius: 5px;
+	margin-bottom: 5px;
+}
+.topicItem:hover {
+	background-color: #FF4E50 
+}
+.topicItem:hover a {
+	color: #fff;
+	
+}
+.topicItem a {
+	padding: 5px;
+	display: block;
+	font-family: "Open Sans";
+	text-decoration: none;
+	color: #FF4E50;
+	opacity: .9;
+}
+.plusBtn {
+	margin-bottom: 10px;
+	border-radius: 5px;
+	list-style-type: none;
+	display: inline-block;
+	padding: 10px 0px 15px 5px;
+	width: 100%;
+	box-sizing: border-box;
+}
+.currentTopicName {
+	font-family: "Open Sans";
+	color: rgb(130,130,130);
+	font-size: 25px;
+}
+.plusBtn .addPostBtn:hover {
+	opacity: .7;
+	cursor: pointer;
+}
+.plusBtn .addPostBtn i {
+	color: rgb(200,200,200);
+	font-size: 22px;
+	margin-right: 5px;
+	font-weight: bold;
+}
+.plusBtn .addPostBtn span {
+	color: rgb(200,200,200);
+	font-family: "Noto Sans";
+	font-size: 25px;
+	font-weight: bold;
+}
+.postListWrapper {
+	border-top: 1px solid rgba(220, 220, 220, .2);
+}
+#postList {
 
+	height: 100%;
+	width: 100%;
+}
+#postList li {
+	font-family: "Open Sans";
+	list-style-type: none;
+
+}
+#postList a {
+	font-size: 20px;
+	color: #3FB8AF;
+	text-decoration: none;
+}
+#postList ol {
+	margin-top: 10px;
+	margin-left: -40px;
+    padding-right: 0;
+    list-style-type: none;
+}
+
+#postList ol li {
+	counter-increment: step-counter;
+}
+
+#postList ol li::before {
+    content: counter(step-counter);
+    margin-right: 5px;
+    font-size: 20px;
+    color: rgb(200,200,200);
+    font-weight: bold;
+    padding: 3px 8px 3px 0px;
+    border-radius: 3px;
+}
+.postItem {
+	padding: 10px;
+}

@@ -33,8 +33,9 @@ def topicView(topic_name):
             "name": x.name, 
             "slug": x.slug, 
             "relative_url": x.relative_url, 
-            "score": str(int(x.score)), 
-            "created_timestamp": x.created_timestamp
+            "score": str(int(x.score)),
+            "id": str(x.id)
+            # "created_timestamp": x.created_timestamp
         }, posts))
     except Exception as e:
         mapped_posts = list()
@@ -184,7 +185,7 @@ def send_pics(path):
 @app.route('/static/<path:path>')
 def send_static(path):
     return send_from_directory('static', path)
-    
+
 @app.errorhandler(Exception)
 def all_exception_handler(error):
     print error

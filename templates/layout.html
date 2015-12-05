@@ -2,8 +2,11 @@
   <head>
     <title>champics</title>
     <link href="{{ url_for('static', filename='styles/layout.css') }}" rel="stylesheet" type="text/css" ></link>
+    <link href="{{ url_for('static', filename='styles/font-awesome.min.css') }}" rel="stylesheet" type="text/css" ></link>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
     <script src="{{ url_for('static', filename='scripts/vendor/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='scripts/vendor/reactjs/react.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/vendor/reactjs/react.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/vendor/reactjs/react-dom.min.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/vendor/reactjs/JSXTransformer.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='scripts/Init.js') }}"></script>
@@ -12,12 +15,13 @@
     <script>
       CHAMPICS.data = {}
       CHAMPICS.data.topics = JSON.parse(JSON.stringify({{topics|safe}}));
-
+      CHAMPICS.data.posts = JSON.parse(JSON.stringify({{posts|safe}}));
+      
     </script>
   </head>
   <body>
     <div class="wrapper">
-      <div>
+      <div id="header">
         <div class="left">
           <h1>champics</h1>
         </div>
