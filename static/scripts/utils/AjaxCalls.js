@@ -1,8 +1,5 @@
 CHAMPICS.ajax = {
-	saveComment: function(replied_id, post_id, edit_data, text, author, success) {
-		var topicName = window.topicName || null;
-		var postName = window.postName || null;
-
+	saveComment: function(replied_id, post_id, edit_data, text, author, topicName, topicName, success) {
 		var data = {
 			replied_id: replied_id,
 			post_id: post_id,
@@ -23,7 +20,7 @@ CHAMPICS.ajax = {
             }
 		});
 	},
-	savePost: function(name, email, topic_id, success) {
+	savePost: function(name, email, topic_id, topicName, success) {
 		var topicName = window.topicName || null;
 
 		var data = {
