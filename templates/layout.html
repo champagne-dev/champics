@@ -1,37 +1,35 @@
-<!doctype html>
-<head>
-  <title>champics</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
-  <script src="{{ url_for('static', filename='jquery-2.1.4.min.js') }}"></script>
-</head>
-<body>
-
-<div class="wrapper">
-  <header>
-    <div id="left">
-      <h1>champics</h1>
+<html>
+  <head>
+    <title>champics</title>
+    <link href="/public/styles/layout.css" rel="stylesheet" type="text/css" ></link>
+    <script src="/public/scripts/vendor/jquery.min.js"></script>
+    <script src="/public/scripts/vendor/reactjs/react.min.js"></script>
+    <script src="/public/scripts/vendor/reactjs/react.dom.min.js"></script>
+    <script src="/public/scripts/reactive/TopicComponent.js" type="text/jsx"></script>
+    <script type="text/jsx">
+      CHAMPICS = {};
+      CHAMPICS.reactive = {};
+      CHAMPICS.reactive["topicComponent"] = React.render(<TopicComponent topics={[]}/>,document.getElementById("topicComponent"));
+    </script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div>
+        <div class="left">
+          <h1>champics</h1>
+        </div>
+        <div class="right">
+          <!-- misc about or something idk -->
+        </div>
+      </div>
+      <section id="topicComponent">
+      </section>
+      <section id="content">
+        {% block content %}
+        {% endblock %}
+      </section>
+      <footer>
+      </footer>
     </div>
-    <div id="right">
-      <!-- misc about or something idk -->
-    </div>
-    
-  </header>
-  <section id="topicPanel">
-    <ul>
-      <li>politicians</li>
-      <li>rap</li>
-      <li>cats</li>
-      <!--after for loop-->
-      <li class="addTopicBtn">+</li>
-    </ul>
-  </section>
-  <section id="content">
-    {% block content %}
-    {% endblock %}
-  </section>
-  <footer>
-  </footer>
-</div>
-
-</body>
+  </body>
+</html>
