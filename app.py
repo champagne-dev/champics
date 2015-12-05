@@ -44,7 +44,7 @@ def topicView(topic_name):
 @app.route("/c/<topic_name>/<post_slug>", methods=["GET"])
 def postView(topic_name, post_slug):
     topic = mysql.selectTopicByName(topic_name)
-    post = mysql.selectTopicBySlug(post_slug)
+    post = mysql.selectPostBySlug(post_slug)
     comments = mysql.selectCommentsByPost(post.id)
 
     mapped_comments = list(map(lambda x: {
