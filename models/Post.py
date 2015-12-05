@@ -13,8 +13,13 @@ class Post(Base):
     score = Column(Integer)
     created_timestamp = Column(Integer)
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, topic_id, name, slug, email, score, created_timestamp):
+	    self.topic_id = topic_id
+	    self.name = name
+	    self.slug = slug
+	    self.email = email
+	    self.score = score
+	    self.created_timestamp = created_timestamp
 
     def __repr__(self):
         return "(Post [%s])" % (self.name)

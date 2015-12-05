@@ -9,13 +9,14 @@ $ virtualenv venv
 $ source venv/bin/activate
 $ pip install -r docs/requirements.txt
 
+********** SQL SETUP **********
+mysql -u yourusername -p yourpassword champics < docs/sql/init.sql
+
 ********** RUNNING IT **********
 // To test locally (from the root dir):
 $ python app.py --local
 // To run in production (from the root dir):
 $ python app.py
-
-
 
 
 

@@ -12,8 +12,13 @@ class Comment(Base):
     score = Column(Integer)
     created_timestamp = Column(Integer)
 
-    def __init__(self, name):
+    def __init__(self, name, text, post_id, replied_id, score, created_timestamp):
         self.name = name
-
+        self.text = text
+        self.post_id = post_id
+        self.replied_id = replied_id
+        self.score = score
+        self.created_timestamp = created_timestamp
+        
     def __repr__(self):
         return "(Comment [%s])" % (self.name)

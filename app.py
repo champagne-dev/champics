@@ -1,7 +1,13 @@
-from flask import Flask, render_template
-import sys
+from flask import Flask, render_template, jsonify
 from utils import mysql
 app = Flask(__name__)
+
+success = [
+	{
+		"error": False
+		"data": "request completed"
+	}
+]
 
 @app.route("/", methods=["GET"])
 def frontpageView():
@@ -17,8 +23,20 @@ def postView():
 
 @app.route("/createTopic", methods=["POST"])
 def createTopic():
-    return "ok"
+	name = request.form['name']
 
+	if not name:
+		error = [
+			{
+				"error": True,
+				"data": "No \"name\" sent"
+			}
+		]
+		return jsonify(results=error)
+	else:
+    	mysql.upsertTopic(name, post_count, created_timestamp):
+    	return jsonify(results=success)
+    
 @app.route("/<topic_name>/createPost", methods=["POST"])
 def createPost():
     return "ok"

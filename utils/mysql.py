@@ -2,30 +2,37 @@ from configs import config
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Topic
+from models import Post
+from models import Comment
 conn_str = 'mysql://'+config.db["user"]+':'+config.db["pw"]+'@'+config.db["host"]+':'+config.db["port"]+'/'+config.db["name"]
 engine = create_engine(conn_str, echo=False)
 Session = sessionmaker(bind=engine)
 session = Session()
-records = session.query(Topic.Topic).all()
-print "Current Topics:"
-for record in records:
-	print record.name
 
+def upsertTopic(name, post_count, created_timestamp):
+	topic = Topic(name, post_count, created_timestamp)
+	session.add(topic)
 
-def upsertTopic():
-	return ""
+def upsertPost(topic_id, name, slug, email, score, created_timestamp):
+	topic = Post(topic_id, name, slug, email, score, created_timestamp)
+	session.add(topic)
 
-def upsertPost():
-	return ""
-
-def upsertComment():
-	return ""
+def upsertComment(name, text, post_id, replied_id, score, created_timestamp):
+	comment = Comment(name, text, post_id, replied_id, score, created_timestamp)
+	session.add(comment)
 
 def selectTopics():
-	return ""
+	records = session.query(Topic.Topic).all()
+	return records
 
-def selectPostsByTopic():
-	return ""
+def selectPostsByTopic(topic_id):
+	records = session.query(Post).filter(Post.topic_id == topic_id)
+	return records
 
-def selectCommentsByPost():
-	return ""
+def selectCommentsByPost(post_id):
+	records = session.query(Comment).filter(Comment.post_id == post_id)
+	return records
+
+def getPostCount(topic_id):
+	count = session.query(Post).filter(Post.topic_id == topic_id).count():
+	return count
