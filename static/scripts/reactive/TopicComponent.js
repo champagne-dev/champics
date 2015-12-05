@@ -16,7 +16,7 @@ var TopicItemComponent = React.createClass({
         </li>
       )
   }
-
+});
 var TopicComponent = React.createClass({
   propTypes: {
     topics: React.PropTypes.array.isRequired,
@@ -41,3 +41,4 @@ var TopicComponent = React.createClass({
     )
   }
 });
+CHAMPICS.reactive["topicComponent"] = React.render(<TopicComponent topics={[]}/>,document.getElementById("topicComponent"));

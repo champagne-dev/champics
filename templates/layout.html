@@ -1,16 +1,14 @@
 <html>
   <head>
     <title>champics</title>
-    <link href="{{ url_for('static', filename='/styles/layout.css') }}" rel="stylesheet" type="text/css" ></link>
-    <script src="{{ url_for('static', filename='/scripts/vendor/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='/scripts/vendor/reactjs/react.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='/scripts/vendor/reactjs/react.dom.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='/scripts/reactive/TopicComponent.js') }}" type="text/jsx"></script>
-    <script type="text/jsx">
-      CHAMPICS = {};
-      CHAMPICS.reactive = {};
-      CHAMPICS.reactive["topicComponent"] = React.render(<TopicComponent topics={[]}/>,document.getElementById("topicComponent"));
-    </script>
+    <link href="{{ url_for('static', filename='styles/layout.css') }}" rel="stylesheet" type="text/css" ></link>
+    <script src="{{ url_for('static', filename='scripts/vendor/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/vendor/reactjs/react.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/vendor/reactjs/react-dom.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/vendor/reactjs/JSXTransformer.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/Init.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/reactive/TopicComponent.js') }}" type="text/jsx"></script>
+    <script src="{{ url_for('static', filename='scripts/utils/AjaxCalls.js') }}"></script>
   </head>
   <body>
     <div class="wrapper">
