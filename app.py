@@ -1,9 +1,11 @@
 import time, base64
 from flask import Flask, render_template, jsonify, g, request
+from flask.ext.cors import CORS
 from utils import mysql
 from slugify import slugify
 
 app = Flask(__name__)
+CORS(app)
 
 success = [
     {
@@ -26,7 +28,7 @@ def frontpageView():
 @app.route("/c/<topic_name>", methods=["GET"])
 def topicView(topic_name):
     topic = mysql.selectTopicByName(topic_name)
-    posts = selectPostsByTopic(topic.id)
+    posts = mysql.selectPostsByTopic(topic.id)
 
     mapped_posts = list(map(lambda x: {
         "name": x.name, 
