@@ -9,8 +9,8 @@ engine = create_engine(conn_str, echo=False)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-def upsertTopic(name, post_count, created_timestamp):
-	topic = Topic(name, post_count, created_timestamp)
+def upsertTopic(name, created_timestamp):
+	topic = Topic(name, created_timestamp)
 	session.add(topic)
 
 def upsertPost(topic_id, name, slug, email, score, created_timestamp):
