@@ -15,11 +15,11 @@ def frontpageView():
     return render_template("frontpage.html")
 
 @app.route("/c/<topic_name>", methods=["GET"])
-def topicView():
+def topicView(topic_name):
     return render_template("topic.html")
 
 @app.route("/c/<topic_name>/<post_slug>", methods=["GET"])
-def postView():
+def postView(topic_name, post_slug):
     return render_template("post.html")
 
 @app.route("/createTopic", methods=["POST"])
