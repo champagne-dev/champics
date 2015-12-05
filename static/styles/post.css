@@ -54,7 +54,6 @@
 }
 
 .headroom {
-    transition: transform 250ms linear;
 }
 .headroom--pinned {
     transform: translateY(0%);
@@ -62,7 +61,12 @@
 .headroom--unpinned {
     transform: translateY(-100%);
 }
-
+.headroom-top-pinned {
+	top: 200px;
+}
+.pinned {
+    top: 0px;
+}
 .animated {
   -webkit-animation-duration: 0.200s;
      -moz-animation-duration: 0.200s;
