@@ -5,7 +5,9 @@ var CommentComponent = React.createClass({
     onHover: React.PropTypes.func.isRequired,
     onReply: React.PropTypes.func.isRequired,
     onDisable: React.PropTypes.func.isRequired,
-    onClick: React.PropTypes.func.isRequired
+    onClick: React.PropTypes.func.isRequired,
+    tabs: React.PropTypes.number.isRequired,
+    noReply: React.PropTypes.bool.isRequired
   },
   getInitialState: function(){
     return {"clicked": false};
@@ -81,14 +83,46 @@ var PostComponent = React.createClass({
     this.props.onCommentReply(comment_id, inherited_styles)
   },
   render: function(){
+    var _commentsOrdered = []
+    var _commentsData = JSON.parse(JSON.stringify(this.props.post.comments));
+    var _commentsDOM = []
+    _commentsDOM.push(<a className="reply" onClick={this.__onCommentReply}></a>);
+    for(var iteration in _commentsData){
+      var comment = _commentsData[iteration];
+      if(!comment.noReply)
+        _commentsData[iteration].noReply = false;
+      if(comment.replied_id == -1){
+        _commentsOrdered.push(iteration);
+        _commentsData[iteration].tabs = 0;
+      }
+      else{
+        if(_commentsData[comment.replied_id]){
+          _commentsOrdered = insertAfterKey(_commentsOrdered, comment.replied_id + "", iteration);
+          _commentsData[iteration].tabs = _commentsData[comment.replied_id].tabs + 1;
+        }
+      }
+    }
+    for(var id in _commentsOrdered){
+      var index = _commentsOrdered[id];
+      if(parseInt(index)){
+        var comment = _commentsData[index];
+        _commentsDOM.push(<CommentComponent tabs={comment.tabs} onReply={this.__onCommentReplyClick} body={comment.body} user={comment.user} index={index} noReply={comment.noReply}/>)
+      }
+    }
     var _comments = [];
     var _overlays = [];
-    for(var iteration in this.props.post.comments){
-      var comment = this.props.post.comments[iteration];
-      if(this.state.comment_overlays.indexOf(comment.id) > -1)
-        _overlays.push(<img className="overlay-image" src={comment.image_path}></img>)
-
-      _comments.push(<CommentComponent comment={comment} onHover={this.__addOverlay} onDisable={this.__removeOverlay} onClick={this.__addOverlay} onReply={this.props.onCommentReply}/>);
+    for(var id in _commentsOrdered){
+      var index = _commentsOrdered[id];
+      if(parseInt(index)){
+        var comment = _commentsData[index];
+        if(this.state.comment_overlays.indexOf(comment.id) > -1){
+          var _comments_overlaid = CHAMPICS.utils.buildCommentThread([comment],_commentsData, comment.replied_id);
+          for(var _comment_overlaid in _comments_overlaid)
+            _overlays.push(<img className="overlay-image" src={_comment_overlaid.image_path}></img>)
+        }
+        _comments.push(<CommentComponent tabs={comment.tabs} noReply={comment.noReply} comment={comment} onHover={this.__addOverlay} onDisable={this.__removeOverlay} onClick={this.__addOverlay} onReply={this.props.onCommentReply}/>);
+      
+      }
     }
     return (
       <div className="full-post">
@@ -246,7 +280,8 @@ var PostsComponent = React.createClass({
       title: title,
       text: text,
       image: image,
-      post_id: post_id
+      post_id: post_id,
+      noReply: true,
     }
     this.setState({})
   },
