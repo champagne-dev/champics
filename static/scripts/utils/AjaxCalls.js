@@ -1,19 +1,19 @@
 CHAMPICS.ajax = {
-	saveComment: function(replied_id, post_id, edit_data, text, author, topicName, topicName, success) {
+	saveComment: function(replied_id, post_id, title, author, success) {
 		var data = {
 			replied_id: replied_id,
 			post_id: post_id,
-			edit_data: edit_data,
-			text: text,
+			edit_data: CHAMPICS.misc.current_canvas_repr,
+			text: title,
 			author: author
 		};
 
 		$.ajax({
 			type: "POST",
-			url: "/"+topicName+"/"+postName+"/createComment",
+			url: "/"+CHAMPICS.data.current_topic.name+"/"+CHAMPICS.data.current_post.name+"/createComment",
             data: data,
             success: function(data) {
-
+            	success(data);
             },
             error: function(e) {
 

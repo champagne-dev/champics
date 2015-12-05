@@ -34,18 +34,20 @@ var CommentComponent = React.createClass({
     this.props.onReply(this.props.comment.id);
   },
   render: function(){
-    var user;
-    if(this.props.comment.user)
-      user = <h5 className="user">{this.props.comment.user}</h5>
-    return 
-    (
-      <div className="comment" onMouseOver={this.__onHover} onMouseOut={this.__onMouseLeave} onClick={this.__onClick}>
-        <div className="text">{this.props.comment.text}</div>
-        {user}
-        <a className="reply" onClick={this.__onReply}></a>
+    var author;
+    if(this.props.comment.author)
+      author = <h5 className="author">{this.props.comment.author}</h5>
+    var style = {
+      "paddingLeft": (this.props.tabs*20)+50
+    }
+    return (
+      <div className="comment" onMouseOver={this.__onHover} onMouseOut={this.__onMouseOut} onClick={this.__onClick} style={style}>
+        <h4 className="text">{this.props.comment.text}</h4>
+        {author}
+        <a className="reply" onClick={this.__onReply}>reply</a>
       </div>
     );
-  }
+  },
 })
 // *************** POST ***************
 var PostComponent = React.createClass({
@@ -73,6 +75,8 @@ var PostComponent = React.createClass({
     }
   },
   __onCommentReply: function(comment_id){
+    if(!parseInt(comment_id) && comment_id!=0)
+      comment_id = -1; //top level
     var post = this.refs.post.getDOMNode();
     var inherited_styles = {
       width: post.offsetWidth,
@@ -80,48 +84,53 @@ var PostComponent = React.createClass({
       top: post.offsetTop,
       left: post.offsetLeft
     }
-    this.props.onCommentReply(comment_id, inherited_styles)
+    this.props.onCommentReply(inherited_styles, comment_id, this.props.post.id)
   },
   render: function(){
-    var _commentsOrdered = []
-    var _commentsData = JSON.parse(JSON.stringify(this.props.post.comments));
     var _commentsDOM = []
-    _commentsDOM.push(<a className="reply" onClick={this.__onCommentReply}></a>);
-    for(var iteration in _commentsData){
-      var comment = _commentsData[iteration];
-      if(!comment.noReply)
-        _commentsData[iteration].noReply = false;
-      if(comment.replied_id == -1){
-        _commentsOrdered.push(iteration);
-        _commentsData[iteration].tabs = 0;
-      }
-      else{
-        if(_commentsData[comment.replied_id]){
-          _commentsOrdered = insertAfterKey(_commentsOrdered, comment.replied_id + "", iteration);
-          for(var _c in _commentsData)
-            if(_c.id == comment.replied_id)
-              _commentsData[iteration].tabs = _c.tabs + 1;
+    _commentsDOM.push(<a className="reply" onClick={this.__onCommentReply}>reply</a>);
+    if(this.props.post.comments){
+      var _commentsOrdered = []
+      var _commentsData = JSON.parse(JSON.stringify(this.props.post.comments));
+      for(var iteration in _commentsData){
+        var comment = _commentsData[iteration];
+        if(!comment.noReply)
+          _commentsData[iteration].noReply = false;
+        if(comment.replied_id == -1){
+          _commentsOrdered.push(iteration);
+          _commentsData[iteration].tabs = 0;
+        }
+        else{
+          if(_commentsData[comment.replied_id]){
+            _commentsOrdered = CHAMPICS.utils.insertAfterKey(_commentsOrdered, comment.replied_id + "", iteration);
+            for(var _c in _commentsData)
+              if(_commentsData[_c].id == comment.replied_id)
+                _commentsData[iteration].tabs = _commentsData[_c].tabs + 1;
+          }
         }
       }
-    }
-    var _overlays = [];
-    for(var id in _commentsOrdered){
-      var index = _commentsOrdered[id];
-      if(parseInt(index)){
-        var comment = _commentsData[index];
-        if(this.state.comment_overlays.indexOf(comment.id) > -1){
-          var _comments_overlaid = CHAMPICS.utils.buildCommentThread([comment],_commentsData, comment.replied_id);
-          for(var _comment_overlaid in _comments_overlaid)
-            _overlays.push(<img className="overlay-image" src={_comment_overlaid.image_path}></img>)
+      var _overlays = [];
+      for(var id in _commentsOrdered){
+        var index = _commentsOrdered[id];
+        if(parseInt(index)){
+          var comment = _commentsData[index];
+          if(this.state.comment_overlays.indexOf(comment.id) > -1){
+            var _comments_overlaid = CHAMPICS.utils.buildCommentThread([comment],_commentsData, comment);
+            console.log(_comments_overlaid);
+            for(var iterino in _comments_overlaid){
+              var _comment_overlaid = _comments_overlaid[iterino];
+              _overlays.push(<img className="overlay-image" src={"/"+_comment_overlaid.relative_url}></img>)
+            }
+          }
+          _commentsDOM.push(<CommentComponent tabs={comment.tabs} noReply={comment.noReply} comment={comment} onHover={this.__addOverlay} onDisable={this.__removeOverlay} onClick={this.__addOverlay} onReply={this.__onCommentReply}/>);
+        
         }
-        _commentsDOM.push(<CommentComponent tabs={comment.tabs} noReply={comment.noReply} comment={comment} onHover={this.__addOverlay} onDisable={this.__removeOverlay} onClick={this.__addOverlay} onReply={this.props.onCommentReply}/>);
-      
       }
     }
     return (
       <div className="full-post">
         <div className="post" ref="post">
-          <img className="post-image" src={this.props.post.image_path}></img>
+          <img className="post-image" src={"/" + this.props.post.relative_url}></img>
           {_overlays}
         </div>
         <div className="comments">
@@ -138,8 +147,8 @@ var DrawableCanvasComponent = React.createClass({
   propTypes: {
     inherited_styles: React.PropTypes.object.isRequired,
     enabled: React.PropTypes.bool.isRequired,
-    comment_id: React.PropTypes.number.isRequired,
-    post_id: React.PropTypes.number.isRequired,
+    comment_id: React.PropTypes.number,
+    post_id: React.PropTypes.number,
     onDisable: React.PropTypes.func.isRequired,
     onSubmit: React.PropTypes.func.isRequired
   },
@@ -150,40 +159,49 @@ var DrawableCanvasComponent = React.createClass({
     // $("#submitEditBtn").click(function(){
     //   self.save();
     // });
-    var canvas = this.refs.canvas.getDOMNode();
-    var ctx = canvas.getContext('2d');
-    var fillColor = "red";
-    var width = this.state.inherited_styles.width;
-    var height = this.state.inherited_styles.height;
-    // define a custom fillCircle method
-    ctx.fillCircle = function(x, y, radius, fillColor) {
-      this.fillStyle = fillColor;
-      this.beginPath();
-      this.moveTo(x, y);
-      this.arc(x, y, radius, 0, Math.PI * 2, false);
-      this.fill();
-    };
-    ctx.clearTo = function(fillColor) {
-      ctx.fillStyle = fillColor;
-    };
-    ctx.clearTo(fillColor || "#ddd");
-    // bind mouse events
-    canvas.onmousemove = function(e) {
-      if (!canvas.isDrawing) {
-         return;
+    if(this.props.enabled && this.state.drawing){
+      var canvas = this.refs.canvas.getDOMNode();
+      var ctx = canvas.getContext('2d');
+      var fillColor = "red";
+      var width = this.state.inherited_styles.width;
+      var height = this.state.inherited_styles.height;
+      canvas.width = width;
+      canvas.height = height;
+      // define a custom fillCircle method
+      ctx.fillCircle = function(x, y, radius, fillColor) {
+        this.fillStyle = fillColor;
+        this.beginPath();
+        this.moveTo(x, y);
+        this.arc(x, y, radius, 0, Math.PI * 2, false);
+        this.fill();
+      };
+      ctx.clearTo = function(fillColor) {
+        ctx.fillStyle = fillColor;
+      };
+      ctx.clearTo(fillColor || "#ddd");
+      // bind mouse events
+      canvas.onmousemove = function(e) {
+        if (!canvas.isDrawing) {
+           return;
+        }
+        console.log(this.offsetLeft)
+        var x = e.pageX - this.offsetLeft;
+        var y = e.pageY - this.offsetTop;
+        var radius = 10; // or whatever
+        var fillColor = '#ff0000';
+        ctx.fillCircle(x, y, radius, fillColor);
+        console.log(x + " " + y)
+      };
+      canvas.onmousedown = function(e) {
+        canvas.isDrawing = true;
+      };
+      canvas.onmouseup = function(e) {
+        canvas.isDrawing = false;
+      };
+      canvas.onmouseleave = function(e) {
+        canvas.isDrawing = false;
       }
-      var x = e.pageX - this.offsetLeft;
-      var y = e.pageY - this.offsetTop;
-      var radius = 10; // or whatever
-      var fillColor = '#ff0000';
-      ctx.fillCircle(x, y, radius, fillColor);
-    };
-    canvas.onmousedown = function(e) {
-      canvas.isDrawing = true;
-    };
-    canvas.onmouseup = function(e) {
-      canvas.isDrawing = false;
-    };
+    }
   },
   __onSave: function(){
     var canvas = this.refs.canvas.getDOMNode();
@@ -193,15 +211,16 @@ var DrawableCanvasComponent = React.createClass({
     this.props.onDisable();
   },
   __onSubmitDrawing: function(){
-
+    var canvas = this.refs.canvas.getDOMNode();
+    CHAMPICS.misc.current_canvas_repr = canvas.toDataURL("image/png");
+    this.setState({"drawing": false});
   },
   __onSubmitEdit: function(){
     var title = $('.writingPortion > .title-field').val();
     var name = $('.writingPortion > .name-field').val();
-    this.props.onSubmit(title, name, image);
+    this.props.onSubmit(this.state.comment_id, this.state.post_id, title, name);
   },
   render: function() {
-    var container;
     if(this.state.enabled){
       var style = this.state.inherited_styles;
       style.zIndex = 2;
@@ -209,24 +228,26 @@ var DrawableCanvasComponent = React.createClass({
       var content;
       if(this.state.drawing)
         content = <div className="canvasContainer">
-                    <canvas className="drawableCanvasComponent" ref="canvas"></canvas>
-                    <a className="submit-btn" onClick={this.__onSubmitDrawing}></a>
+                    <canvas className="drawableCanvasComponent" ref="canvas" style={style}></canvas>
+                    <a className="submit-btn" onClick={this.__onSubmitDrawing} style={{"position":"relative","left":-100}}>Submit Drawing</a>
                   </div>
       else
         content = <div className="writingPortion">
                     <textarea className="title-field"></textarea>
                     <input className="name-field"></input>
-                    <a className="submit-btn" onClick={this.__onSubmitEdit}></a>
+                    <a className="submit-btn" onClick={this.__onSubmitEdit}>Submit EDIT</a>
                   </div>
-      container = 
-        <div className="editingContainer" style={style}>
-          {content}
-          <a className="close" onClick={this.__onDisable}></a>
-        </div>
+        return (
+            <div className="editingContainer">
+              {content}
+              <a className="close" onClick={this.__onDisable} style={{"position":"relative","left":-100}}>Close</a>
+            </div>
+          )
     }
-    return (
-      {container}
-    )
+    else 
+      return (
+        <div className="phony"></div>
+      )
   }
 });
 
@@ -247,33 +268,36 @@ var PostsComponent = React.createClass({
   componentDidMount: function(){
   },
   __enableCanvas: function(inherited_styles, comment_id, post_id){
-    this.setState({"canvas_inherited_styles": inherited_styles,"canvas_enabled":false, "canvas_comment_id": comment_id, "canvas_post_id": post_id})
+    this.setState({"canvas_inherited_styles": inherited_styles,"canvas_enabled":true, "canvas_comment_id": comment_id, "canvas_post_id": post_id})
   },
   __disableCanvas: function(){
+    console.log("close")
     this.setState({"canvas_enabled": false})
   },
-  __onSubmitEdit: function(replied_id, post_id, title, text, image){
+  __onSubmitEdit: function(replied_id, post_id, title, author){
     this.__disableCanvas();
-    CHAMPICS.ajax.saveComment(replied_id, title, text, image);
-    this.saved_comment = {
+    CHAMPICS.ajax.saveComment(replied_id, post_id, title, author, function(data){
+      console.log(data)
+    });
+    var saved_comment = {
       replied_id: replied_id,
-      title: title,
-      text: text,
-      image: image,
+      text: title,
+      image: CHAMPICS.misc.current_canvas_repr,
       post_id: post_id,
       noReply: true,
     }
-    this.setState({})
+    this.setState({"saved_comment":saved_comment})
   },
   render: function() {
     var _posts = [];
-    var _canvas = <DrawableCanvasComponent comment_id={this.state.canvas_comment_id} post_id={this.state.canvas_post_id} enabled={this.state.canvas_enabled} inherited_styles={this.state.canvas_inherited_styles} onDisable={this.__disableCanvas} onSubmit={this.__onSubmitEdit}/>
+    var _canvas = <DrawableCanvasComponent key={parseInt(this.state.canvas_comment_id) + this.state.canvas_enabled}comment_id={parseInt(this.state.canvas_comment_id)} post_id={this.state.canvas_post_id} enabled={this.state.canvas_enabled} inherited_styles={this.state.canvas_inherited_styles} onDisable={this.__disableCanvas} onSubmit={this.__onSubmitEdit}/>
     for (var iteration in this.props.posts){
         var post = JSON.parse(JSON.stringify(this.props.posts[iteration]));
-        if(this.state.saved_comment.post_id == this.props.posts[iteration].id){
+        post.comments = post.comments || [];
+        if(this.state.saved_comment && this.state.saved_comment.post_id == post.id){
           post.comments.push(this.state.saved_comment)
         }
-        _posts.push(<PostComponent post={this.props.posts[iteration]} onCommentReply={this.__enableCanvas}/>);
+        _posts.push(<PostComponent post={post} onCommentReply={this.__enableCanvas}/>);
     }
     return (
       <div className="posts">
@@ -284,4 +308,4 @@ var PostsComponent = React.createClass({
   }
 });
 
-CHAMPICS.reactive["PostsComponent"] = React.render(<PostsComponent posts={[CHAMPICS.data.posts]}/>,document.getElementById("PostsComponent"))
+CHAMPICS.reactive["PostsComponent"] = React.render(<PostsComponent posts={[CHAMPICS.data.current_post]}/>,document.getElementById("PostsComponent"))

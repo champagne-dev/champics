@@ -30,7 +30,6 @@ var TopicComponent = React.createClass({
     var _topics = [];
     for (var iteration in this.props.topics){
       var topic = this.props.topics[iteration];
-      console.log(topic)
       if(topic["id"] == this.state.topic_id)
         _topics.unshift(<TopicItemComponent isActive={true} topicName={topic["name"]} topicId={topic["id"]} />)
       else

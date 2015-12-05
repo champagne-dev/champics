@@ -1,19 +1,18 @@
 //jared added this
 var PostItemComponent = React.createClass({
   propTypes: {
-    slug: React.PropTypes.string.isRequired,
-    postName: React.PropTypes.string.isRequired,
-    postId: React.PropTypes.string.isRequired
+    post: React.PropTypes.object.isRequired,
   },
   getInitialState: function(){
     return {};
   },
   render: function(){
     var _className = "postItem";
-    var _href = "/c/"+window.current_topic.name+"/"+this.props.slug //broken link
+    var _href = "/c/"+CHAMPICS.data.current_topic.name+"/"+this.props.post.slug //broken link
     return (
         <li className={_className}>
-          <a href={_href}>{this.props.postName}</a>
+          <a href={_href}>{this.props.post.name}</a>
+          <img src={"/"+this.props.post.relative_url}></img>
         </li>
       )
   }
@@ -33,7 +32,7 @@ var POSTComponent = React.createClass({
       $(".createPostForm").toggle();
     });
 
-    var topic = window.current_topic;
+    var topic = CHAMPICS.data.current_topic;
     $('.createPostForm > .submit-btn').click(function(){
       var email = $('.createPostForm > .email-field').val();
       var title = $('.createPostForm > .title-field').val();
@@ -47,13 +46,13 @@ var POSTComponent = React.createClass({
     });
   },
   render: function() {
-    var currentTopic = window.current_topic.name;
+    var currentTopic = CHAMPICS.data.current_topic.name;
     //this is bad but idk how to communicate between components
     var _posts = [];
     for (var iteration in this.props.posts){
       var post = this.props.posts[iteration];
       console.log(post)
-      _posts.push(<PostItemComponent postName={post["name"]} postId={post["id"]} slug={post["slug"]} />);
+      _posts.push(<PostItemComponent post={post} />);
     }
     return (
       <ul id="postList">

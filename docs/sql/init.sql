@@ -25,6 +25,7 @@ CREATE TABLE `post` (
 CREATE TABLE `comment` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `text` varchar(1024) NOT NULL DEFAULT '',
+  `author` varchar(255) NOT NULL DEFAULT '',
   `post_id` int(11) NOT NULL,
   `replied_id` int(11) NOT NULL DEFAULT '-1',
   `relative_url` varchar(255) NOT NULL DEFAULT '',

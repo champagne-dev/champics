@@ -1,11 +1,18 @@
 {% extends "layout.html" %}
 {% block content %}
+<style>
+img.overlay-image {
+    position: absolute;
+    left: 400px;
+}
+</style>
 <div id="PostsComponent">
 	
 </div>
 
 <script>
-	CHAMPICS.data.posts = JSON.parse(JSON.stringify({{posts|safe}}));
+	CHAMPICS.data.current_post = JSON.parse(JSON.stringify({{current_post|safe}}));
+	CHAMPICS.data.current_topic = JSON.parse(JSON.stringify({{current_topic|safe}}));
 </script>
 <script src="{{ url_for('static', filename='scripts/reactive/PostsComponent.js') }}" type="text/jsx"></script>
 

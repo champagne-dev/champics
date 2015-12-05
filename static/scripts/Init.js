@@ -1,5 +1,6 @@
 CHAMPICS = {};
 CHAMPICS.reactive = {};
+CHAMPICS.misc = {};
 CHAMPICS.utils = {
 	insertAt: function(array, o, index){
 	    /**
@@ -27,24 +28,25 @@ CHAMPICS.utils = {
 	if(index == -1)
 	    return array_copy;
 	else {
-		console.log(array_copy);
 	    if(index == array_copy.length - 1){
 	        array_copy.push(toInsert);
 	    }
 	    else{
-	       array_copy = insertAt(array_copy, toInsert, index + 1);
+	       array_copy = CHAMPICS.utils.insertAt(array_copy, toInsert, index + 1);
 	    }
 	     return array_copy;
 	  	}   
 	},
-	buildCommentThread: function(mut_array, comments, replied_id){
-		for(var comment in comments){
-			if(comment["id"] == replied_id){
-				mut_array.push(comment.id)
-				if(comment.replied_id == -1)
-					return;
-				else
-					CHAMPICS.utils.buildCommentThread(mut_array, comments, comment.replied_id);
+	buildCommentThread: function(mut_array, comments, comment){
+		console.log(mut_array)
+		for(var it in comments){
+			var _comment = comments[it];
+			if(parseInt(_comment["id"]) == parseInt(comment.replied_id)){// found the next comment up.
+				mut_array.push(_comment);
+				return CHAMPICS.utils.buildCommentThread(mut_array, comments, _comment);
+			}
+			else if(parseInt(_comment["id"]) == parseInt(comment.id) && parseInt(comment.replied_id) == -1){ // Found the top level comment
+				return mut_array;
 			}
 		}
 	}

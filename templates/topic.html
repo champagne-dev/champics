@@ -1,6 +1,5 @@
 {% extends "layout.html" %}
 {% block content %}
-<script src="{{ url_for('static', filename='scripts/reactive/POSTComponent.js') }}" type="text/jsx"></script>
 <style>
 	.createPostForm{
 		margin: 10px 5px;
@@ -35,6 +34,9 @@
 <div id="POSTComponent">
 </div>
 <script type="text/javascript">
-	current_topic = JSON.parse(JSON.stringify({{current_topic|safe}}));
+	CHAMPICS.data.current_topic = JSON.parse(JSON.stringify({{current_topic|safe}}));
+	CHAMPICS.data.posts = JSON.parse(JSON.stringify({{posts|safe}}))
+	console.log(CHAMPICS.data.posts)
 </script>
+<script src="{{ url_for('static', filename='scripts/reactive/POSTComponent.js') }}" type="text/jsx"></script>
 {% endblock %}

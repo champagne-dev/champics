@@ -3,6 +3,7 @@ from flask import Flask, render_template, jsonify, g, request, send_from_directo
 from utils import mysql
 from slugify import slugify
 from configs import config
+import json
 app = Flask(__name__, static_url_path='')
 
 success = [
@@ -11,7 +12,17 @@ success = [
         "data": "request completed"
     }
 ]
+def defaultDatetimeJSONDump(obj):
+    import calendar, datetime
 
+    if isinstance(obj, datetime.datetime):
+        if obj.utcoffset() is not None:
+            obj = obj - obj.utcoffset()
+    millis = int(
+        calendar.timegm(obj.timetuple()) * 1000 +
+        obj.microsecond / 1000
+    )
+    return millis
 @app.before_request
 def before_request():
     if request.method == "GET":
@@ -47,20 +58,21 @@ def postView(topic_name, post_slug):
     topic = mysql.selectTopicByName(topic_name)
     post = mysql.selectPostBySlug(post_slug)
     comments = mysql.selectCommentsByPost(post.id)
-
+    print comments
     try:
         mapped_comments = list(map(lambda x: {
             "text": x.text, 
             "author": x.author, 
-            "replied_id": x.replied_id, 
+            "replied_id": str(x.replied_id), 
             "score": str(int(x.score)), 
             "relative_url": x.relative_url,
+            "id": str(x.id)
             # "created_timestamp": x.created_timestamp
         }, comments))
     except:
         mapped_comments = list()
 
-    return render_template("post.html", topics=g.topics, current_topic={"name": topic.name, "id": str(topic.id)}, current_post={"id": post.id, "name": post.name, "slug": post.slug, "relative_url": post.relative_url, "score": post.score, "created_timestamp": post.created_timestamp}, comments=mapped_comments)
+    return render_template("post.html", topics=g.topics, current_topic={"name": topic.name, "id": str(topic.id)}, current_post=json.dumps({"id": post.id, "name": post.name, "slug": post.slug, "relative_url": post.relative_url, "score": post.score, "created_timestamp": post.created_timestamp, "comments":mapped_comments}, default=defaultDatetimeJSONDump))
 
 @app.route("/createTopic", methods=["POST"])
 def createTopic():
