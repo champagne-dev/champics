@@ -81,8 +81,8 @@ var DrawableCanvasComponent = React.createClass({
     console.log(canvas);
     var ctx = canvas.getContext('2d');
     var fillColor = "red";
-    var width = 200;
-    var height = 200;
+    var width = this.state.inherited_styles.width;
+    var height = this.state.inherited_styles.height;
     // define a custom fillCircle method
     ctx.fillCircle = function(x, y, radius, fillColor) {
       this.fillStyle = fillColor;
