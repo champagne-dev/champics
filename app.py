@@ -44,19 +44,20 @@ def topicView(topic_name):
 @app.route("/c/<topic_name>/<post_slug>", methods=["GET"])
 def postView(topic_name, post_slug):
     topic = mysql.selectTopicByName(topic_name)
-    post = mysql.selectTopicBySlug(post_slug)
+    post = mysql.selectPostBySlug(post_slug)
     comments = mysql.selectCommentsByPost(post.id)
-
-    mapped_comments = list(map(lambda x: {
-        "text": x.text, 
-        "author": x.author, 
-        "replied_id": x.replied_id, 
-        "score": int(x.score), 
-        "relative_url": x.relative_url,
-        "created_timestamp": x.created_timestamp
-    }, comments))
-
-    return render_template("post.html", topics=g.topics, current_topic={"name": topic.name, "id": str(topic.id)}, current_post={"name": post.name, "slug": post.slug, "relative_url": post.relative_url, "score": post.score, "created_timestamp": created_timestamp}, comments=mapped_comments)
+    try:
+        mapped_comments = list(map(lambda x: {
+            "text": x.text, 
+            "author": x.author, 
+            "replied_id": x.replied_id, 
+            "score": int(x.score), 
+            "relative_url": x.relative_url,
+            "created_timestamp": x.created_timestamp
+        }, comments))
+    except:
+        mapped_comments = list()
+    return render_template("post.html", topics=g.topics, current_topic={"name": topic.name, "id": str(topic.id)}, current_post={"name": post.name, "slug": post.slug, "relative_url": post.relative_url, "score": post.score, "created_timestamp": post.created_timestamp}, comments=mapped_comments)
 
 @app.route("/createTopic", methods=["POST"])
 def createTopic():
