@@ -87,6 +87,7 @@ var PostComponent = React.createClass({
       var comment = this.props.post.comments[iteration];
       if(this.state.comment_overlays.indexOf(comment.id) > -1)
         _overlays.push(<img className="overlay-image" src={comment.image_path}></img>)
+
       _comments.push(<CommentComponent comment={comment} onHover={this.__addOverlay} onDisable={this.__removeOverlay} onClick={this.__addOverlay} onReply={this.props.onCommentReply}/>);
     }
     return (
@@ -114,11 +115,13 @@ var DrawableCanvasComponent = React.createClass({
   propTypes: {
     inherited_styles: React.PropTypes.object.isRequired,
     enabled: React.PropTypes.bool.isRequired,
+    comment_id: React.PropTypes.number.isRequired,
+    post_id: React.PropTypes.number.isRequired,
     onDisable: React.PropTypes.func.isRequired,
     onSubmit: React.PropTypes.func.isRequired
   }
   getInitialState: function(){
-    return {enabled: this.props.enabled, inherited_styles: this.props.inherited_styles, "drawing": true};
+    return {"comment_id": this.props.comment_id, "post_id": this.props.post_id, enabled: this.props.enabled, inherited_styles: this.props.inherited_styles, "drawing": true};
   },
   componentDidMount: function(){
     // $("#submitEditBtn").click(function(){
@@ -170,6 +173,8 @@ var DrawableCanvasComponent = React.createClass({
 
   },
   __onSubmitEdit: function(){
+    var title = $('.writingPortion > .title-field').val();
+    var name = $('.writingPortion > .name-field').val();
     this.props.onSubmit(title, name, image);
   },
   render: function() {
@@ -227,16 +232,32 @@ var PostsComponent = React.createClass({
   },
   componentDidMount: function(){
   },
-  __enableCanvas: function(inherited_styles){
-    this.setState({"canvas_inherited_styles": inherited_styles,"canvas_enabled":false})
+  __enableCanvas: function(inherited_styles, comment_id, post_id){
+    this.setState({"canvas_inherited_styles": inherited_styles,"canvas_enabled":false, "canvas_comment_id": comment_id, "canvas_post_id": post_id})
   },
   __disableCanvas: function(){
     this.setState({"canvas_enabled": false})
   },
+  __onSubmitEdit: function(replied_id, post_id, title, text, image){
+    this.__disableCanvas();
+    CHAMPICS.ajax.saveComment(replied_id, title, text, image);
+    this.saved_comment = {
+      replied_id: replied_id,
+      title: title,
+      text: text,
+      image: image,
+      post_id: post_id
+    }
+    this.setState({})
+  },
   render: function() {
     var _posts = [];
-    var _canvas = <DrawableCanvasComponent enabled={this.state.canvas_enabled} inherited_styles={this.state.canvas_inherited_styles} onDisable={this.__disableCanvas}/>
+    var _canvas = <DrawableCanvasComponent comment_id={this.state.canvas_comment_id} post_id={this.state.canvas_post_id} enabled={this.state.canvas_enabled} inherited_styles={this.state.canvas_inherited_styles} onDisable={this.__disableCanvas} onSubmit={this.__onSubmitEdit}/>
     for (var iteration in this.props.posts){
+        var post = JSON.parse(JSON.stringify(this.props.post[iteration]));
+        if(this.state.saved_comment.post_id == this.props.posts[iteration].id){
+          post.comments.push(this.state.saved_comment)
+        }
         _posts.push(<PostComponent post={this.props.posts[iteration]} onCommentReply={this.__enableCanvas}/>);
     }
     return (
