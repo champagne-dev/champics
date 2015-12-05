@@ -33,10 +33,9 @@ def topicView(topic_name):
             "name": x.name, 
             "slug": x.slug, 
             "relative_url": x.relative_url, 
-            "score": x.score, 
+            "score": int(x.score), 
             "created_timestamp": x.created_timestamp
         }, posts))
-        print mapped_posts
     except Exception as e:
         mapped_posts = list()
 
@@ -52,7 +51,7 @@ def postView(topic_name, post_slug):
         "text": x.text, 
         "author": x.author, 
         "replied_id": x.replied_id, 
-        "score": x.score, 
+        "score": int(x.score), 
         "relative_url": x.relative_url,
         "created_timestamp": x.created_timestamp
     }, comments))
