@@ -92,6 +92,10 @@ var PostComponent = React.createClass({
     if(this.props.post.comments){
       var _commentsOrdered = []
       var _commentsData = JSON.parse(JSON.stringify(this.props.post.comments));
+      var _commentsNewData = {};
+      for(var ity in _commentsData)
+        _commentsNewData[_commentsData[ity]["id"]] = _commentsData[ity];
+      _commentsData = _commentsNewData;
       for(var iteration in _commentsData){
         var comment = _commentsData[iteration];
         if(!comment.noReply)
@@ -262,7 +266,7 @@ var PostsComponent = React.createClass({
       top: -1,
       left: -1
     }
-    return {"canvas_inherited_styles": inherited_styles,"canvas_enabled":false};
+    return {"canvas_inherited_styles": inherited_styles,"canvas_enabled":false, "posts":this.props.posts};
   },
   componentDidMount: function(){
   },
@@ -270,13 +274,17 @@ var PostsComponent = React.createClass({
     this.setState({"canvas_inherited_styles": inherited_styles,"canvas_enabled":true, "canvas_comment_id": comment_id, "canvas_post_id": post_id})
   },
   __disableCanvas: function(){
-    console.log("close")
     this.setState({"canvas_enabled": false})
   },
   __onSubmitEdit: function(replied_id, post_id, title, author){
     this.__disableCanvas();
     var self = this;
     CHAMPICS.ajax.saveComment(replied_id, post_id, title, author, function(data){
+      var posts = JSON.parse(JSON.stringify(self.state.posts));
+      var length;
+      for(var id in posts)
+        if(parseInt(posts[id]["id"])==parseInt(post_id))
+          length = posts[id]["comments"].length;
       var saved_comment = {
         replied_id: replied_id,
         text: title,
@@ -284,22 +292,23 @@ var PostsComponent = React.createClass({
         author: author,
         post_id: post_id,
         noReply: true,
-        relative_url: data["results"][0]["relative_url"]
+        relative_url: data["results"][0]["relative_url"],
+        id: length+1
       }
-      self.setState({"saved_comment":saved_comment})
+      for(var id in posts)
+        if(parseInt(posts[id]["id"])==parseInt(post_id))
+          posts[id].comments.push(saved_comment);
+      self.setState({"posts":posts})
     });
 
   },
   render: function() {
     var _posts = [];
     var _canvas = <DrawableCanvasComponent key={parseInt(this.state.canvas_comment_id) + this.state.canvas_enabled}comment_id={parseInt(this.state.canvas_comment_id)} post_id={this.state.canvas_post_id} enabled={this.state.canvas_enabled} inherited_styles={this.state.canvas_inherited_styles} onDisable={this.__disableCanvas} onSubmit={this.__onSubmitEdit}/>
-    for (var iteration in this.props.posts){
-        var post = JSON.parse(JSON.stringify(this.props.posts[iteration]));
+    for (var iteration in this.state.posts){
+        var post = JSON.parse(JSON.stringify(this.state.posts[iteration]));
         post.comments = post.comments || [];
-        if(this.state.saved_comment && this.state.saved_comment.post_id == post.id){
-          post.comments.push(this.state.saved_comment)
-        }
-        _posts.push(<PostComponent post={post} onCommentReply={this.__enableCanvas}/>);
+        _posts.push(<PostComponent post={post} onCommentReply={this.__enableCanvas} key={post.comments.length+"post"}/>);
     }
     return (
       <div className="posts">
