@@ -326,6 +326,22 @@ var PostsComponent = React.createClass({
     return {"canvas_inherited_styles": inherited_styles,"canvas_enabled":false, "posts":this.props.posts};
   },
   componentDidMount: function(){
+    var headroom2  = new Headroom(document.querySelector(".post"), {
+      "offset": 250,
+      "tolerance": 20,
+      "classes" : {
+            // when element is initialised
+            // when scrolling up
+            "initial": "animated",
+            "pinned": "slideDown",
+            "unpinned": "slideUp"
+      },
+      onPin : function() {
+      },
+      onUnpin : function() {
+      }
+    });
+    headroom2.init();
   },
   __enableCanvas: function(inherited_styles, comment_id, post_id){
     this.setState({"canvas_inherited_styles": inherited_styles,"canvas_enabled":true, "canvas_comment_id": comment_id, "canvas_post_id": post_id})
