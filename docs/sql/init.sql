@@ -16,6 +16,7 @@ CREATE TABLE `post` (
   `topic_id` int(11) NOT NULL,
   `created_timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `email` varchar(255) DEFAULT NULL,
+  `relative_url` varchar(255) NOT NULL DEFAULT '',
   `slug` varchar(255) NOT NULL DEFAULT '',
   `score` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
@@ -26,6 +27,7 @@ CREATE TABLE `comment` (
   `text` varchar(1024) NOT NULL DEFAULT '',
   `post_id` int(11) NOT NULL,
   `replied_id` int(11) NOT NULL DEFAULT '-1',
+  `relative_url` varchar(255) NOT NULL DEFAULT '',
   `score` int(11) NOT NULL DEFAULT '0',
   `created_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)

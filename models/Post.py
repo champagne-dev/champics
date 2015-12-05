@@ -10,14 +10,17 @@ class Post(Base):
     name = Column(String(255))
     slug = Column(String(255))
     email = Column(String(255))
+    relative_url = Column(String(255))
     score = Column(Integer)
     created_timestamp = Column(Integer)
+    
 
-    def __init__(self, topic_id, name, slug, email, score, created_timestamp):
+    def __init__(self, topic_id, name, slug, email, relative_url, score, created_timestamp):
 	    self.topic_id = topic_id
 	    self.name = name
 	    self.slug = slug
 	    self.email = email
+	    self.relative_url = relative_url
 	    self.score = score
 	    self.created_timestamp = created_timestamp
 
