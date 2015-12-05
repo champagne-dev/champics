@@ -5,13 +5,19 @@ db = dict(
 ,   pw           = 'MYSQL_PASSWORD_GOES_HERE'
 )
 
+
 redis = dict(
     host    = 'DEFAULT_REDIS_HOSTNAME'
 ,   port    = "DEFAULT_REDIS_PORT"
 ,   db      = "DEFAULT_REDIS_DB"         
 )
 
-# Override default config.
+dirs = dict(
+	uploaded_topics		= "uploads/topics"
+,	logs				= "docs/logs"
+)
+
+# Override default config if config_local exists (if we are local).
 try:
     from config_local import *
 except ImportError as e:
