@@ -113,10 +113,9 @@ var PostComponent = React.createClass({
       for(var id in _commentsOrdered){
         var index = _commentsOrdered[id];
         if(parseInt(index)){
-          var comment = _commentsData[index];
+          var comment = _commentsData[parseInt(index)];
           if(this.state.comment_overlays.indexOf(comment.id) > -1){
             var _comments_overlaid = CHAMPICS.utils.buildCommentThread([comment],_commentsData, comment);
-            console.log(_comments_overlaid);
             for(var iterino in _comments_overlaid){
               var _comment_overlaid = _comments_overlaid[iterino];
               _overlays.push(<img className="overlay-image" src={"/"+_comment_overlaid.relative_url}></img>)
@@ -278,16 +277,15 @@ var PostsComponent = React.createClass({
     this.__disableCanvas();
     var self = this;
     CHAMPICS.ajax.saveComment(replied_id, post_id, title, author, function(data){
-      console.log(data)
       var saved_comment = {
         replied_id: replied_id,
         text: title,
         image: CHAMPICS.misc.current_canvas_repr,
+        author: author,
         post_id: post_id,
         noReply: true,
         relative_url: data["results"][0]["relative_url"]
       }
-      console.log(saved_comment)
       self.setState({"saved_comment":saved_comment})
     });
 
