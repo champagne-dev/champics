@@ -1,4 +1,4 @@
-import time
+import time, base64
 from flask import Flask, render_template, jsonify, g, request
 from utils import mysql
 from slugify import slugify
@@ -98,6 +98,7 @@ def createComment(topic_name, post_slug):
     author = request.form['author']
     replied_id = request.form['replied_id']
     post_id = request.form['post_id']
+    edit_data = request.form['edit_data']
 
     if not text or not post_id or not replied_id:
         error = [
@@ -107,6 +108,15 @@ def createComment(topic_name, post_slug):
             }
         ]
         return jsonify(results=error)
+
+    edit_data = edit_data.replace("data:image/png;base64,", "")
+    edit_data = edit_data.replace(" ", "+")
+    base64_edit_data = base64.b64decode(edit_data)
+    count = getCommentCount(post_id)
+    file_name = count+".png"
+
+    with open("./"+topic_name+"/"+post_id+"/"+file_name, "w") as text_file:
+        text_file.write(base64_edit_data)
 
     mysql.upsertComment(text, author, post_id, replied_id, 0)
     return jsonify(results=success)
