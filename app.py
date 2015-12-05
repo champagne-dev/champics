@@ -1,3 +1,4 @@
+import time
 from flask import Flask, render_template, jsonify
 from utils import mysql
 app = Flask(__name__)
@@ -34,7 +35,7 @@ def createTopic():
 		]
 		return jsonify(results=error)
 
-	mysql.upsertTopic(name, "", "")
+	mysql.upsertTopic(name, time.time())
 
 	return jsonify(results=success)
 
@@ -45,6 +46,11 @@ def createPost():
 @app.route("/<topic_name>/<post_slug>/createComment", methods=["POST"])
 def createComment():
     return "ok"
+
+@app.errorhandler(Exception)
+def all_exception_handler(error):
+	print error
+	return 'Error', 500
 
 if __name__ == "__main__":
     app.run()
