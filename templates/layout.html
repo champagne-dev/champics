@@ -9,6 +9,11 @@
     <script type="text/javascript" src="{{ url_for('static', filename='scripts/Init.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/reactive/TopicComponent.js') }}" type="text/jsx"></script>
     <script src="{{ url_for('static', filename='scripts/utils/AjaxCalls.js') }}"></script>
+    <script>
+      CHAMPICS.data = {}
+      CHAMPICS.data.topics = JSON.parse(JSON.stringify({{topics|safe}}));
+
+    </script>
   </head>
   <body>
     <div class="wrapper">

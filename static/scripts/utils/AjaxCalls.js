@@ -41,7 +41,7 @@ CHAMPICS.ajax = {
             }
 		});
 	},
-	saveTopic: function(name) {
+	saveTopic: function(name, success) {
 
 		var data = {
 			name: name
@@ -52,7 +52,7 @@ CHAMPICS.ajax = {
 			url: "/createTopic",
             data: data,
             success: function(data) {
-            	
+            	success(data);
             },
             error: function(e) {
 
