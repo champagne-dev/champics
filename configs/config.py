@@ -21,7 +21,7 @@ except ImportError as e:
 	)
 
 	dirs = dict(
-		uploaded_topics		= "uploads/topics"
+		pic_dir				= "pics/"
 	,	logs				= "docs/logs"
 	)
 

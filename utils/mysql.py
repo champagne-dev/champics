@@ -45,7 +45,10 @@ def selectPostBySlug(post_slug):
 	return record
 
 def getPostCount(topic_id):
+	print "oooooooo"
+	print topic_id
 	count = session.query(Post).filter(Post.topic_id == topic_id).count()
+	print count
 	return count
 
 def selectCommentsByPost(post_id):

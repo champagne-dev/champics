@@ -2,7 +2,7 @@ import time, base64, os, urllib
 from flask import Flask, render_template, jsonify, g, request
 from utils import mysql
 from slugify import slugify
-
+from configs import config
 app = Flask(__name__)
 
 success = [
@@ -81,11 +81,10 @@ def createPost(topic_name):
     name = request.form['name']
     email = request.form['email']
     topic_id = request.form['topic_id']
+    post_file_name = "post.png"
 
-    url_ext = url.split(".")[0]
-    post_file_name = "post."+url.ext
-
-    filename = "./"+topic_name+"/"+post_id+"/"+post_file_name
+    count = mysql.getPostCount(topic_id)
+    filename = config.dirs["pic_dir"]+topic_name+"/"+str(count)+"/"+post_file_name
     try:
         if not os.path.exists(os.path.dirname(filename)):
             os.makedirs(os.path.dirname(filename))
@@ -162,7 +161,7 @@ def createComment(topic_name, post_slug):
     print file_name
 
     try:
-        filename = "./"+topic_name+"/"+post_id+"/"+file_name
+        filename = config.dirs["pic_dir"]+topic_name+"/"+post_id+"/"+file_name
         if not os.path.exists(os.path.dirname(filename)):
             os.makedirs(os.path.dirname(filename))
         with open(filename, "w") as text_file:
