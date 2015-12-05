@@ -188,6 +188,7 @@ def createComment(topic_name, post_slug):
         print e
 
     mysql.upsertComment(text, author, post_id, replied_id, filename, 0)
+    success[0]["relative_url"] = filename
     return jsonify(results=success)
 
 @app.route('/pics/<path:path>')

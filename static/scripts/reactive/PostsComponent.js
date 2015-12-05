@@ -276,17 +276,21 @@ var PostsComponent = React.createClass({
   },
   __onSubmitEdit: function(replied_id, post_id, title, author){
     this.__disableCanvas();
+    var self = this;
     CHAMPICS.ajax.saveComment(replied_id, post_id, title, author, function(data){
       console.log(data)
+      var saved_comment = {
+        replied_id: replied_id,
+        text: title,
+        image: CHAMPICS.misc.current_canvas_repr,
+        post_id: post_id,
+        noReply: true,
+        relative_url: data["results"][0]["relative_url"]
+      }
+      console.log(saved_comment)
+      self.setState({"saved_comment":saved_comment})
     });
-    var saved_comment = {
-      replied_id: replied_id,
-      text: title,
-      image: CHAMPICS.misc.current_canvas_repr,
-      post_id: post_id,
-      noReply: true,
-    }
-    this.setState({"saved_comment":saved_comment})
+
   },
   render: function() {
     var _posts = [];

@@ -10,7 +10,7 @@ CHAMPICS.ajax = {
 
 		$.ajax({
 			type: "POST",
-			url: "/"+CHAMPICS.data.current_topic.name+"/"+CHAMPICS.data.current_post.name+"/createComment",
+			url: "/"+CHAMPICS.data.current_topic.name+"/"+CHAMPICS.data.current_post.slug+"/createComment",
             data: data,
             success: function(data) {
             	success(data);
