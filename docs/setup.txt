@@ -1,7 +1,7 @@
 ******************** INITIAL ********************
 ********** CONFIG **********
-$ cp config.template.py config.py
-// Put in your template settings.
+$ cp config.py config_local.py
+// Put in your local settings which will override the ones in config.py
 // Run the SQL commands in the DB you created.
 
 ********** PYTHON REQUIREMENTS **********
