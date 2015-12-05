@@ -1,44 +1,40 @@
-<% extends layout.html %>
-<% block content %>
-<div class="addPostBtn">+</div>
-<div id="postListing">
-	<ul>
-		<li class="postItem">
-			<div class="float">
-				<div class="upvote"></div>
-				<label>{{votes}}</label>
-				<div class="downvote"></div>
-			</div>
-			<div class="float">
-				<a href="" class="title">Text for post</a>
-				<label class="date">posted {{timeSinceDate}} ago</label>
-				<label class="">{{commentTotal}} comments</label> 
-			</div>
-		</li>
-		<li class="postItem">
-			<div class="float">
-				<div class="upvote"></div>
-				<label>{{votes}}</label>
-				<div class="downvote"></div>
-			</div>
-			<div class="float">
-				<a href="" class="title">Another post and it's text</a>
-				<label class="date">posted {{timeSinceDate}} ago</label>
-				<label class="">{{commentTotal}} comments</label> 
-			</div>
-		</li>
-		<li class="postItem">
-			<div class="float">
-				<div class="upvote"></div>
-				<label>{{votes}}</label>
-				<div class="downvote"></div>
-			</div>
-			<div class="float">
-				<a href="" class="title">A third one just for the fans</a>
-				<label class="date">posted {{timeSinceDate}} ago</label>
-				<label class="">{{commentTotal}} comments</label> 
-			</div>
-		</li>
-	</ul>
+{% extends "layout.html" %}
+{% block content %}
+<style>
+	.createPostForm{
+		width: 200px;
+		height: 300px;
+		border: 1px solid black;
+	}
+	.createPostForm > .input{
+		display: block;
+		width: 100%;
+		height: 20px;
+	}
+	.createPostForm > .submit-btn{
+		text-align: center;
+		border: 1px solid green;
+		cursor: pointer;
+	}
+</style>
+<div class="createPostForm">
+	<input class="title-field input" placeholder="title"></input>
+	<input class="email-field input" placeholder="email"></input>
+	<input class="url-field input" placeholder="url"></input>
+	<a class="submit-btn input">Submit</a>
 </div>
-<% endblock %>
+<script type="text/javascript">
+	var topic = JSON.parse(JSON.stringify({{current_topic|safe}}));
+	$('.createPostForm > .submit-btn').click(function(){
+		var email = $('.createPostForm > .email-field').val();
+		var title = $('.createPostForm > .title-field').val();
+		var _url  = $('.createPostForm > .url-field').val();
+		var topic_id = topic["id"];
+		var topic_name = topic["name"];
+		CHAMPICS.ajax.savePost(_url, title, email, topic_id, topic_name, function(data){
+			console.log(data)
+			$('.createPostForm').hide();
+		})
+	})
+</script>
+{% endblock %}

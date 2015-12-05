@@ -20,10 +20,9 @@ CHAMPICS.ajax = {
             }
 		});
 	},
-	savePost: function(name, email, topic_id, topicName, success) {
-		var topicName = window.topicName || null;
-
+	savePost: function(url, name, email, topic_id, topicName, success) {
 		var data = {
+			url: url,
 			name: name,
 			email: email,
 			topic_id: topic_id
@@ -34,7 +33,7 @@ CHAMPICS.ajax = {
 			url: "/"+topicName+"/createPost",
             data: data,
             success: function(data) {
-            	
+            	success(data);
             },
             error: function(e) {
 
