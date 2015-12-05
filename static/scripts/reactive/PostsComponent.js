@@ -207,6 +207,7 @@ var DrawableCanvasComponent = React.createClass({
     if(this.props.enabled && this.state.drawing){
       var self = this;
       var canvas = this.refs.canvas.getDOMNode();
+      console.log(canvas)
       var ctx = canvas.getContext('2d');
       var fillColor = "red";
       var width = this.state.inherited_styles.width;
