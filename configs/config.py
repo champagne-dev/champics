@@ -3,6 +3,7 @@ db = dict(
 ,   user         = 'MYSQL_USERNAME_GOES_HERE'
 ,   name         = 'MYSQL_DBNAME_GOES_HERE'
 ,   pw           = 'MYSQL_PASSWORD_GOES_HERE'
+,	port 		 = 'MYSQL_PORT_GOES_HERE'
 )
 
 
