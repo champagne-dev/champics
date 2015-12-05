@@ -49,7 +49,7 @@ def postView(topic_name, post_slug):
         "author": x.author, 
         "replied_id": x.replied_id, 
         "score": x.score, 
-        "relative_url" = x.relative_url,
+        "relative_url": x.relative_url,
         "created_timestamp": x.created_timestamp
     }, comments))
 
@@ -68,7 +68,7 @@ def createTopic():
         ]
         return jsonify(results=error)
 
-    mysql.upsertTopic(name, 0, time.time())
+    mysql.upsertTopic(name, 0)
 
     return jsonify(results=success)
 
@@ -88,7 +88,7 @@ def createPost(topic_name):
         return jsonify(results=error)
 
     slug = slugify(name)
-    mysql.upsertPost(topic_id, name, slug, email, 0, time.time())
+    mysql.upsertPost(topic_id, name, slug, email, 0)
 
     return jsonify(results=success)
 
@@ -108,7 +108,7 @@ def createComment(topic_name, post_slug):
         ]
         return jsonify(results=error)
 
-    mysql.upsertComment(text, author, post_id, replied_id, 0, time.time())
+    mysql.upsertComment(text, author, post_id, replied_id, 0)
     return jsonify(results=success)
 
 @app.errorhandler(Exception)
