@@ -3,7 +3,7 @@ from flask import Flask, render_template, jsonify, g, request, send_from_directo
 from utils import mysql
 from slugify import slugify
 from configs import config
-app = Flask(__name__, static_url_path='/')
+app = Flask(__name__, static_url_path='')
 
 success = [
     {
@@ -181,6 +181,10 @@ def createComment(topic_name, post_slug):
 def send_pics(path):
     return send_from_directory('pics', path)
 
+@app.route('/static/<path:path>')
+def send_static(path):
+    return send_from_directory('static', path)
+    
 @app.errorhandler(Exception)
 def all_exception_handler(error):
     print error
