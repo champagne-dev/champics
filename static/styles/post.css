@@ -1,0 +1,152 @@
+#header {
+	width: 800px;
+	background-color: #fff;
+	position: relative;
+	z-index: 2;
+}
+#topicComponent {
+	background-color: #fff;
+	position: relative;
+	z-index: 2;
+}
+.post {
+	border: 1px solid rgba(63, 184, 175, .2);
+	-webkit-background-clip: padding-box; /* for Safari */
+    background-clip: padding-box;
+	background-color: #fff;
+	top: 200px;
+	padding: 45px;
+	position: fixed;
+	width: 800px;
+	height: auto;
+	max-width: 100%;
+	z-index: 2;
+	text-align: center;
+	margin-bottom: 20px;
+	background-color: rgb(250,240,240);
+}
+
+.post-image {
+	opacity: 1;
+	min-width: 300px;
+	max-width: 600px;
+	border: 1px solid rgb(200,200,200);
+}
+
+.white-overlay {
+	top: 0;
+	width: 800px;
+	z-index: 1;
+	background-color: #fff;
+	position: fixed;
+	height: 300px;
+}
+#totalHeader {
+	position: fixed;
+	z-index: 2
+}
+.comments {
+	padding: 5px;
+	position: absolute;
+	top: 600px;
+	z-index: 0;
+}
+
+.headroom {
+    transition: transform 250ms linear;
+}
+.headroom--pinned {
+    transform: translateY(0%);
+}
+.headroom--unpinned {
+    transform: translateY(-100%);
+}
+
+.animated {
+  -webkit-animation-duration: 0.200s;
+     -moz-animation-duration: 0.200s;
+       -o-animation-duration: 0.200s;
+          animation-duration: 0.200s;
+  -webkit-animation-fill-mode: both;
+     -moz-animation-fill-mode: both;
+       -o-animation-fill-mode: both;
+          animation-fill-mode: both;
+}
+
+@-webkit-keyframes slideDown {
+  0% {
+    top: 0;
+  }
+
+  100% {
+    top: 200px;
+  }
+}
+
+@-moz-keyframes slideDown {
+  0% {
+    top: 0;
+  }
+
+  100% {
+    top: 200px;
+  }
+}
+
+@-o-keyframes slideDown {
+  0% {
+    top: 0;
+  }
+
+  100% {
+    top: 200px;
+  }
+}
+@-webkit-keyframes slideUp {
+  0% {
+    top: 200px;
+  }
+
+  100% {
+    top: 0;
+  }
+}
+@-moz-keyframes slideUp {
+  0% {
+    top: 200px;
+  }
+
+  100% {
+    top: 0;
+  }
+}
+@-o-keyframes slideUp {
+  0% {
+    top: 200px;
+  }
+
+  100% {
+    top: 0;
+  }
+}
+@keyframes slideUp {
+  0% {
+    top: 200px;
+  }
+
+  100% {
+    top: 0;
+  }
+}
+.animated.slideDown {
+  -webkit-animation-name: slideDown;
+  -moz-animation-name: slideDown;
+  -o-animation-name: slideDown;
+  animation-name: slideDown;
+}
+.animated.slideUp {
+  -webkit-animation-name: slideUp;
+  -moz-animation-name: slideUp;
+  -o-animation-name: slideUp;
+  animation-name: slideUp;
+}

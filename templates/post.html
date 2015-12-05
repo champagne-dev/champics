@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
+<link href="{{ url_for('static', filename='styles/post.css') }}" rel="stylesheet" type="text/css" ></link>
 <style>
 img.overlay-image {
     position: absolute;
@@ -15,7 +16,9 @@ img.overlay-image {
 	CHAMPICS.data.current_topic = JSON.parse(JSON.stringify({{current_topic|safe}}));
 </script>
 <script src="{{ url_for('static', filename='scripts/reactive/PostsComponent.js') }}" type="text/jsx"></script>
-
-
+<div class="white-overlay">
+</div>
+<script src="{{ url_for('static', filename='scripts/vendor/headroom.min.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts/header.js') }}"></script>
 
 {% endblock %}

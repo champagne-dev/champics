@@ -35,7 +35,7 @@ def before_request():
     else:
         g.form = {}
         for key in request.form:
-            if key == "url":
+            if key == "url" or key == "edit_data":
                 g.form[key] = request.form[key]
             else:   
                 g.form[key] = urllib.quote(request.form[key])

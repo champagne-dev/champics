@@ -2,25 +2,6 @@
 	display: none;
 }
 
-#postPanel {
-	width: 100%;
-	height: 540px;
-	background-color: #777;
-}
-
-#post {
-	padding: 45px;
-	margin: auto;
-	max-width: 600px;
-	z-index: 1;
-	text-align: center;
-}
-
-.postImage {
-	max-width: 600px;
-	border: 1px solid rgb(200,200,200);
-}
-
 #submitEditBtn {
 	background: #ff5566;
 	border: 1px solid #ee1111;

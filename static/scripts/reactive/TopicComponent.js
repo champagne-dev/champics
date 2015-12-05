@@ -25,6 +25,7 @@ var TopicComponent = React.createClass({
     return {};
   },
   componentDidMount: function(){
+
   },
   render: function() {
     var _topics = [];
