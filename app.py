@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 success = [
 	{
-		"error": False
+		"error": False,
 		"data": "request completed"
 	}
 ]
@@ -33,10 +33,11 @@ def createTopic():
 			}
 		]
 		return jsonify(results=error)
-	else:
-    	mysql.upsertTopic(name, post_count, created_timestamp):
-    	return jsonify(results=success)
-    
+
+	mysql.upsertTopic(name, "", "")
+
+	return jsonify(results=success)
+
 @app.route("/<topic_name>/createPost", methods=["POST"])
 def createPost():
     return "ok"

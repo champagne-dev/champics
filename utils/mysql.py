@@ -34,5 +34,5 @@ def selectCommentsByPost(post_id):
 	return records
 
 def getPostCount(topic_id):
-	count = session.query(Post).filter(Post.topic_id == topic_id).count():
+	count = session.query(Post).filter(Post.topic_id == topic_id).count()
 	return count
