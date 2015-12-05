@@ -36,6 +36,7 @@ def topicView(topic_name):
             "score": x.score, 
             "created_timestamp": x.created_timestamp
         }, posts))
+        print mapped_posts
     except Exception as e:
         mapped_posts = list()
 
