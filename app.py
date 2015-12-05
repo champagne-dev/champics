@@ -33,7 +33,7 @@ def topicView(topic_name):
             "name": x.name, 
             "slug": x.slug, 
             "relative_url": x.relative_url, 
-            "score": int(x.score), 
+            "score": str(int(x.score)), 
             "created_timestamp": x.created_timestamp
         }, posts))
     except Exception as e:
@@ -46,17 +46,19 @@ def postView(topic_name, post_slug):
     topic = mysql.selectTopicByName(topic_name)
     post = mysql.selectPostBySlug(post_slug)
     comments = mysql.selectCommentsByPost(post.id)
+
     try:
         mapped_comments = list(map(lambda x: {
             "text": x.text, 
             "author": x.author, 
             "replied_id": x.replied_id, 
-            "score": int(x.score), 
+            "score": str(int(x.score)), 
             "relative_url": x.relative_url,
             "created_timestamp": x.created_timestamp
         }, comments))
     except:
         mapped_comments = list()
+
     return render_template("post.html", topics=g.topics, current_topic={"name": topic.name, "id": str(topic.id)}, current_post={"name": post.name, "slug": post.slug, "relative_url": post.relative_url, "score": post.score, "created_timestamp": post.created_timestamp}, comments=mapped_comments)
 
 @app.route("/createTopic", methods=["POST"])
