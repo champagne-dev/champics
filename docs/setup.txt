@@ -16,6 +16,9 @@ $ python app.py --local
 $ python app.py
 
 
+
+
+
 ******************** ADDING NEW REQUIREMENTS ********************
 $ source venv/bin/activate
 $ pip install [package-name]
