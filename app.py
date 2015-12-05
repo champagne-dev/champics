@@ -18,7 +18,7 @@ success = [
 def before_request():
     if request.method == "GET":
         topics = mysql.selectTopics()
-        mapped_topics = list(map(lambda x: {"name": x.name, "id": x.id}, topics))
+        mapped_topics = list(map(lambda x: {"name": x.name, "id": str(x.id)}, topics))
         g.topics = mapped_topics
 
 @app.route("/", methods=["GET"])
@@ -30,15 +30,18 @@ def topicView(topic_name):
     topic = mysql.selectTopicByName(topic_name)
     posts = mysql.selectPostsByTopic(topic.id)
 
-    mapped_posts = list(map(lambda x: {
-        "name": x.name, 
-        "slug": x.slug, 
-        "relative_url": x.relative_url, 
-        "score": x.score, 
-        "created_timestamp": x.created_timestamp
-    }, posts))
+    try:
+        mapped_posts = list(map(lambda x: {
+            "name": x.name, 
+            "slug": x.slug, 
+            "relative_url": x.relative_url, 
+            "score": x.score, 
+            "created_timestamp": x.created_timestamp
+        }, posts))
+    except Exception as e:
+        mapped_posts = list()
 
-    return render_template("topic.html", topics=g.topics, current_topic={"name": topic.name, "id": topic.id}, posts=mapped_posts)
+    return render_template("topic.html", topics=g.topics, current_topic={"name": topic.name, "id": str(topic.id)}, posts=mapped_posts)
 
 @app.route("/c/<topic_name>/<post_slug>", methods=["GET"])
 def postView(topic_name, post_slug):
@@ -55,7 +58,7 @@ def postView(topic_name, post_slug):
         "created_timestamp": x.created_timestamp
     }, comments))
 
-    return render_template("post.html", topics=g.topics, current_topic={"name": topic.name, "id": topic.id}, current_post={"name": post.name, "slug": post.slug, "relative_url": post.relative_url, "score": post.score, "created_timestamp": created_timestamp}, comments=mapped_comments)
+    return render_template("post.html", topics=g.topics, current_topic={"name": topic.name, "id": str(topic.id)}, current_post={"name": post.name, "slug": post.slug, "relative_url": post.relative_url, "score": post.score, "created_timestamp": created_timestamp}, comments=mapped_comments)
 
 @app.route("/createTopic", methods=["POST"])
 def createTopic():
