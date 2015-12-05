@@ -1,8 +1,10 @@
-import time, base64, os, urllib
+import time, base64, os, urllib, imghdr, random
+import StringIO
 from flask import Flask, render_template, jsonify, g, request, send_from_directory
 from utils import mysql
 from slugify import slugify
 from configs import config
+from PIL import Image
 import json
 app = Flask(__name__, static_url_path='')
 
@@ -111,19 +113,30 @@ def createPost(topic_name):
                 error = [
                     {
                         "error": True,
-                        "data": "url could not be read"
+                        "data": "URL could not be read"
                     }
                 ]
                 return jsonify(results=error)
 
             text_file.write(url_contents)
-            os.chmod(filename, 0o777)
+            os.chmod(filename, 0o774)
+
+            try: 
+                im = Image.open(StringIO.StringIO(url_contents))
+            except Exception as e:
+                error = [
+                    {
+                        "error": True,
+                        "data": "You have to post an image url"
+                    }
+                ]
+                return jsonify(results=error)
     except Exception as e:
         print e
         error = [
             {
                 "error": True,
-                "data": "file could not be saved, sorry"
+                "data": "File could not be saved"
             }
         ]
 
@@ -139,8 +152,11 @@ def createPost(topic_name):
         return jsonify(results=error)
 
     slug = slugify(name)
-    mysql.upsertPost(topic_id, name, slug, email, filename, 0)
 
+    if mysql.checkPostSlug(slug):
+        slug = slug+str(count)
+
+    mysql.upsertPost(topic_id, name, slug, email, filename, 0)
     return jsonify(results=success)
 
 @app.route("/<topic_name>/<post_slug>/createComment", methods=["POST"])
@@ -183,7 +199,7 @@ def createComment(topic_name, post_slug):
             os.makedirs(os.path.dirname(filename))
         with open(filename, "w") as text_file:
             text_file.write(base64_edit_data)
-            os.chmod(filename, 0o777)
+            os.chmod(filename, 0o774)
     except Exception as e:
         print e
 
@@ -202,7 +218,8 @@ def send_static(path):
 @app.errorhandler(Exception)
 def all_exception_handler(error):
     print error
-    return 'Error', 500
+    topic = random.choice(g.topics)
+    return render_template("error.html", error_message="We messed up :(, here's a random page <a href=\"/c/"+topic["name"]+"\">"+topic["name"]+"</a>")
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,5 +1,6 @@
 from configs import config
 from sqlalchemy import create_engine
+from sqlalchemy import exists
 from sqlalchemy.orm import sessionmaker
 from models import Topic
 from models import Post
@@ -48,9 +49,14 @@ def selectPostBySlug(post_slug):
 	record = session.query(Post).filter(Post.slug == post_slug).one()
 	return record
 
+def checkPostSlug(post_slug):
+	doesExist = session.query(exists().where(Post.slug==post_slug)).scalar()
+	return doesExist
+
 def getPostCount(topic_id):
 	count = session.query(Post).filter(Post.topic_id == topic_id).count()
 	return count
+
 
 def getCommentCount(post_id):
 	count = session.query(Comment).filter(Comment.post_id == post_id).count()

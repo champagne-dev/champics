@@ -41,7 +41,14 @@ var POSTComponent = React.createClass({
       var topic_name = topic["name"];
       CHAMPICS.ajax.savePost(_url, title, email, topic_id, topic_name, function(data){
         console.log(data)
-        $('.createPostForm').hide();
+        if (data["results"][0]["error"]) {
+          $(".createPostForm > label").text(data["results"][0]["data"])
+          console.log(data["results"][0]["data"])
+        } else {
+          $(".createPostForm > label").text("")
+          $('.createPostForm').hide();
+        }
+        
       })
     });
   },
@@ -65,6 +72,7 @@ var POSTComponent = React.createClass({
             </span>
           </div>
           <div className="createPostForm">
+              <label className="error"></label>
               <input className="title-field input" placeholder="title"></input>
               <input className="email-field input" placeholder="email"></input>
               <input className="url-field input" placeholder="url"></input>
