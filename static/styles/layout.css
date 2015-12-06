@@ -145,14 +145,15 @@ ul {
 #postList ol li::before {
     content: counter(step-counter);
     margin-right: 5px;
+    margin-top: 20px;
     font-size: 20px;
-    color: rgb(200,200,200);
+    color: rgb(210,210,210);
     font-weight: bold;
-    padding: 3px 8px 3px 0px;
+    padding: 10px 8px 3px 5px;
     border-radius: 3px;
 }
 .postItem {
-	padding: 10px;
+	padding: 22px;
 	position: relative;
 }
 li.postItem > .voting-widget{
@@ -166,16 +167,49 @@ li.postItem > .voting-widget{
 .postItem > .voting-widget > .vote_element{
   display: block;
   width: 100%;
-  height: 10px;
-  font-size: 15px;
-  margin: 3px;
+  height: 20px;
+  margin: -5px 3px 8px 3px;  
 }
 .postItem > .voting-widget > .vote_count{
-	margin-left: 4px;
+	padding-bottom: 5px;
+	color: rgb(150,150,150);
+	margin: 10px 0px 0px 9px;
+	font-size: 20px;
 }
 .postItem > .voting-widget > .upvote,.postItem > .voting-widget > .downvote{
 	cursor: pointer;
+	font-size: 40px !important;
+	color: rgb(100,100,100) !important;
 }
 .postItem > .voting-widget > .vote_element.hidden{
   visibility: hidden;
+}
+.postItem > .voting-widget > .vote_element{
+  display: block;
+  width: 100%;
+  height: 20px;
+  margin: -5px 3px 8px 3px;  
+}
+
+.comment > .voting-widget {
+	top: 45px !important;
+}
+.comment > .voting-widget > .vote_count{
+	color: rgb(150,150,150);
+	font-size: 20px !important;
+	padding-left: 3px;
+}
+.comment > .voting-widget > .upvote,.comment > .voting-widget > .downvote{
+	margin: 5px;
+	cursor: pointer;
+	font-size: 30px !important;
+	color: rgb(100,100,100) !important;
+}
+.comment > .voting-widget > .vote_element.hidden{
+  visibility: hidden;
+}
+.comment > .voting-widget > .vote_element{
+  display: block;
+  width: 100%;
+  height: 20px;
 }
