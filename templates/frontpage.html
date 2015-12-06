@@ -17,10 +17,10 @@
 		cursor: pointer;
 	}
 </style>
-<div class="createTopicForm">
+<!-- <div class="createTopicForm">
 	<input class="name-field input"></input>
 	<a class="submit-btn input">Submit</a>
-</div>
+</div> -->
 <script type="text/javascript">
 	$('.createTopicForm > .submit-btn').click(function(){
 		CHAMPICS.ajax.saveTopic($('.createTopicForm > .name-field').val(), function(data){
