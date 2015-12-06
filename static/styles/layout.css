@@ -162,7 +162,7 @@ li.postItem > .voting-widget{
   display: inline;
   position: absolute;
   left: -20px;
-  top: -3px;
+  top: 0px;
 }
 .postItem > .voting-widget > .vote_element{
   display: block;
@@ -171,9 +171,8 @@ li.postItem > .voting-widget{
   margin: -5px 3px 8px 3px;  
 }
 .postItem > .voting-widget > .vote_count{
-	padding-bottom: 5px;
 	color: rgb(150,150,150);
-	margin: 10px 0px 0px 9px;
+	margin: 12px 0px 5px 9px;
 	font-size: 20px;
 }
 .postItem > .voting-widget > .upvote,.postItem > .voting-widget > .downvote{
@@ -187,6 +186,5 @@ li.postItem > .voting-widget{
 .postItem > .voting-widget > .vote_element{
   display: block;
   width: 100%;
-  height: 20px;
-  margin: -5px 3px 8px 3px;  
+  height: 15px;
 }
