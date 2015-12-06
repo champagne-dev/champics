@@ -112,19 +112,19 @@ ul {
 	font-size: 25px;
 	font-weight: bold;
 }
-.rankOptions {
+#postList .rankOptions {
 	display: inline-block;
 	float: right;
 	padding: 10px 5px 15px 5px;
 }
-.rankOptions .rankOption {
+#postList .rankOptions .rankOption {
 	color: #FF4E50 !important;
 	font-family: "Open Sans";
 	margin-left: 15px !important;
 	font-size: 22px !important;
 
 }
-.rankOptions .rankOption:hover {
+#postList .rankOptions .rankOption:hover {
 	text-decoration: underline !important;
 }
 .postListWrapper {

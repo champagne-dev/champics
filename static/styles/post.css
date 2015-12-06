@@ -52,6 +52,7 @@
 	position: absolute;
 	top: 580px;
 	z-index: 0;
+  width: 800px;
   max-width: 800px;
   width: 100%;
   box-sizing: border-box;
@@ -59,9 +60,26 @@
 /*.comments.pinned {
   top: 480px;
 }*/
+.subHeader > .rankOptions {
+  display: inline-block;
+  float: right;
+  padding: 10px 5px 15px 5px;
+}
+.subHeader > .rankOptions .rankOption {
+  color: #FF4E50 !important;
+  font-family: "Open Sans";
+  margin-left: 15px !important;
+  font-size: 22px !important;
+
+}
+.subHeader > .rankOptions .rankOption:hover {
+  text-decoration: underline !important;
+}
 .comments > .subHeader {
   width: 100%;
   height: auto;
+  max-width: 800px;
+  width: 800px;
 }
 .comments > .subHeader > .reply {
   padding: 10px 50px;
@@ -82,10 +100,11 @@
   font-family: "Noto Sans";
   font-size: 18px;
   color: #FF4E50;
-  width: 200px;
+  width: auto;
+  max-width: 200px;
   position: absolute;
-  left: 650px;
-  top: 10px;
+  right: 0px;
+  top: 12px;
 }
 .comment {
   font-family: "Open Sans";
@@ -93,6 +112,7 @@
   cursor: pointer;
   padding-top: 0px;
   padding-bottom: 5px;
+  box-sizing: border-box;
   -webkit-transition: background-color .1s ease-in-out;
   -moz-transition: background-color .1s ease-in-out;
   -o-transition: background-color .1s ease-in-out;
@@ -103,7 +123,7 @@
   padding-top: 0;
 }
 .comment:hover{
-  background-color: rgba(227,76,74,.2);
+  background-color: rgba(227,76,74,.1);
 }
 .comment > .text {
   font-size: 18px;
@@ -206,7 +226,7 @@ div.writingPortion > .input-form, div.writingPortion > .btn-form{
 }
 div.writingPortion > .title-field{
   height: 40%;
-  padding: 5px
+  padding: 5px;
   resize: none;
   font-family: "Open Sans";
   opacity: .8;

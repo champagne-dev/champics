@@ -270,7 +270,7 @@ def all_exception_handler(error):
     print error
     if request.method == "GET":
         topic = random.choice(g.topics)
-        return render_template("error.html", error_message="We messed up :(, here's a random page <a href=\"/c/"+topic["name"]+"\">"+topic["name"]+"</a>")
+        return render_template("error.html", error_message="We messed up :( here's a random page <a href=\"/c/"+topic["name"]+"\">"+topic["name"]+"</a>")
     else:
         return error
 

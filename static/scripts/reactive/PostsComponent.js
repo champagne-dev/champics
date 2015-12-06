@@ -113,6 +113,7 @@ var PostComponent = React.createClass({
     this.props.onCommentReply(inherited_styles, comment_id, this.props.post.id)
   },
   render: function(){
+
     var _commentsDOM = []
     _commentsDOM.push(
                       <span className="subHeader">
