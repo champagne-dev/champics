@@ -197,7 +197,7 @@ var DrawableCanvasComponent = React.createClass({
     onSubmit: React.PropTypes.func.isRequired
   },
   getInitialState: function(){
-    return {"stroke_color":"red", "stroke_width":7.5, "comment_id": this.props.comment_id, "post_id": this.props.post_id, enabled: this.props.enabled, inherited_styles: this.props.inherited_styles, "drawing": true};
+    return {"stroke_color":"green", "stroke_width":7.5, "comment_id": this.props.comment_id, "post_id": this.props.post_id, enabled: this.props.enabled, inherited_styles: this.props.inherited_styles, "drawing": true};
   },
   componentDidMount: function(){
     // $("#submitEditBtn").click(function(){
@@ -217,7 +217,7 @@ var DrawableCanvasComponent = React.createClass({
         this.fillStyle = fillColor;
         this.beginPath();
         this.moveTo(x, y);
-        this.arc(x, y, radius, 0, Math.PI * 2, false);
+        this.arc(x, y, radius/2, 0, Math.PI * 2, false);
         this.fill();
       };
       ctx.clearTo = function(fillColor) {
