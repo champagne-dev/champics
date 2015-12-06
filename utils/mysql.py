@@ -57,7 +57,22 @@ def getPostCount(topic_id):
 	count = session.query(Post).filter(Post.topic_id == topic_id).count()
 	return count
 
-
 def getCommentCount(post_id):
 	count = session.query(Comment).filter(Comment.post_id == post_id).count()
 	return count
+
+def incrementPostScore(post_id):
+	record = session.query(Post).filter(Post.id == post_id).update({'score': Post.score + 1})
+	return record
+
+def decrementPostScore(post_id):
+	record = session.query(Post).filter(Post.id == post_id).update({'score': Post.score + 1})
+	return record
+
+def incrementCommentScore(comment_id):
+	record = session.query(Comment).filter(Comment.id == comment_id).update({'score': Comment.score + 1})
+	return record
+
+def incrementCommentScore(comment_id):
+	record = session.query(Comment).filter(Comment.id == comment_id).update({'score': Comment.score + 1})
+	return record

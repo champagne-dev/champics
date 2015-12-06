@@ -2,6 +2,7 @@ import time, base64, os, urllib, imghdr, random
 import StringIO
 from flask import Flask, render_template, jsonify, g, request, send_from_directory
 from utils import mysql
+from utils import ranking
 from slugify import slugify
 from configs import config
 from PIL import Image
@@ -48,9 +49,14 @@ def topicView(topic_name):
             "slug": x.slug, 
             "relative_url": x.relative_url, 
             "score": str(int(x.score)),
-            "id": str(x.id)
-            # "created_timestamp": x.created_timestamp
+            "id": str(x.id),
+            "created_timestamp": str(x.created_timestamp)
         }, posts))
+        try:
+            mapped_posts = ranking.orderTopPosts(mapped_posts)
+        except Exception as e:
+            print e
+
     except Exception as e:
         mapped_posts = list()
 
@@ -61,7 +67,7 @@ def postView(topic_name, post_slug):
     topic = mysql.selectTopicByName(topic_name)
     post = mysql.selectPostBySlug(post_slug)
     comments = mysql.selectCommentsByPost(post.id)
-    print comments
+
     try:
         mapped_comments = list(map(lambda x: {
             "text": x.text, 
@@ -69,9 +75,10 @@ def postView(topic_name, post_slug):
             "replied_id": str(x.replied_id), 
             "score": str(int(x.score)), 
             "relative_url": x.relative_url,
-            "id": str(x.id)
-            # "created_timestamp": x.created_timestamp
+            "id": str(x.id),
+            "created_timestamp": str(x.created_timestamp)
         }, comments))
+
     except:
         mapped_comments = list()
 
@@ -203,9 +210,38 @@ def createComment(topic_name, post_slug):
             os.chmod(filename, 0o774)
     except Exception as e:
         print e
+        error = [
+            {
+                "error": True,
+                "data": "Could not create image file, sorry"
+            }
+        ]
+        return jsonify(results=error)
 
     mysql.upsertComment(text, author, post_id, replied_id, filename, 0)
     success[0]["relative_url"] = filename
+    return jsonify(results=success)
+
+@app.route("/<topic_name>/<post_slug>/createUpvote", methods=["PUT"])
+def createPostUpvote(topic_name, post_slug):
+    post = mysql.selectPostBySlug(post_slug)
+    incrementPostScore(post.id)
+    return jsonify(results=success)
+
+@app.route("/<topic_name>/<post_slug>/createDownvote", methods=["PUT"])
+def createPostDownvote(topic_name, post_slug):
+    post = mysql.selectPostBySlug(post_slug)
+    decrementPostScore(post.id)
+    return jsonify(results=success)
+
+@app.route("/<topic_name>/<post_slug>/<comment_id>/createUpvote", methods=["PUT"])
+def createCommentUpvote(topic_name, post_slug, comment_id):
+    incrementCommentScore(comment_id)
+    return jsonify(results=success)
+
+@app.route("/<topic_name>/<post_slug>/<comment_id>/createDownvote", methods=["PUT"])
+def createCommentDownvote(topic_name, post_slug, comment_id):
+    incrementCommentScore(comment_id)
     return jsonify(results=success)
 
 @app.route('/pics/<path:path>')
