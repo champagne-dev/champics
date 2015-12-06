@@ -69,6 +69,12 @@ ul {
 	color: #fff;
 	
 }
+.topicItem.active{
+	background-color: #FF4E50;
+}
+.topicItem.active a{
+	color: #fff;
+}
 .topicItem a {
 	padding: 5px;
 	display: block;

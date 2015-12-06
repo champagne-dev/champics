@@ -31,10 +31,10 @@ var TopicComponent = React.createClass({
     var _topics = [];
     for (var iteration in this.props.topics){
       var topic = this.props.topics[iteration];
-      if(topic["id"] == this.state.topic_id)
-        _topics.unshift(<TopicItemComponent isActive={true} topicName={topic["name"]} topicId={topic["id"]} />)
-      else
-        _topics.push(<TopicItemComponent isActive={false} topicName={topic["name"]} topicId={topic["id"]} />);
+      var is_active = false;
+      if(CHAMPICS.data.current_topic && topic["name"] == CHAMPICS.data.current_topic.name)
+        is_active = true;
+      _topics.push(<TopicItemComponent isActive={is_active} topicName={topic["name"]} topicId={topic["id"]} />);
     }
     return (
       <ul>
