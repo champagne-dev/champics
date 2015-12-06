@@ -288,7 +288,7 @@ var DrawableCanvasComponent = React.createClass({
       var editingContainer = $(".editingContainer");
 
       if (window.pageYOffset > 35) {
-
+        
         if (!comments.hasClass("pinned")) {
             comments.addClass("pinned");
         } 
