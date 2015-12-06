@@ -56,14 +56,16 @@ var CommentComponent = React.createClass({
     }
     var voting;
     var votingClass = "";
+    var votingWidgetClass = "";
     if(this.state.voting_disabled)
       votingClass=" hidden"
-    if(this.props.comment.replied_id == -1) // If it's top level
-      voting = <div className="voting-widget">
-                <a className={"upvote vote_element fa fa-caret-up"+votingClass} onClick={this.__onUpvote}></a>
-                <h5 className="vote_count vote_element">{this.state.vote_count}</h5>
-                <a className={"downvote vote_element fa fa-caret-down"+votingClass} onClick={this.__onDownvote}></a>
-               </div>
+    if(this.props.comment.replied_id != -1) // If it's top level
+      votingWidgetClass = " hidden"
+    voting = <div className={"voting-widget"+votingWidgetClass}>
+              <a className={"upvote vote_element fa fa-caret-up"+votingClass} onClick={this.__onUpvote}></a>
+              <h5 className="vote_count vote_element">{this.state.vote_count}</h5>
+              <a className={"downvote vote_element fa fa-caret-down"+votingClass} onClick={this.__onDownvote}></a>
+             </div>
     return (
       <div className="comment" onMouseOver={this.__onHover} onMouseOut={this.__onMouseOut} onClick={this.__onClick} style={style}>
         {voting}
@@ -162,6 +164,7 @@ var PostComponent = React.createClass({
         }
       }
     }
+    // console.log(this.props.post.comments);
     return (
       <div className="full-post">
         <div className="post" ref="post">
@@ -430,10 +433,11 @@ var PostsComponent = React.createClass({
     var self = this;
     CHAMPICS.ajax.saveComment(replied_id, post_id, title, author, function(data){
       var posts = JSON.parse(JSON.stringify(self.state.posts));
-      var length;
+      var highest_id = 0;
       for(var id in posts)
-        if(parseInt(posts[id]["id"])==parseInt(post_id))
-          length = posts[id]["comments"].length;
+        for(var itsy in posts[id]["comments"])
+          if(parseInt(posts[id]["comments"][itsy]["id"])>highest_id)
+            highest_id = parseInt(posts[id]["comments"][itsy]["id"]);
       var saved_comment = {
         replied_id: replied_id,
         text: title,
@@ -441,8 +445,9 @@ var PostsComponent = React.createClass({
         author: author,
         post_id: post_id,
         noReply: true,
+        score: 0,
         relative_url: data["results"][0]["relative_url"],
-        id: length+1
+        id: highest_id+1
       }
       for(var id in posts)
         if(parseInt(posts[id]["id"])==parseInt(post_id))
