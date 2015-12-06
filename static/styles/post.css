@@ -74,6 +74,9 @@
   border-radius: 3px;
   width: auto;
 }
+.comments > .subHeader > .reply:hover {
+  cursor: pointer;
+}
 .comments > .subHeader > .caption {
   font-family: "Noto Sans";
   font-size: 18px;
@@ -87,12 +90,16 @@
   font-family: "Open Sans";
   width: 92%;
   cursor: pointer;
+  padding-top: 0px;
   padding-bottom: 5px;
   -webkit-transition: background-color .1s ease-in-out;
   -moz-transition: background-color .1s ease-in-out;
   -o-transition: background-color .1s ease-in-out;
   transition: background-color .1s ease-in-out;
   margin: 0;
+}
+.comment::before {
+  padding-top: 0;
 }
 .comment:hover{
   background-color: rgba(227,76,74,.2);

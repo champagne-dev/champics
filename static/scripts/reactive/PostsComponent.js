@@ -397,12 +397,13 @@ var PostsComponent = React.createClass({
   },
   componentDidMount: function(){
     $(".comments").css("top", $(".post").position().top+$(".post").outerHeight(true))
-
     $(".post").addClass("animated").addClass("slideDown");
+
     $(window).scroll(function(){
       var comments = $(".comments");
       var post = $(".post");
       if (window.pageYOffset > 35) {
+
         if (!comments.hasClass("pinned")) {
             comments.addClass("pinned");
         } 

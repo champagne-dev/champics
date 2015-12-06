@@ -82,6 +82,8 @@ var POSTComponent = React.createClass({
       console.log(post)
       _posts.push(<PostItemComponent post={post} />);
     }
+    var topHref = "/c/"+CHAMPICS.data.current_topic.name+"?r=top"
+    var newHref = "/c/"+CHAMPICS.data.current_topic.name+"?r=new"
     return (
       <ul id="postList">
           
@@ -91,6 +93,10 @@ var POSTComponent = React.createClass({
               <i className="fa fa-plus"></i> 
               <span>&nbsp;post pic</span>
             </span>
+          </div>
+          <div className="rankOptions">
+            <a href={topHref} className="rankOption">Top</a>
+            <a href={newHref} className="rankOption">New</a>
           </div>
           <div className="createPostForm">
               <label className="error"></label>

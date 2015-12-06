@@ -89,7 +89,6 @@ ul {
 	list-style-type: none;
 	display: inline-block;
 	padding: 10px 0px 15px 5px;
-	width: 100%;
 	box-sizing: border-box;
 }
 .currentTopicName {
@@ -112,6 +111,21 @@ ul {
 	font-family: "Noto Sans";
 	font-size: 25px;
 	font-weight: bold;
+}
+.rankOptions {
+	display: inline-block;
+	float: right;
+	padding: 10px 5px 15px 5px;
+}
+.rankOptions .rankOption {
+	color: #FF4E50 !important;
+	font-family: "Open Sans";
+	margin-left: 15px !important;
+	font-size: 22px !important;
+
+}
+.rankOptions .rankOption:hover {
+	text-decoration: underline !important;
 }
 .postListWrapper {
 	border-top: 1px solid rgba(220, 220, 220, .2);
