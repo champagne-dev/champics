@@ -119,14 +119,14 @@
   -o-transition: background-color .1s ease-in-out;
   transition: background-color .1s ease-in-out;
   margin: 0;
-
-}
-.comment::before {
-  padding-top: 0;
-  margin: 0;
 }
 .comment:hover{
-  background-color: rgba(227,76,74,.1);
+  /*background-color: rgba(227,76,74,.1); just for now until I figure out the */
+  opacity: .5;
+
+}
+.comment:hover * {
+  color: rgb(227,76,74); 
 }
 .comment > .text {
   font-size: 18px;
