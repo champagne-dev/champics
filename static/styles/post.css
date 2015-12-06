@@ -112,15 +112,18 @@
   cursor: pointer;
   padding-top: 0px;
   padding-bottom: 5px;
+  height: auto;
   box-sizing: border-box;
   -webkit-transition: background-color .1s ease-in-out;
   -moz-transition: background-color .1s ease-in-out;
   -o-transition: background-color .1s ease-in-out;
   transition: background-color .1s ease-in-out;
   margin: 0;
+
 }
 .comment::before {
   padding-top: 0;
+  margin: 0;
 }
 .comment:hover{
   background-color: rgba(227,76,74,.1);
