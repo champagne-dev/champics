@@ -97,7 +97,7 @@ var PostComponent = React.createClass({
   },
   render: function(){
     var _commentsDOM = []
-    _commentsDOM.push(<a className="reply" onClick={this.__onCommentReply}><i className="fa fa-plus"></i> Reply</a>);
+    _commentsDOM.push(<a className="reply" onClick={this.__onCommentReply}><i className="fa fa-plus"></i> Reply</a><label>{this.props.post.name}</label>);
     if(this.props.post.comments){
       var _commentsOrdered = []
       var _commentsData = JSON.parse(JSON.stringify(this.props.post.comments));
