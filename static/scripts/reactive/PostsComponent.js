@@ -288,7 +288,7 @@ var DrawableCanvasComponent = React.createClass({
       var editingContainer = $(".editingContainer");
 
       if (window.pageYOffset > 35) {
-        
+
         if (!comments.hasClass("pinned")) {
             comments.addClass("pinned");
         } 
@@ -403,6 +403,9 @@ var PostsComponent = React.createClass({
     return {"canvas_inherited_styles": inherited_styles,"canvas_enabled":false, "posts":this.props.posts};
   },
   componentDidMount: function(){
+    setTimeout(function(){
+      $(".comments").css("top", $(".post").position().top+$(".post").outerHeight(true))
+    }, 700)
     $(".comments").css("top", $(".post").position().top+$(".post").outerHeight(true))
     $(".post").addClass("animated").addClass("slideDown");
 
