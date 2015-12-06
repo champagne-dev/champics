@@ -225,23 +225,23 @@ def createComment(topic_name, post_slug):
 @app.route("/<topic_name>/<post_slug>/createUpvote", methods=["PUT"])
 def createPostUpvote(topic_name, post_slug):
     post = mysql.selectPostBySlug(post_slug)
-    incrementPostScore(post.id)
+    mysql.incrementPostScore(post.id)
     return jsonify(results=success)
 
 @app.route("/<topic_name>/<post_slug>/createDownvote", methods=["PUT"])
 def createPostDownvote(topic_name, post_slug):
     post = mysql.selectPostBySlug(post_slug)
-    decrementPostScore(post.id)
+    mysql.decrementPostScore(post.id)
     return jsonify(results=success)
 
 @app.route("/<topic_name>/<post_slug>/<comment_id>/createUpvote", methods=["PUT"])
 def createCommentUpvote(topic_name, post_slug, comment_id):
-    incrementCommentScore(comment_id)
+    mysql.incrementCommentScore(comment_id)
     return jsonify(results=success)
 
 @app.route("/<topic_name>/<post_slug>/<comment_id>/createDownvote", methods=["PUT"])
 def createCommentDownvote(topic_name, post_slug, comment_id):
-    incrementCommentScore(comment_id)
+    mysql.incrementCommentScore(comment_id)
     return jsonify(results=success)
 
 @app.route('/pics/<path:path>')
