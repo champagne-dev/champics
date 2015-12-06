@@ -40,6 +40,7 @@ def frontpageView():
 
 @app.route("/c/<topic_name>", methods=["GET"])
 def topicView(topic_name):
+    p = request.args.get('p')
     topic = mysql.selectTopicByName(topic_name)
     posts = mysql.selectPostsByTopic(topic.id)
 
@@ -53,7 +54,11 @@ def topicView(topic_name):
             "created_timestamp": str(x.created_timestamp)
         }, posts))
         try:
-            mapped_posts = ranking.orderTopPosts(mapped_posts)
+            if p == "new":
+                mapped_posts = ranking.orderNewPosts(mapped_posts)
+            else:
+                mapped_posts = ranking.orderTopPosts(mapped_posts)
+                
         except Exception as e:
             print e
 

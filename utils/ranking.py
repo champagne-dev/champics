@@ -12,9 +12,17 @@ def getRank(score, created_time):
 	return new_score
 
 def orderTopComments(comments):
-	sorted_comments = sorted(comments, key=lambda x: getRank(int(x["score"]), x["created_timestamp"]), reverse=True)
+	sorted_comments = sorted(comments, key=lambda x: getRank(int(x["score"]), x["created_timestamp"]))
+	return sorted_comments
+
+def orderNewComments(comments):
+	sorted_comments = sorted(comments, key=lambda x: x["created_timestamp"], reverse=True)
 	return sorted_comments
 
 def orderTopPosts(posts):
-	sorted_posts = sorted(posts, key=lambda x: getRank(int(x["score"]), x["created_timestamp"]), reverse=True)
+	sorted_posts = sorted(posts, key=lambda x: getRank(int(x["score"]), x["created_timestamp"]))
+	return sorted_posts
+
+def orderNewPosts(posts):
+	sorted_posts = sorted(posts, key=lambda x: x["created_timestamp"], reverse=True)
 	return sorted_posts
