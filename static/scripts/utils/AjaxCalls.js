@@ -57,5 +57,57 @@ CHAMPICS.ajax = {
 
             }
 		});
+	},
+	upvoteComment: function(topicName, post_slug, comment_id, success) {
+		var data = {
+			name: name
+		};
+
+		$.ajax({
+			type: "PUT",
+			url: "/"+topicName+"/"+post_slug+"/"+comment_id+"/createUpvote",
+            success: function(data) {
+            	success(data);
+            },
+            error: function(e) {
+
+            }
+		});
+	},
+	downvoteComment: function(topicName, post_slug, comment_id, success) {
+		$.ajax({
+			type: "PUT",
+			url: "/"+topicName+"/"+post_slug+"/"+comment_id+"/createDownvote",
+            success: function(data) {
+            	success(data);
+            },
+            error: function(e) {
+
+            }
+		});
+	},
+	upvotePost: function(topicName, post_slug, name, success) {
+		$.ajax({
+			type: "PUT",
+			url: "/"+topicName+"/"+post_slug+"/createUpvote",
+            success: function(data) {
+            	success(data);
+            },
+            error: function(e) {
+
+            }
+		});
+	},
+	downvotePost: function(topicName, post_slug, name, success) {
+		$.ajax({
+			type: "PUT",
+			url: "/"+topicName+"/"+post_slug+"/createDownvote",
+            success: function(data) {
+            	success(data);
+            },
+            error: function(e) {
+
+            }
+		});
 	}
 }
