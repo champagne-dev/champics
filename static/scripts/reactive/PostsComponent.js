@@ -10,7 +10,7 @@ var CommentComponent = React.createClass({
     noReply: React.PropTypes.bool.isRequired
   },
   getInitialState: function(){
-    return {"clicked": false};
+    return {"clicked": false, "voting_disabled": false};
   },
   componentDidMount: function(){
 
@@ -40,8 +40,17 @@ var CommentComponent = React.createClass({
     var style = {
       "paddingLeft": (this.props.tabs*20)+50
     }
+    var voting;
+    var votingClass
+    if(this.props.comment.replied_id == -1) // If it's top level
+      voting = <div className="voting-widget">
+                <a className="upvote"></a>
+                <h5 className="vote_count"></a>
+                <a className="downvote"></a>
+               </div>
     return (
       <div className="comment" onMouseOver={this.__onHover} onMouseOut={this.__onMouseOut} onClick={this.__onClick} style={style}>
+        {voting}
         <h4 className="text">{this.props.comment.text}</h4>
         {author}<label className="separator">&nbsp;|&nbsp;</label>
         <a className="reply" onClick={this.__onReply}>reply</a>
