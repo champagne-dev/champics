@@ -1,50 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
 <link href="{{ url_for('static', filename='styles/post.css') }}" rel="stylesheet" type="text/css" ></link>
-<style>
-img.overlay-image {
-    position: absolute;
-    top: -70px;
-    left: 0;
-    height: 100%;
-    width: 100%;
-}
-div.edit-buttons{
-	position: absolute;
-    margin-left: -70px;
-    margin-top: 300px;
-	width: 20px;
-	height: auto;
-	padding: 3px;
-	padding-top: 7px;
-	padding-bottom: 7px;
-}
-div.edit-buttons > .edit-btn{
-	display: block;
-	margin: auto;
-	margin-top: 3px;
-	margin-bottom: 3px;
-}
-div.edit-buttons > .edit-btn.active0{
-	border: 1px solid blue;
-}
-div.edit-buttons > .edit-btn.active1{
-	border: 1px solid blue;
-}
-a.btn-form{
-	position: absolute;
-	margin-top: 250px;
-	margin-left: -200px;
-}
-a.btn-form.close{
-	margin-left: -70px;
-}
-div.writingPortion{
-	position: absolute;
-	margin-top: 300px;
-	margin-left: -300px;
-}
-</style>
 <div id="PostsComponent">
 	
 </div>

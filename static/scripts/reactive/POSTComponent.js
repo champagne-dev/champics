@@ -12,7 +12,6 @@ var PostItemComponent = React.createClass({
     return (
         <li className={_className}>
           <a href={_href}>{this.props.post.name}</a>
-          <img src={"/"+this.props.post.relative_url}></img>
         </li>
       )
   }

@@ -207,7 +207,6 @@ var DrawableCanvasComponent = React.createClass({
     if(this.props.enabled && this.state.drawing){
       var self = this;
       var canvas = this.refs.canvas.getDOMNode();
-      console.log(canvas)
       var ctx = canvas.getContext('2d');
       var fillColor = "red";
       var width = this.state.inherited_styles.width;
@@ -231,8 +230,8 @@ var DrawableCanvasComponent = React.createClass({
         if (!canvas.isDrawing) {
            return;
         }
-        var x = e.pageX - this.offsetLeft;
-        var y = e.pageY - this.offsetTop;
+        var x = e.pageX - $('.editingContainer').offset().left - this.offsetLeft;
+        var y = e.pageY - $('.editingContainer').offset().top - this.offsetTop;
         var radius = self.state.stroke_width; // or whatever
         var fillColor = self.state.stroke_color;
         ctx.fillCircle(x, y, radius, fillColor);
@@ -247,6 +246,21 @@ var DrawableCanvasComponent = React.createClass({
         canvas.isDrawing = false;
       }
     }
+    $(".editingContainer").addClass("animated").addClass("slideDown");
+    $(window).scroll(function(){
+      var post = $(".editingContainer");
+      if (window.pageYOffset > 50) {
+        if (post.hasClass("slideDown") || !post.addClass("slideUp")) {
+          post.addClass("slideUp")
+          post.removeClass("slideDown")
+        }
+      } else {
+        if (post.hasClass("slideUp") || !post.addClass("slideDown")) {
+          post.addClass("slideDown")
+          post.removeClass("slideUp")
+        }
+      }
+    });
   },
   __changeEditingTool: function(type, extra){
     console.log(type);
@@ -279,29 +293,42 @@ var DrawableCanvasComponent = React.createClass({
       style.zIndex = 1000;
       style.position = "absolute";
       var content;
-      if(this.state.drawing)
-        content = <div className="canvasContainer">
-                    <canvas className="drawableCanvasComponent" ref="canvas" style={style}></canvas>
-                    <div className="edit-buttons">
-                      <CanvasEditButton isActive={true} type={0} extra="red" onClick={this.__changeEditingTool}/>
-                      <CanvasEditButton type={0} extra="blue" onClick={this.__changeEditingTool}/>
-                      <CanvasEditButton type={0} extra="green" onClick={this.__changeEditingTool}/>
-                      <CanvasEditButton isActive={true} type={1} extra={15} onClick={this.__changeEditingTool}/>
-                      <CanvasEditButton type={1} extra={25} onClick={this.__changeEditingTool}/>
-                      <CanvasEditButton type={1} extra={35} onClick={this.__changeEditingTool}/>
-                    </div>
-                    <a className="submit-btn btn-form" onClick={this.__onSubmitDrawing}>Submit Drawing</a>
-                  </div>
+      var btns;
+      var close_btn = <a className="close btn-form fa fa-times" onClick={this.__onDisable}></a>
+      var submit_btn = <a className="submit btn-form fa fa-check" onClick={this.__onSubmitDrawing}></a>
+      var writing_class = ""
+      if(this.state.drawing){
+        btns = <div className="control-btns">
+                  {submit_btn}
+                  {close_btn}
+               </div>
+        writing_class = " hidden";
+      }
       else
-        content = <div className="writingPortion">
-                    <textarea className="title-field  input-form"></textarea>
-                    <input className="name-field input-form"></input>
-                    <a className="submit-btn btn-form" onClick={this.__onSubmitEdit}>Submit EDIT</a>
-                  </div>
+        btns = <div className="control-btns">
+                  {close_btn}
+               </div>
+      writing_form = <div className={"writingPortion"+writing_class}>
+                      <textarea className="title-field  input-form" placeholder="Comment"></textarea>
+                      <input className="name-field input-form" placeholder="Name"></input>
+                      <a className="submit-btn btn-form" onClick={this.__onSubmitEdit}>COMMENT</a>
+                     </div>
+      canvas_tools = <div className="canvasContainer">
+                      <canvas className="drawableCanvasComponent" ref="canvas"></canvas>
+                      <div className="edit-buttons">
+                        <CanvasEditButton isActive={true} type={0} extra="red" onClick={this.__changeEditingTool}/>
+                        <CanvasEditButton type={0} extra="blue" onClick={this.__changeEditingTool}/>
+                        <CanvasEditButton type={0} extra="green" onClick={this.__changeEditingTool}/>
+                        <CanvasEditButton isActive={true} type={1} extra={15} onClick={this.__changeEditingTool}/>
+                        <CanvasEditButton type={1} extra={25} onClick={this.__changeEditingTool}/>
+                        <CanvasEditButton type={1} extra={35} onClick={this.__changeEditingTool}/>
+                      </div>
+                     </div>
         return (
             <div className="editingContainer">
-              {content}
-              <a className="close btn-form" onClick={this.__onDisable}>Close</a>
+              {canvas_tools}
+              {writing_form}
+              {btns}
             </div>
           )
     }

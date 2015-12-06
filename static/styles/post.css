@@ -49,10 +49,103 @@
 .comments {
 	padding: 5px;
 	position: absolute;
-	top: 500px;
+	top: 600px;
 	z-index: 0;
 }
-
+img.overlay-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+div.edit-buttons{
+  position: relative;
+  left: -100px;
+  top: -300px;
+  width: 20px;
+  height: auto;
+  padding: 3px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+div.edit-buttons > .edit-btn{
+  display: block;
+  margin: auto;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+div.edit-buttons > .edit-btn.active0{
+  border: 1px solid blue;
+}
+div.edit-buttons > .edit-btn.active1{
+  border: 1px solid blue;
+}
+div.control-btns{
+  position: relative;
+  left: -100px;
+  top: -250px;
+  height: auto;
+  width: 20px;
+}
+div.control-btns > .btn-form{
+  display: block;
+  margin: auto;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+div.control-btns > .btn-form.close{
+  font-size: 25px;
+  color: red;
+}
+div.control-btns > .btn-form.submit{
+  font-size: 25px;
+  color: green;
+}
+div.writingPortion{
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(255,255,255,.5);
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+div.writingPortion.hidden{
+  display: none;
+}
+div.writingPortion > .input-form, div.writingPortion > .btn-form{
+  width: 100%;
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  font-size: 38px;
+  border: 1px solid grey;
+}
+div.writingPortion > .title-field{
+  height: 40%;
+  resize: none;
+}
+div.writingPortion > .name-field{
+  height: 10%;
+}
+div.writingPortion > .submit-btn{
+  height: 60px;
+  width: 100%;
+  padding-top: 10px;
+  font-family: "Open Sans";
+  display: block;
+  color: white;
+  background-color: rgba(227,74,76,.9);
+  -webkit-transition: background-color .2s ease-in-out;
+  -moz-transition: background-color .2s ease-in-out;
+  -o-transition: background-color .2s ease-in-out;
+  transition: background-color .2s ease-in-out;
+  cursor: pointer;
+}
+div.writingPortion > .submit-btn:hover{
+  background-color: rgba(227,74,76,1.0);
+}
 .headroom {
 }
 .headroom--pinned {
@@ -154,4 +247,15 @@
   -moz-animation-name: slideUp;
   -o-animation-name: slideUp;
   animation-name: slideUp;
+}
+.editingContainer{
+    top: 200px;
+    position: fixed;
+    width: 800px;
+    height: auto;
+    max-width: 100%;
+    z-index: 1000;
+    text-align: center;
+    margin-bottom: 20px;
+    background-color: transparent;
 }
