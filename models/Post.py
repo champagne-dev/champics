@@ -13,7 +13,7 @@ class Post(Base):
     email = Column(String(255))
     relative_url = Column(String(255))
     score = Column(Integer)
-    created_timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+    created_timestamp = Column(DateTime, default=datetime.datetime.now)
     
 
     def __init__(self, topic_id, name, slug, email, relative_url, score):

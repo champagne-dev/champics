@@ -13,7 +13,7 @@ class Comment(Base):
     replied_id = Column(Integer)
     relative_url = Column(String(255))
     score = Column(Integer)
-    created_timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+    created_timestamp = Column(DateTime, default=datetime.datetime.now)
 
     def __init__(self, text, author, post_id, replied_id, relative_url, score):
         self.text = text

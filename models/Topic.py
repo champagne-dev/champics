@@ -9,7 +9,7 @@ class Topic(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(255))
     post_count = Column(Integer)
-    created_timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+    created_timestamp = Column(DateTime, default=datetime.datetime.now)
 
     def __init__(self, name, post_count):
         self.name = name
