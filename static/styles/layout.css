@@ -147,4 +147,29 @@ ul {
 }
 .postItem {
 	padding: 10px;
+	position: relative;
+}
+li.postItem > .voting-widget{
+  width: 40px;
+  height: auto;
+  display: inline;
+  position: absolute;
+  left: -20px;
+  top: -3px;
+}
+.postItem > .voting-widget > .vote_element{
+  display: block;
+  width: 100%;
+  height: 10px;
+  font-size: 15px;
+  margin: 3px;
+}
+.postItem > .voting-widget > .vote_count{
+	margin-left: 4px;
+}
+.postItem > .voting-widget > .upvote,.postItem > .voting-widget > .downvote{
+	cursor: pointer;
+}
+.postItem > .voting-widget > .vote_element.hidden{
+  visibility: hidden;
 }

@@ -117,7 +117,7 @@ var PostComponent = React.createClass({
                       <a className="reply" onClick={this.__onCommentReply}>
                         <i className="fa fa-plus"></i> Reply
                       </a>
-                      <label>{this.props.post.name}</label>
+                      //<label>{this.props.post.name}</label>
                       );
     if(this.props.post.comments){
       var _commentsOrdered = []
