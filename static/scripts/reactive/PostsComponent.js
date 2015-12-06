@@ -13,7 +13,6 @@ var CommentComponent = React.createClass({
     return {"clicked": false, "voting_disabled": false, "vote_count": this.props.comment.score};
   },
   componentDidMount: function(){
-
   },
   __onHover: function(){
     this.props.onHover(this.props.comment.id);
@@ -397,6 +396,8 @@ var PostsComponent = React.createClass({
     return {"canvas_inherited_styles": inherited_styles,"canvas_enabled":false, "posts":this.props.posts};
   },
   componentDidMount: function(){
+    $(".comments").css("top", $(".post").position().top+$(".post").outerHeight(true))
+
     $(".post").addClass("animated").addClass("slideDown");
     $(window).scroll(function(){
       var comments = $(".comments");

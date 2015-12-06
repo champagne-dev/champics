@@ -40,7 +40,7 @@ def frontpageView():
 
 @app.route("/c/<topic_name>", methods=["GET"])
 def topicView(topic_name):
-    p = request.args.get('p')
+    r = request.args.get('r')
     topic = mysql.selectTopicByName(topic_name)
     posts = mysql.selectPostsByTopic(topic.id)
 
@@ -54,11 +54,11 @@ def topicView(topic_name):
             "created_timestamp": str(x.created_timestamp)
         }, posts))
         try:
-            if p == "new":
+            if r == "new":
                 mapped_posts = ranking.orderNewPosts(mapped_posts)
             else:
                 mapped_posts = ranking.orderTopPosts(mapped_posts)
-                
+
         except Exception as e:
             print e
 
@@ -69,6 +69,7 @@ def topicView(topic_name):
 
 @app.route("/c/<topic_name>/<post_slug>", methods=["GET"])
 def postView(topic_name, post_slug):
+    r = request.args.get('r')
     topic = mysql.selectTopicByName(topic_name)
     post = mysql.selectPostBySlug(post_slug)
     comments = mysql.selectCommentsByPost(post.id)
@@ -83,7 +84,14 @@ def postView(topic_name, post_slug):
             "id": str(x.id),
             "created_timestamp": str(x.created_timestamp)
         }, comments))
-
+        try:
+            if r == "new":
+                mapped_comments = ranking.orderNewComments(mapped_comments)
+            else:
+                mapped_comments = ranking.orderTopComments(mapped_comments)
+                
+        except Exception as e:
+            print e
     except:
         mapped_comments = list()
 
