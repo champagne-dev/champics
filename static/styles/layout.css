@@ -146,17 +146,14 @@ ul {
 	text-decoration: none;
 }
 #postList ol {
-
 	margin-top: 10px;
 	margin-left: -20px;
     padding-right: 0;
     list-style-type: none;
 }
-
 #postList ol li {
 	counter-increment: step-counter;
 }
-
 #postList ol li::before {
     content: counter(step-counter);
     margin-right: 5px;

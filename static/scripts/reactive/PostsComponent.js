@@ -283,14 +283,18 @@ var DrawableCanvasComponent = React.createClass({
     $(window).scroll(function(){
       var comments = $(".comments");
       var post = $(".post");
+      var editingContainer = $(".editingContainer");
+
       if (window.pageYOffset > 35) {
+
         if (!comments.hasClass("pinned")) {
             comments.addClass("pinned");
         } 
         if (post.hasClass("slideDown") || !post.addClass("slideUp")) {
           post.addClass("slideUp");
           post.removeClass("slideDown");
-          
+          editingContainer.addClass("slideUp");
+          editingContainer.removeClass("slideDown");
         }
       } else {
         if (comments.hasClass("pinned")) {
@@ -299,7 +303,8 @@ var DrawableCanvasComponent = React.createClass({
         if (post.hasClass("slideUp") || !post.addClass("slideDown")) {
           post.addClass("slideDown");
           post.removeClass("slideUp");
-          
+          editingContainer.addClass("slideDown");
+          editingContainer.removeClass("slideUp");
         }
       }
     });
@@ -402,6 +407,8 @@ var PostsComponent = React.createClass({
     $(window).scroll(function(){
       var comments = $(".comments");
       var post = $(".post");
+      var editingContainer = $(".editingContainer");
+
       if (window.pageYOffset > 35) {
 
         if (!comments.hasClass("pinned")) {
@@ -410,7 +417,8 @@ var PostsComponent = React.createClass({
         if (post.hasClass("slideDown") || !post.addClass("slideUp")) {
           post.addClass("slideUp");
           post.removeClass("slideDown");
-          
+          editingContainer.addClass("slideUp");
+          editingContainer.removeClass("slideDown");
         }
       } else {
         if (comments.hasClass("pinned")) {
@@ -419,7 +427,8 @@ var PostsComponent = React.createClass({
         if (post.hasClass("slideUp") || !post.addClass("slideDown")) {
           post.addClass("slideDown");
           post.removeClass("slideUp");
-          
+          editingContainer.addClass("slideDown");
+          editingContainer.removeClass("slideUp");
         }
       }
     });
