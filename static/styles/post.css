@@ -1,3 +1,4 @@
+
 #header {
 	width: 800px;
 	background-color: #fff;
@@ -23,6 +24,7 @@
 	text-align: center;
 	margin-bottom: 20px;
 	background-color: #FF4E50;
+  box-sizing: border-box;
 }
 
 .post-image {
@@ -54,9 +56,14 @@
 /*.comments.pinned {
   top: 480px;
 }*/
-.comments > .reply {
-  padding: 10px;
-  display: block;
+.comments > .subHeader {
+  width: 100%;
+  height: auto;
+}
+.comments > .subHeader > .reply {
+  padding: 10px 50px;
+
+  display: inline-block;
   border: 1px solid #ccc;
   background-color: rgb(63, 184, 175);
   color: #fff;
@@ -64,6 +71,15 @@
   text-align: center;
   border-radius: 3px;
   width: auto;
+}
+.comments > .subHeader > .caption {
+  font-family: "Noto Sans";
+  font-size: 18px;
+  color: #FF4E50;
+  width: 200px;
+  position: absolute;
+  left: 650px;
+  top: 10px;
 }
 .comment {
   font-family: "Open Sans";
