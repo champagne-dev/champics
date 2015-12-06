@@ -281,6 +281,7 @@ var DrawableCanvasComponent = React.createClass({
       }
     }
     $(".editingContainer").addClass("animated").addClass("slideDown");
+    $(".comments").css("top", $(".post").position().top+$(".post").outerHeight(true))
     $(window).scroll(function(){
       var comments = $(".comments");
       var post = $(".post");
