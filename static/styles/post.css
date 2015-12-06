@@ -126,7 +126,7 @@
 
 }
 .comment:hover * {
-  color: rgb(227,76,74); 
+  color: rgb(227,76,74) !important; 
 }
 .comment > .text {
   font-size: 18px;
