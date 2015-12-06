@@ -67,8 +67,7 @@ var POSTComponent = React.createClass({
           $(".createPostForm > label").text(data["results"][0]["data"])
           console.log(data["results"][0]["data"])
         } else {
-          $(".createPostForm > label").text("")
-          $('.createPostForm').hide();
+          location.reload();
         }
         
       })
