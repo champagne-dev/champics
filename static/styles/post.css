@@ -244,7 +244,10 @@ div.writingPortion > .submit-btn:hover{
   margin-top: 5px;
 }
 .comment > .voting-widget > .vote_element.hidden{
-  display: none;
+  visibility: hidden;
+}
+.comment > .voting-widget > .upvote,.comment > .voting-widget > .downvote{
+  cursor: pointer;
 }
 @-webkit-keyframes slideDown {
   0% {

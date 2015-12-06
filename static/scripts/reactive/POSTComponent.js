@@ -4,13 +4,36 @@ var PostItemComponent = React.createClass({
     post: React.PropTypes.object.isRequired,
   },
   getInitialState: function(){
-    return {};
+    return {"voting_disabled": false, "vote_count": this.props.post.score};
+  },
+  __onUpvote: function(){
+    CHAMPICS.ajax.upvotePost(this.props.post.slug, function(data){
+      console.log(data)
+    })
+    var vote_count = this.state.vote_count;
+    this.setState({"vote_count": parseInt(vote_count)+1, "voting_disabled": true})
+  },
+  __onDownvote: function(){
+    CHAMPICS.ajax.downvotePost(this.props.post.slug, function(data){
+      console.log(data)
+    })
+    var vote_count = this.state.vote_count;
+    this.setState({"vote_count": parseInt(vote_count)-1, "voting_disabled": true})
   },
   render: function(){
     var _className = "postItem";
     var _href = "/c/"+CHAMPICS.data.current_topic.name+"/"+this.props.post.slug //broken link
+    var voting;
+    var votingClass = "";
+    if(this.state.voting_disabled)
+      votingClass=" hidden"
     return (
         <li className={_className}>
+          <div className="voting-widget">
+           <a className={"upvote vote_element fa fa-caret-up"+votingClass} onClick={this.__onUpvote}></a>
+           <h5 className="vote_count vote_element">{this.state.vote_count}</h5>
+           <a className={"downvote vote_element fa fa-caret-down"+votingClass} onClick={this.__onDownvote}></a>
+          </div>
           <a href={_href}>{this.props.post.name}</a>
         </li>
       )

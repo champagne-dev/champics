@@ -86,10 +86,10 @@ CHAMPICS.ajax = {
             }
 		});
 	},
-	upvotePost: function(topicName, post_slug, success) {
+	upvotePost: function(post_slug, success) {
 		$.ajax({
 			type: "PUT",
-			url: "/"+topicName+"/"+post_slug+"/createUpvote",
+			url: "/"+CHAMPICS.data.current_topic.name+"/"+post_slug+"/createUpvote",
             success: function(data) {
             	success(data);
             },
@@ -98,10 +98,10 @@ CHAMPICS.ajax = {
             }
 		});
 	},
-	downvotePost: function(topicName, post_slug, success) {
+	downvotePost: function(post_slug, success) {
 		$.ajax({
 			type: "PUT",
-			url: "/"+topicName+"/"+post_slug+"/createDownvote",
+			url: "/"+CHAMPICS.data.current_topic.name+"/"+post_slug+"/createDownvote",
             success: function(data) {
             	success(data);
             },
