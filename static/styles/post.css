@@ -13,7 +13,6 @@
 	border: 1px solid rgba(63, 184, 175, .2);
 	-webkit-background-clip: padding-box; /* for Safari */
     background-clip: padding-box;
-	background-color: #fff;
 	top: 200px;
 	padding: 30px;
 	position: fixed;
@@ -23,7 +22,7 @@
 	z-index: 2;
 	text-align: center;
 	margin-bottom: 20px;
-	background-color: rgb(250,240,240);
+	background-color: #FF4E50;
 }
 
 .post-image {
@@ -49,8 +48,46 @@
 .comments {
 	padding: 5px;
 	position: absolute;
-	top: 600px;
+	top: 580px;
 	z-index: 0;
+}
+/*.comments.pinned {
+  top: 480px;
+}*/
+.comments > .reply {
+  padding: 10px;
+  display: block;
+  border: 1px solid #ccc;
+  background-color: rgb(63, 184, 175);
+  color: #fff;
+  font-family: "Noto Sans";
+  text-align: center;
+  border-radius: 3px;
+  width: auto;
+}
+.comment {
+  font-family: "Open Sans";
+  font-size: 
+}
+.comment > .text {
+  font-size: 18px;
+}
+
+.comment > .author {
+  font-size: 14px;
+  color: rgb(150,150,150);
+}
+.comment > .reply {
+  font-size: 14px;
+  text-decoration: underline;
+  color: #FF4E50;
+}
+.comment > .reply:hover {
+  cursor: pointer;
+  opacity: .7;
+}
+.separator {
+  color: rgb(120,120,120);; 
 }
 img.overlay-image {
   position: absolute;
@@ -74,12 +111,17 @@ div.edit-buttons > .edit-btn{
   margin: auto;
   margin-top: 3px;
   margin-bottom: 3px;
+  border: 5px solid #fff;
+}
+div.edit-buttons > .edit-btn:hover{
+  background-color: #ccc;
 }
 div.edit-buttons > .edit-btn.active0{
-  border: 1px solid blue;
+  border: 5px solid #aaa;
+  opacity: .7
 }
 div.edit-buttons > .edit-btn.active1{
-  border: 1px solid blue;
+  border: 5px solid #aaa;
 }
 div.control-btns{
   position: relative;
@@ -156,9 +198,6 @@ div.writingPortion > .submit-btn:hover{
 }
 .headroom-top-pinned {
 	top: 200px;
-}
-.pinned {
-    top: 0px;
 }
 .animated {
   -webkit-animation-duration: 0.200s;

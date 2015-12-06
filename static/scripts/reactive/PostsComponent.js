@@ -36,14 +36,14 @@ var CommentComponent = React.createClass({
   render: function(){
     var author;
     if(this.props.comment.author)
-      author = <h5 className="author">{this.props.comment.author}</h5>
+      author = <label className="author">{this.props.comment.author}</label>
     var style = {
       "paddingLeft": (this.props.tabs*20)+50
     }
     return (
       <div className="comment" onMouseOver={this.__onHover} onMouseOut={this.__onMouseOut} onClick={this.__onClick} style={style}>
         <h4 className="text">{this.props.comment.text}</h4>
-        {author}
+        {author}<label className="separator">&nbsp;|&nbsp;</label>
         <a className="reply" onClick={this.__onReply}>reply</a>
       </div>
     );
@@ -88,7 +88,7 @@ var PostComponent = React.createClass({
   },
   render: function(){
     var _commentsDOM = []
-    _commentsDOM.push(<a className="reply" onClick={this.__onCommentReply}>reply</a>);
+    _commentsDOM.push(<a className="reply" onClick={this.__onCommentReply}><i className="fa fa-plus"></i> Reply</a>);
     if(this.props.post.comments){
       var _commentsOrdered = []
       var _commentsData = JSON.parse(JSON.stringify(this.props.post.comments));
@@ -166,10 +166,10 @@ var CanvasEditButton = React.createClass({
   render: function(){
     var className = "";
     var style = {
-      backgroundColor: "black",
+      backgroundColor: "#222",
       borderRadius: "50%",
-      width: "15px",
-      height: "15px",
+      width: "30px",
+      height: "30px",
       position: "relative"
     };
     if(this.props.type == 0){
@@ -178,8 +178,7 @@ var CanvasEditButton = React.createClass({
     else{
       style["width"] = this.props.extra+"px";
       style["height"] = this.props.extra+"px";
-      if(this.props.extra != 15)
-        style["left"] = "-"+parseInt((this.props.extra-15)/4)+"px";
+      style["left"] = (30-parseInt(this.props.extra))/2+"px";
     }
     if(this.props.isActive)
       className= "active"+this.props.type
@@ -248,16 +247,25 @@ var DrawableCanvasComponent = React.createClass({
     }
     $(".editingContainer").addClass("animated").addClass("slideDown");
     $(window).scroll(function(){
-      var post = $(".editingContainer");
-      if (window.pageYOffset > 50) {
+      var comments = $(".comments");
+      var post = $(".post");
+      if (window.pageYOffset > 35) {
+        if (!comments.hasClass("pinned")) {
+            comments.addClass("pinned");
+        } 
         if (post.hasClass("slideDown") || !post.addClass("slideUp")) {
-          post.addClass("slideUp")
-          post.removeClass("slideDown")
+          post.addClass("slideUp");
+          post.removeClass("slideDown");
+          
         }
       } else {
+        if (comments.hasClass("pinned")) {
+            comments.removeClass("pinned");
+        } 
         if (post.hasClass("slideUp") || !post.addClass("slideDown")) {
-          post.addClass("slideDown")
-          post.removeClass("slideUp")
+          post.addClass("slideDown");
+          post.removeClass("slideUp");
+          
         }
       }
     });
@@ -316,12 +324,12 @@ var DrawableCanvasComponent = React.createClass({
       canvas_tools = <div className="canvasContainer">
                       <canvas className="drawableCanvasComponent" ref="canvas"></canvas>
                       <div className="edit-buttons">
-                        <CanvasEditButton isActive={true} type={0} extra="red" onClick={this.__changeEditingTool}/>
+                        <CanvasEditButton type={0} extra="red" onClick={this.__changeEditingTool}/>
                         <CanvasEditButton type={0} extra="blue" onClick={this.__changeEditingTool}/>
-                        <CanvasEditButton type={0} extra="green" onClick={this.__changeEditingTool}/>
-                        <CanvasEditButton isActive={true} type={1} extra={15} onClick={this.__changeEditingTool}/>
-                        <CanvasEditButton type={1} extra={25} onClick={this.__changeEditingTool}/>
-                        <CanvasEditButton type={1} extra={35} onClick={this.__changeEditingTool}/>
+                        <CanvasEditButton isActive={true} type={0} extra="green" onClick={this.__changeEditingTool}/>
+                        <CanvasEditButton type={1} extra={30} onClick={this.__changeEditingTool}/>
+                        <CanvasEditButton type={1} extra={20} onClick={this.__changeEditingTool}/>
+                        <CanvasEditButton isActive={true} type={1} extra={10} onClick={this.__changeEditingTool}/>
                       </div>
                      </div>
         return (
@@ -356,16 +364,25 @@ var PostsComponent = React.createClass({
   componentDidMount: function(){
     $(".post").addClass("animated").addClass("slideDown");
     $(window).scroll(function(){
+      var comments = $(".comments");
       var post = $(".post");
-      if (window.pageYOffset > 50) {
+      if (window.pageYOffset > 35) {
+        if (!comments.hasClass("pinned")) {
+            comments.addClass("pinned");
+        } 
         if (post.hasClass("slideDown") || !post.addClass("slideUp")) {
-          post.addClass("slideUp")
-          post.removeClass("slideDown")
+          post.addClass("slideUp");
+          post.removeClass("slideDown");
+          
         }
       } else {
+        if (comments.hasClass("pinned")) {
+            comments.removeClass("pinned");
+        } 
         if (post.hasClass("slideUp") || !post.addClass("slideDown")) {
-          post.addClass("slideDown")
-          post.removeClass("slideUp")
+          post.addClass("slideDown");
+          post.removeClass("slideUp");
+          
         }
       }
     });
