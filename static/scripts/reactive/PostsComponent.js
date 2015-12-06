@@ -10,7 +10,7 @@ var CommentComponent = React.createClass({
     noReply: React.PropTypes.bool.isRequired
   },
   getInitialState: function(){
-    return {"clicked": false, "voting_disabled": false};
+    return {"clicked": false, "voting_disabled": false, "vote_count": this.props.comment.score};
   },
   componentDidMount: function(){
 
@@ -33,6 +33,20 @@ var CommentComponent = React.createClass({
   __onReply: function(){
     this.props.onReply(this.props.comment.id);
   },
+  __onUpvote: function(){
+    CHAMPICS.ajax.upvoteComment(this.props.comment.id, function(data){
+      console.log(data)
+    })
+    var vote_count = this.state.vote_count;
+    this.setState({"vote_count": parseInt(vote_count)+1, "voting_disabled": true})
+  },
+  __onDownvote: function(){
+    CHAMPICS.ajax.downvoteComment(this.props.comment.id, function(data){
+      console.log(data)
+    })
+    var vote_count = this.state.vote_count;
+    this.setState({"vote_count": parseInt(vote_count)-1, "voting_disabled": true})
+  },
   render: function(){
     var author;
     if(this.props.comment.author)
@@ -41,12 +55,14 @@ var CommentComponent = React.createClass({
       "paddingLeft": (this.props.tabs*20)+50
     }
     var voting;
-    var votingClass
+    var votingClass = "";
+    if(this.state.voting_disabled)
+      votingClass=" hidden"
     if(this.props.comment.replied_id == -1) // If it's top level
       voting = <div className="voting-widget">
-                <a className="upvote"></a>
-                <h5 className="vote_count"></a>
-                <a className="downvote"></a>
+                <a className={"upvote vote_element fa fa-caret-up"+votingClass} onClick={this.__onUpvote}></a>
+                <h5 className="vote_count vote_element">{this.state.vote_count}</h5>
+                <a className={"downvote vote_element fa fa-caret-down"+votingClass} onClick={this.__onDownvote}></a>
                </div>
     return (
       <div className="comment" onMouseOver={this.__onHover} onMouseOut={this.__onMouseOut} onClick={this.__onClick} style={style}>
@@ -97,7 +113,12 @@ var PostComponent = React.createClass({
   },
   render: function(){
     var _commentsDOM = []
-    _commentsDOM.push(<a className="reply" onClick={this.__onCommentReply}><i className="fa fa-plus"></i> Reply</a><label>{this.props.post.name}</label>);
+    _commentsDOM.push(
+                      <a className="reply" onClick={this.__onCommentReply}>
+                        <i className="fa fa-plus"></i> Reply
+                      </a>
+                      <label>{this.props.post.name}</label>
+                      );
     if(this.props.post.comments){
       var _commentsOrdered = []
       var _commentsData = JSON.parse(JSON.stringify(this.props.post.comments));

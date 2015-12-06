@@ -58,14 +58,14 @@ CHAMPICS.ajax = {
             }
 		});
 	},
-	upvoteComment: function(topicName, post_slug, comment_id, success) {
+	upvoteComment: function(comment_id, success) {
 		var data = {
 			name: name
 		};
 
 		$.ajax({
 			type: "PUT",
-			url: "/"+topicName+"/"+post_slug+"/"+comment_id+"/createUpvote",
+			url: "/"+CHAMPICS.data.current_topic.name+"/"+CHAMPICS.data.current_post.slug+"/"+comment_id+"/createUpvote",
             success: function(data) {
             	success(data);
             },
@@ -74,10 +74,10 @@ CHAMPICS.ajax = {
             }
 		});
 	},
-	downvoteComment: function(topicName, post_slug, comment_id, success) {
+	downvoteComment: function(comment_id, success) {
 		$.ajax({
 			type: "PUT",
-			url: "/"+topicName+"/"+post_slug+"/"+comment_id+"/createDownvote",
+			url: "/"+CHAMPICS.data.current_topic.name+"/"+CHAMPICS.data.current_post.slug+"/"+comment_id+"/createDownvote",
             success: function(data) {
             	success(data);
             },
@@ -86,7 +86,7 @@ CHAMPICS.ajax = {
             }
 		});
 	},
-	upvotePost: function(topicName, post_slug, name, success) {
+	upvotePost: function(topicName, post_slug, success) {
 		$.ajax({
 			type: "PUT",
 			url: "/"+topicName+"/"+post_slug+"/createUpvote",
@@ -98,7 +98,7 @@ CHAMPICS.ajax = {
             }
 		});
 	},
-	downvotePost: function(topicName, post_slug, name, success) {
+	downvotePost: function(topicName, post_slug, success) {
 		$.ajax({
 			type: "PUT",
 			url: "/"+topicName+"/"+post_slug+"/createDownvote",
