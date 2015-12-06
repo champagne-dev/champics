@@ -52,6 +52,8 @@
 	position: absolute;
 	top: 580px;
 	z-index: 0;
+  max-width: 800px;
+  width: 100%;
 }
 /*.comments.pinned {
   top: 480px;
@@ -83,7 +85,17 @@
 }
 .comment {
   font-family: "Open Sans";
-  font-size: 
+  width: 92%;
+  cursor: pointer;
+  padding-bottom: 5px;
+  -webkit-transition: background-color .1s ease-in-out;
+  -moz-transition: background-color .1s ease-in-out;
+  -o-transition: background-color .1s ease-in-out;
+  transition: background-color .1s ease-in-out;
+  margin: 0;
+}
+.comment:hover{
+  background-color: rgba(227,76,74,.2);
 }
 .comment > .text {
   font-size: 18px;
@@ -232,6 +244,9 @@ div.writingPortion > .submit-btn:hover{
   position: relative;
   left: -40px;
   top: 55px;
+}
+.comment > .voting-widget.hidden{
+  visibility: hidden;
 }
 .comment > .voting-widget > .vote_element{
   display: block;
