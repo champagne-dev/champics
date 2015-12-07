@@ -37,6 +37,13 @@ def selectTopicByName(name):
 	record = session.query(Topic).filter(Topic.name == name).one()
 	return record
 
+def selectPosts(limit, order):
+	if order == True:
+		records = session.query(Post).order_by(Post.score).limit(limit)
+	else:
+		records = session.query(Post).limit(limit)
+
+	return records
 def selectPostsByTopic(topic_id):
 	records = session.query(Post).filter(Post.topic_id == topic_id)
 	return records

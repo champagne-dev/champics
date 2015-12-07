@@ -22,7 +22,9 @@ var PostItemComponent = React.createClass({
   },
   render: function(){
     var _className = "postItem";
-    var _href = "/c/"+CHAMPICS.data.current_topic.name+"/"+this.props.post.slug //broken link
+    var relativeUrl = this.props.post.relative_url;
+    var topic = relativeUrl.split("/")[1];
+    var _href = "/c/"+topic+"/"+this.props.post.slug //broken link
     var voting;
     var votingClass = "";
     if(this.state.voting_disabled)
@@ -49,32 +51,52 @@ var POSTComponent = React.createClass({
   },
   componentDidMount: function(){
     //sorry for putting this here
-    $(".addPostBtn").click(function(){
-      console.log("ok")
-      $(".createPostForm").toggle();
-    });
-
     var topic = CHAMPICS.data.current_topic;
-    $('.createPostForm > .submit-btn').click(function(){
-      var email = $('.createPostForm > .email-field').val();
-      var title = $('.createPostForm > .title-field').val();
-      var _url  = $('.createPostForm > .url-field').val();
-      var topic_id = topic["id"];
-      var topic_name = topic["name"];
-      CHAMPICS.ajax.savePost(_url, title, email, topic_id, topic_name, function(data){
-        console.log(data)
-        if (data["results"][0]["error"]) {
-          $(".createPostForm > label").text(data["results"][0]["data"])
-          console.log(data["results"][0]["data"])
-        } else {
-          location.reload();
-        }
-        
-      })
-    });
+    if (topic) {
+      $(".addPostBtn").click(function(){
+        console.log("ok")
+        $(".createPostForm").toggle();
+      });
+
+      
+      $('.createPostForm > .submit-btn').click(function(){
+        var email = $('.createPostForm > .email-field').val();
+        var title = $('.createPostForm > .title-field').val();
+        var _url  = $('.createPostForm > .url-field').val();
+        var topic_id = topic["id"];
+        var topic_name = topic["name"];
+        CHAMPICS.ajax.savePost(_url, title, email, topic_id, topic_name, function(data){
+          console.log(data)
+          if (data["results"][0]["error"]) {
+            $(".createPostForm > label").text(data["results"][0]["data"])
+            console.log(data["results"][0]["data"])
+          } else {
+            location.reload();
+          }
+          
+        })
+      });  
+    }
+    
   },
   render: function() {
-    var currentTopic = CHAMPICS.data.current_topic.name;
+    var topHref, newHref, subHeader;
+    if (CHAMPICS.data.current_topic) {
+      var currentTopic = CHAMPICS.data.current_topic.name;
+
+      topHref = "/c/"+CHAMPICS.data.current_topic.name+"?r=top";
+      newHref = "/c/"+CHAMPICS.data.current_topic.name+"?r=new";
+      subHeader = <span className="ok"><span className="currentTopicName">{currentTopic}&nbsp; </span>
+                  <span className="addPostBtn">
+                    <i className="fa fa-plus"></i> 
+                    <span>&nbsp;post pic</span>
+                  </span></span>
+    } else {
+      topHref = "/?r=top";
+      newHref = "/?r=new";
+      subHeader = <span className="currentTopicName">{CHAMPICS.data.r} Pics</span>
+    }
+    
     //this is bad but idk how to communicate between components
     var _posts = [];
     for (var iteration in this.props.posts){
@@ -82,17 +104,21 @@ var POSTComponent = React.createClass({
       console.log(post)
       _posts.push(<PostItemComponent post={post} />);
     }
-    var topHref = "/c/"+CHAMPICS.data.current_topic.name+"?r=top"
-    var newHref = "/c/"+CHAMPICS.data.current_topic.name+"?r=new"
+  
+    var style = {
+      "fontFamily": "Open Sans"
+    }
+
+    if (_posts.length < 1) {
+      _postsPayLoad = <label style={style}>There are no posts on this topic. Feel free to submit a pic.</label>;
+    } else {
+      _postsPayLoad = _posts;
+    }
     return (
       <ul id="postList">
           
           <div className="plusBtn">
-            <span className="currentTopicName">{currentTopic}&nbsp; </span>
-            <span className="addPostBtn">
-              <i className="fa fa-plus"></i> 
-              <span>&nbsp;post pic</span>
-            </span>
+            {subHeader}
           </div>
           <div className="rankOptions">
             <a href={topHref} className="rankOption">Top</a>
@@ -107,7 +133,7 @@ var POSTComponent = React.createClass({
           </div>
           <div className="postListWrapper">
             <ol>
-            {_posts}
+            {_postsPayLoad}
             </ol>
           </div>
       </ul>

@@ -120,6 +120,7 @@ var PostComponent = React.createClass({
                         <a className="reply" onClick={this.__onCommentReply}>
                           <i className="fa fa-plus"></i> Reply
                         </a>
+                        <label className="hint">*hover comment to see drawing</label>
                         <label className="caption">&rdquo;{this.props.post.name}&rdquo;</label>
                       </span>
                       );

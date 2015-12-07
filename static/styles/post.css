@@ -57,6 +57,13 @@
   width: 100%;
   box-sizing: border-box;
 }
+.hint {
+  font-family: "Open Sans";
+  font-style: italic;
+  margin-left: 5px;
+  color: rgb(200,200,200);
+  font-size: 14px;
+}
 /*.comments.pinned {
   top: 480px;
 }*/
@@ -288,7 +295,7 @@ div.writingPortion > .submit-btn:hover{
   display: block;
   position: relative;
   left: -40px;
-  top: 55px;
+  top: 65px;
 }
 .comment > .voting-widget.hidden{
   visibility: hidden;
@@ -306,8 +313,18 @@ div.writingPortion > .submit-btn:hover{
 .comment > .voting-widget > .vote_element.hidden{
   visibility: hidden;
 }
+.comment > .voting-widget > .vote_count {
+  cursor: normal;
+  color: rgb(150,150,150) !important;
+  margin: 16px 0px 5px 6px;
+  font-size: 20px;
+  opacity: 1 !important;
+}
 .comment > .voting-widget > .upvote,.comment > .voting-widget > .downvote{
   cursor: pointer;
+  font-size: 40px !important;
+  color: rgb(100,100,100) !important;
+  opacity: 1 !important;
 }
 @-webkit-keyframes slideDown {
   0% {
@@ -396,4 +413,10 @@ div.writingPortion > .submit-btn:hover{
     text-align: center;
     margin-bottom: 20px;
     background-color: transparent;
+}
+
+@media (max-width: 500px) {
+  .hint {
+    display: none;
+  }
 }
