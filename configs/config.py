@@ -1,11 +1,11 @@
 import sys
 # Override default config if config_local exists (if we are local).
 db = dict(
-    host         = 'MYSQL_HOSTNAME_GOES_HERE'
-,   user         = 'MYSQL_USERNAME_GOES_HERE'
-,   name         = 'MYSQL_DBNAME_GOES_HERE'
-,   pw           = 'MYSQL_PASSWORD_GOES_HERE'
-,	port 		 = 'MYSQL_PORT_GOES_HERE'  # Has to be a string
+    host         = 'localhost'
+,   user         = 'root'
+,   name         = 'champics'
+,   pw           = 'champagnePapi0'
+,	port 		 = '3306'  # Has to be a string
 )
 
 
