@@ -1,32 +1,18 @@
 {% extends "layout.html" %}
 {% block content %}
-<style>
-	.createTopicForm{
-		width: 200px;
-		height: 300px;
-		border: 1px solid black;
-	}
-	.createTopicForm > .input{
-		display: block;
-		width: 100%;
-		height: 20px;
-	}
-	.createTopicForm > .submit-btn{
-		text-align: center;
-		border: 1px solid green;
-		cursor: pointer;
-	}
-</style>
 <!-- <div class="createTopicForm">
 	<input class="name-field input"></input>
 	<a class="submit-btn input">Submit</a>
 </div> -->
+
+<div id="POSTComponent">
+</div>
 <script type="text/javascript">
-	$('.createTopicForm > .submit-btn').click(function(){
-		CHAMPICS.ajax.saveTopic($('.createTopicForm > .name-field').val(), function(data){
-			console.log(data)
-			$('.createTopicForm').hide();
-		})
-	})
+	// CHAMPICS.data.current_topic = JSON.parse(JSON.stringify({{current_topic|safe}}));
+	CHAMPICS.data.posts = JSON.parse(JSON.stringify({{posts|safe}}))
+	CHAMPICS.data.r = "{{r|safe}}"
+
+	console.log(CHAMPICS.data.posts)
 </script>
+<script src="{{ url_for('static', filename='scripts/reactive/POSTComponent.js') }}" type="text/jsx"></script>
 {% endblock %}

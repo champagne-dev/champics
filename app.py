@@ -36,7 +36,35 @@ def before_request():
     
 @app.route("/", methods=["GET"])
 def frontpageView():
-    return render_template("frontpage.html", topics=g.topics)
+    r = request.args.get('r')
+    posts = mysql.selectPosts(20, True)
+
+    try:
+        mapped_posts = list(map(lambda x: {
+            "name": x.name, 
+            "slug": x.slug, 
+            "relative_url": x.relative_url, 
+            "score": str(int(x.score)),
+            "id": str(x.id),
+            "created_timestamp": str(x.created_timestamp)
+        }, posts))
+        try:
+            if r == "new":
+                mapped_posts = ranking.orderNewPosts(mapped_posts)
+            else:
+                mapped_posts = ranking.orderTopPosts(mapped_posts)
+
+        except Exception as e:
+            print e
+
+    except Exception as e:
+        mapped_posts = list()
+    
+    if r == "new":
+        r = "New"
+    else:
+        r = "Top"
+    return render_template("frontpage.html", topics=g.topics, posts=mapped_posts, r=r)
 
 @app.route("/c/<topic_name>", methods=["GET"])
 def topicView(topic_name):
