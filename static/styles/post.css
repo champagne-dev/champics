@@ -14,7 +14,7 @@
 	border: 1px solid rgba(63, 184, 175, .2);
 	-webkit-background-clip: padding-box; /* for Safari */
     background-clip: padding-box;
-	top: 200px;
+	top: 220px;
 	padding: 30px;
 	position: fixed;
 	width: 800px;
@@ -55,6 +55,7 @@
   max-width: 800px;
   width: 100%;
   box-sizing: border-box;
+  margin-bottom: 100px;
 }
 .hint {
   font-family: "Open Sans";
@@ -331,7 +332,7 @@ div.writingPortion > .submit-btn:hover{
   }
 
   100% {
-    top: 200px;
+    top: 220px;
   }
 }
 
@@ -341,7 +342,7 @@ div.writingPortion > .submit-btn:hover{
   }
 
   100% {
-    top: 200px;
+    top: 220px;
   }
 }
 
@@ -351,12 +352,12 @@ div.writingPortion > .submit-btn:hover{
   }
 
   100% {
-    top: 200px;
+    top: 220px;
   }
 }
 @-webkit-keyframes slideUp {
   0% {
-    top: 200px;
+    top: 220px;
   }
 
   100% {
@@ -365,7 +366,7 @@ div.writingPortion > .submit-btn:hover{
 }
 @-moz-keyframes slideUp {
   0% {
-    top: 200px;
+    top: 220px;
   }
 
   100% {
@@ -374,7 +375,7 @@ div.writingPortion > .submit-btn:hover{
 }
 @-o-keyframes slideUp {
   0% {
-    top: 200px;
+    top: 220px;
   }
 
   100% {
@@ -383,7 +384,7 @@ div.writingPortion > .submit-btn:hover{
 }
 @keyframes slideUp {
   0% {
-    top: 200px;
+    top: 220px;
   }
 
   100% {

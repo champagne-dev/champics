@@ -425,23 +425,19 @@ var PostsComponent = React.createClass({
     return {"canvas_inherited_styles": inherited_styles,"canvas_enabled":false, "posts":this.props.posts};
   },
   componentDidMount: function(){
-    setTimeout(function(){
+    var interval = setTimeout(function(){
       $(".comments").css("top", $(".post").position().top+$(".post").outerHeight(true))
     }, 700)
     $(".comments").css("top", $(".post").position().top+$(".post").outerHeight(true))
     $(".post").addClass("animated").addClass("slideDown");
 
     $(window).scroll(function(){
+      clearInterval(interval);
       var comments = $(".comments");
       var post = $(".post");
       var editingContainer = $(".editingContainer");
 
       if (window.pageYOffset > 25) {
-        if (CHAMPICS.canvasDisabled) {
-            console.log("awadd")
-            $(".comments").css("top", $(".post").position().top+$(".post").outerHeight(true))
-            CHAMPICS.canvasDisabled = false;
-        }
         if (!comments.hasClass("pinned")) {
             comments.addClass("pinned");
         } 
@@ -453,10 +449,6 @@ var PostsComponent = React.createClass({
           
         }
       } else {
-        if (CHAMPICS.canvasDisabled) {
-          $(".comments").css("top", $(".post").position().top+$(".post").outerHeight(true))
-          CHAMPICS.canvasDisabled = false;
-        }
         if (comments.hasClass("pinned")) {
             comments.removeClass("pinned");
         } 
