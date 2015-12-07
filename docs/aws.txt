@@ -1,0 +1,9 @@
+
+ssh -i champagne.pem ec2-user@champics.com
+
+
+TO REBOOT
+Terminate instance
+Disassociate elastic ip
+Launch instance from AMI "champics-webserver"
+Reassociate elastic ip once it's booter
