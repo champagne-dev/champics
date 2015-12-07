@@ -41,6 +41,14 @@
 	font-family: "Noto Sans";
 	color: #FF4E50;
 }
+.right {
+	position: relative;
+	top: -80px;
+	float: right;
+}
+.right img {
+	width: 60px;
+}
 #topicComponent, #content {
 	max-width: 800px;
 	margin: auto;
