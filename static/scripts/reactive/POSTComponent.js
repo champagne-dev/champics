@@ -57,6 +57,12 @@ var POSTComponent = React.createClass({
   },
   componentDidMount: function(){
     //sorry for putting this here
+    console.log(navigator.userAgent.search("Firefox"))
+    if (navigator.userAgent.search("Firefox")>-1) {
+      console.log("FIREFOX");
+      $("#postList").css("padding-left", "0px");
+      $("#postList").css("moz-box-sizing", "border-box")
+    }
     var topic = CHAMPICS.data.current_topic;
     if (topic) {
       $(".addPostBtn").click(function(){

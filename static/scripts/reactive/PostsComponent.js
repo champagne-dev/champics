@@ -425,6 +425,7 @@ var PostsComponent = React.createClass({
     return {"canvas_inherited_styles": inherited_styles,"canvas_enabled":false, "posts":this.props.posts};
   },
   componentDidMount: function(){
+    
     var interval = setTimeout(function(){
       $(".comments").css("top", $(".post").position().top+$(".post").outerHeight(true))
     }, 700)
