@@ -7,14 +7,20 @@ var PostItemComponent = React.createClass({
     return {"voting_disabled": false, "vote_count": this.props.post.score};
   },
   __onUpvote: function(){
-    CHAMPICS.ajax.upvotePost(this.props.post.slug, function(data){
+    var relativeUrl = this.props.post.relative_url;
+    var topic = relativeUrl.split("/")[1];
+
+    CHAMPICS.ajax.upvotePost(topic, this.props.post.slug, function(data){
       console.log(data)
     })
     var vote_count = this.state.vote_count;
     this.setState({"vote_count": parseInt(vote_count)+1, "voting_disabled": true})
   },
   __onDownvote: function(){
-    CHAMPICS.ajax.downvotePost(this.props.post.slug, function(data){
+    var relativeUrl = this.props.post.relative_url;
+    var topic = relativeUrl.split("/")[1];
+
+    CHAMPICS.ajax.downvotePost(topic, this.props.post.slug, function(data){
       console.log(data)
     })
     var vote_count = this.state.vote_count;

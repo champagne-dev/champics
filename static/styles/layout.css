@@ -146,7 +146,7 @@ ul {
 #postList li {
 	font-family: "Open Sans";
 	list-style-type: none;
-
+	word-wrap: break-word;
 }
 #postList a {
 	font-size: 20px;
