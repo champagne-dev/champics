@@ -73,13 +73,13 @@ def incrementPostScore(post_id):
 	return record
 
 def decrementPostScore(post_id):
-	record = session.query(Post).filter(Post.id == post_id).update({'score': Post.score + 1})
+	record = session.query(Post).filter(Post.id == post_id).update({'score': Post.score - 1})
 	return record
 
 def incrementCommentScore(comment_id):
 	record = session.query(Comment).filter(Comment.id == comment_id).update({'score': Comment.score + 1})
 	return record
 
-def incrementCommentScore(comment_id):
-	record = session.query(Comment).filter(Comment.id == comment_id).update({'score': Comment.score + 1})
+def decrementCommentScore(comment_id):
+	record = session.query(Comment).filter(Comment.id == comment_id).update({'score': Comment.score - 1})
 	return record
