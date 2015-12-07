@@ -34,12 +34,17 @@ CREATE TABLE `comment` (
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=latin1;
 
-INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('1', 'Funny', CURRENT_TIMESTAMP, '0');
-INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('2', 'Cats', CURRENT_TIMESTAMP, '0');
-INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('3', 'Dogs', CURRENT_TIMESTAMP, '0');
-INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('5', 'Money', CURRENT_TIMESTAMP, '0');
-INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('6', 'Democrats', CURRENT_TIMESTAMP, '0');
-INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('7', 'Pictures', CURRENT_TIMESTAMP, '0');
-INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('8', 'Animals', CURRENT_TIMESTAMP, '0');
-INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('9', 'Games', CURRENT_TIMESTAMP, '0');
-INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('10', 'Republicans', CURRENT_TIMESTAMP, '0');
+INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('1', 'funny', CURRENT_TIMESTAMP, '0');
+INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('2', 'politics', CURRENT_TIMESTAMP, '0');
+INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('3', 'cute', CURRENT_TIMESTAMP, '0');
+INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('5', 'movies', CURRENT_TIMESTAMP, '0');
+INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('6', 'games', CURRENT_TIMESTAMP, '0');
+INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('7', 'animals', CURRENT_TIMESTAMP, '0');
+INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('8', 'gifs', CURRENT_TIMESTAMP, '0');
+INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('9', 'tech', CURRENT_TIMESTAMP, '0');
+INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('10', 'news', CURRENT_TIMESTAMP, '0');
+INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('11', 'celebrity', CURRENT_TIMESTAMP, '0');
+INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('12', 'nature', CURRENT_TIMESTAMP, '0');
+INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('13', 'art', CURRENT_TIMESTAMP, '0');
+INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('14', 'music', CURRENT_TIMESTAMP, '0');
+INSERT INTO `topic` (`id`, `name`, `created_timestamp`, `post_count`) VALUES ('15', 'random', CURRENT_TIMESTAMP, '0');
