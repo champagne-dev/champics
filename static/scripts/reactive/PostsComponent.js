@@ -299,7 +299,13 @@ var DrawableCanvasComponent = React.createClass({
       var editingContainer = $(".editingContainer");
 
       if (window.pageYOffset > 25) {
-
+        if (CHAMPICS.canvasDisabled) {
+            setTimeout(function(){
+              $(".comments").css("top", $(".post").position().top+$(".post").outerHeight(true))
+              CHAMPICS.canvasDisabled = false;
+            }, 600)
+            
+        }
         if (!comments.hasClass("pinned")) {
             comments.addClass("pinned");
         } 
@@ -308,8 +314,15 @@ var DrawableCanvasComponent = React.createClass({
           post.removeClass("slideDown");
           editingContainer.addClass("slideUp");
           editingContainer.removeClass("slideDown");
+          
         }
       } else {
+        if (CHAMPICS.canvasDisabled) {
+          setTimeout(function(){
+            $(".comments").css("top", $(".post").position().top+$(".post").outerHeight(true))
+            CHAMPICS.canvasDisabled = false;
+          }, 600)
+        }
         if (comments.hasClass("pinned")) {
             comments.removeClass("pinned");
         } 
@@ -318,6 +331,7 @@ var DrawableCanvasComponent = React.createClass({
           post.removeClass("slideUp");
           editingContainer.addClass("slideDown");
           editingContainer.removeClass("slideUp");
+          
         }
       }
     });
@@ -423,7 +437,11 @@ var PostsComponent = React.createClass({
       var editingContainer = $(".editingContainer");
 
       if (window.pageYOffset > 25) {
-
+        if (CHAMPICS.canvasDisabled) {
+            console.log("awadd")
+            $(".comments").css("top", $(".post").position().top+$(".post").outerHeight(true))
+            CHAMPICS.canvasDisabled = false;
+        }
         if (!comments.hasClass("pinned")) {
             comments.addClass("pinned");
         } 
@@ -432,8 +450,13 @@ var PostsComponent = React.createClass({
           post.removeClass("slideDown");
           editingContainer.addClass("slideUp");
           editingContainer.removeClass("slideDown");
+          
         }
       } else {
+        if (CHAMPICS.canvasDisabled) {
+          $(".comments").css("top", $(".post").position().top+$(".post").outerHeight(true))
+          CHAMPICS.canvasDisabled = false;
+        }
         if (comments.hasClass("pinned")) {
             comments.removeClass("pinned");
         } 
@@ -442,6 +465,7 @@ var PostsComponent = React.createClass({
           post.removeClass("slideUp");
           editingContainer.addClass("slideDown");
           editingContainer.removeClass("slideUp");
+          
         }
       }
     });
@@ -450,6 +474,7 @@ var PostsComponent = React.createClass({
     this.setState({"canvas_inherited_styles": inherited_styles,"canvas_enabled":true, "canvas_comment_id": comment_id, "canvas_post_id": post_id})
   },
   __disableCanvas: function(){
+    CHAMPICS.canvasDisabled = true; 
     this.setState({"canvas_enabled": false})
   },
   __onSubmitEdit: function(replied_id, post_id, title, author){
