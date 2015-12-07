@@ -6,6 +6,6 @@ champics is a social bookmarking website for posting pictures and commenting wit
 [champics](http://champics.com)
 
 #Contact
-Created by Jared ([@jawerty](http://github.com/jawerty)) and Carter ([@carterh062](http://github.com/jawerty)))
+Created by Jared ([@jawerty](http://github.com/jawerty)) and Carter ([@carterh062](http://github.com/jawerty))
 
 
