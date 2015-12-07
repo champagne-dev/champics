@@ -139,7 +139,7 @@ var POSTComponent = React.createClass({
           <div className="createPostForm">
               <label className="error"></label>
               <input className="title-field input" placeholder="title"></input>
-              <input className="email-field input" placeholder="email"></input>
+              <input className="email-field input" placeholder="email (optional)"></input>
               <input className="url-field input" placeholder="url"></input>
               <button className="submit-btn input">Submit</button>
           </div>

@@ -200,7 +200,7 @@ def createPost(topic_name):
 
         return jsonify(results=error)
     
-    if not name or not email:
+    if not name or not url:
         error = [
             {
                 "error": True,
