@@ -287,7 +287,7 @@ var DrawableCanvasComponent = React.createClass({
       var post = $(".post");
       var editingContainer = $(".editingContainer");
 
-      if (window.pageYOffset > 35) {
+      if (window.pageYOffset > 25) {
 
         if (!comments.hasClass("pinned")) {
             comments.addClass("pinned");
@@ -414,7 +414,7 @@ var PostsComponent = React.createClass({
       var post = $(".post");
       var editingContainer = $(".editingContainer");
 
-      if (window.pageYOffset > 35) {
+      if (window.pageYOffset > 25) {
 
         if (!comments.hasClass("pinned")) {
             comments.addClass("pinned");
