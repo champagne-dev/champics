@@ -164,7 +164,6 @@ var PostComponent = React.createClass({
         }
       }
     }
-    // console.log(this.props.post.comments);
     return (
       <div className="full-post">
         <div className="post" ref="post">
@@ -195,7 +194,6 @@ var CanvasEditButton = React.createClass({
     this.props.onClick(this.props.type, this.props.extra);
     var s = '.edit-btn.active'+this.props.type;
     $('.edit-btn.active'+this.props.type).removeClass('active'+this.props.type);
-    console.log(event);
     $(event.target).addClass('active'+this.props.type);  
   },
   render: function(){
@@ -245,6 +243,7 @@ var DrawableCanvasComponent = React.createClass({
       var fillColor = "red";
       var width = this.state.inherited_styles.width;
       var height = this.state.inherited_styles.height;
+      var last_point = null
       canvas.width = width;
       canvas.height = height;
       // define a custom fillCircle method
@@ -254,6 +253,15 @@ var DrawableCanvasComponent = React.createClass({
         this.moveTo(x, y);
         this.arc(x, y, radius/2, 0, Math.PI * 2, false);
         this.fill();
+        if(last_point){
+          this.beginPath();
+          this.moveTo(last_point.x, last_point.y);
+          this.lineTo(x,y);
+          this.strokeStyle = fillColor;
+          this.lineWidth = radius;
+          this.stroke();
+        }
+        last_point = {"x":x,"y":y}
       };
       ctx.clearTo = function(fillColor) {
         ctx.fillStyle = fillColor;
@@ -275,9 +283,11 @@ var DrawableCanvasComponent = React.createClass({
       };
       canvas.onmouseup = function(e) {
         canvas.isDrawing = false;
+        last_point = null;
       };
       canvas.onmouseleave = function(e) {
         canvas.isDrawing = false;
+        last_point = null;
       }
     }
     $(".editingContainer").addClass("animated").addClass("slideDown");
@@ -312,8 +322,6 @@ var DrawableCanvasComponent = React.createClass({
     });
   },
   __changeEditingTool: function(type, extra){
-    console.log(type);
-    console.log(extra);
     if(type==0)
       this.setState({"stroke_color": extra})
     else
@@ -321,7 +329,6 @@ var DrawableCanvasComponent = React.createClass({
   },
   __onSave: function(){
     var canvas = this.refs.canvas.getDOMNode();
-    console.log(canvas.toDataURL("image/png"));
   },
   __onDisable: function(){
     this.props.onDisable();
