@@ -20,6 +20,11 @@ dirs = dict(
 ,	logs				= "docs/logs"
 )
 
+server = dict(
+	debug				= False
+,	host 				= "0.0.0.0"
+,	port 				= 80
+)
 
 try:
 	from config_local import *

@@ -303,4 +303,4 @@ def all_exception_handler(error):
         return error
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=config.server["debug"], host=config.server["host"], port=config.server["port"])
