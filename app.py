@@ -152,6 +152,15 @@ def createPost(topic_name):
 
     count = mysql.getPostCount(topic_id)
     filename = config.dirs["pic_dir"]+topic_name+"/"+str(count)+"/"+post_file_name
+
+    if len(name) > 140:
+        error = [
+            {
+                "error": True,
+                "data": "Title should not be more than 140 characters"
+            }
+        ]
+        return jsonify(results=error) 
     try:
         if not os.path.exists(os.path.dirname(filename)):
             os.makedirs(os.path.dirname(filename))
@@ -195,7 +204,7 @@ def createPost(topic_name):
         error = [
             {
                 "error": True,
-                "data": "Not all data sent"
+                "data": "All fields must be set"
             }
         ]
         return jsonify(results=error)
@@ -230,7 +239,7 @@ def createComment(topic_name, post_slug):
         error = [
             {
                 "error": True,
-                "data": "Not all data sent is defined"
+                "data": "Not all data sent"
             }
         ]
         return jsonify(results=error)
