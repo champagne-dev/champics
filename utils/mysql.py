@@ -17,16 +17,15 @@ else:
 
 def checkout_listener(dbapi_con, con_record, con_proxy):
     try:
-        try:
-            dbapi_con.ping(False)
-        except TypeError:
-            dbapi_con.ping(True)
-    except dbapi_con.OperationalError as exc:
+        bapi_con.ping(True)
+    except Exception as exc:
         print "Reconnected"
         sys.stdout.flush()
         connect()
 
 def connect():
+	global Session
+	global session
 	engine = create_engine(conn_str, echo=False, pool_recycle=3600)
 	Session = scoped_session(sessionmaker(bind=engine))
 	session = Session()
