@@ -25,15 +25,17 @@ def checkout_listener(dbapi_con, con_record, con_proxy):
         print "Reconnected"
         sys.stdout.flush()
         connect()
-     
+
 def connect():
 	engine = create_engine(conn_str, echo=False, pool_recycle=3600)
 	Session = scoped_session(sessionmaker(bind=engine))
 	session = Session()
 	event.listen(engine, 'checkout', checkout_listener)
+	return [Session, session]
 
-connect()
-
+s = connect()
+Session = s[0]
+session = s[1]
 
 def upsertTopic(name, post_count):
 	topic = Topic(name, post_count)
