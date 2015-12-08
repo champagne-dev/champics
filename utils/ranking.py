@@ -2,7 +2,7 @@ import datetime, time
 from math import log
 
 def getRank(score, created_time):
-	if score < 0:
+	if score < 0 or created_time is None:
 		return score
 
 	created_timestamp = time.mktime(datetime.datetime.strptime(created_time, '%Y-%m-%d %H:%M:%S').timetuple())
