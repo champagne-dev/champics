@@ -6,13 +6,14 @@ def getRank(score, created_time):
 		return score
 	if created_time is None:
 		return score
+	else:
+		created_timestamp = time.mktime(datetime.datetime.strptime(created_time, '%Y-%m-%d %H:%M:%S').timetuple())
+		current_timestamp = int(time.time())
+		time_diff = current_timestamp - created_timestamp
+		new_score = log(score+1)/(time_diff/60000)
+		return new_score
 
-	created_timestamp = time.mktime(datetime.datetime.strptime(created_time, '%Y-%m-%d %H:%M:%S').timetuple())
-	current_timestamp = int(time.time())
-	time_diff = current_timestamp - created_timestamp
-	new_score = log(score+1)/(time_diff/60000)
-	return new_score
-
+	return score
 def orderTopComments(comments):
 	sorted_comments = sorted(comments, key=lambda x: getRank(int(x["score"]), x["created_timestamp"]), reverse=True)
 	return sorted_comments
