@@ -2,4 +2,4 @@ configs/config_local.py
 venv/
 .DS_Store
 *.pyc
-
+pics
