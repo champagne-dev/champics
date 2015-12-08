@@ -17,10 +17,10 @@ else:
 
 db = dict(
     host         = host
-,   user         = url.username
-,   name         = url.path[1:]
-,   pw           = url.password
-,	port 		 = url.port  # Has to be a string
+,   user         = user
+,   name         = name
+,   pw           = pw
+,	port 		 = port  # Has to be a string
 )
 
 
