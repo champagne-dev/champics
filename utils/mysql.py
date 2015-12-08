@@ -10,7 +10,7 @@ Topic = Topic.Topic
 Post = Post.Post
 Comment = Comment.Comment
 if 'DATABASE_URL' in os.environ:
-	conn_str = config.db["url"]
+	conn_str = config.db["url"].split("?")[0]
 else:
 	conn_str = 'mysql://'+config.db["user"]+':'+config.db["pw"]+'@'+config.db["host"]+':'+config.db["port"]+'/'+config.db["name"]
 
