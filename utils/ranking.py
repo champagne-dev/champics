@@ -1,7 +1,9 @@
-import datetime, time
+import datetime, time, sys
 from math import log
 
 def getRank(score, created_time):
+	print created_timestamp
+	sys.stdout.flush()
 	if score < 0 or created_time == None:
 		return score
 
