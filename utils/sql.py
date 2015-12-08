@@ -1,4 +1,4 @@
-import os
+import os, sys
 from configs import config
 from sqlalchemy import create_engine, event, exists
 from sqlalchemy.orm import sessionmaker, scoped_session
@@ -19,7 +19,7 @@ try:
 	engine = create_engine(conn_str, echo=False)
 except Exception as e:
 	print e
-	
+	sys.stdout.flush()
 Session = scoped_session(sessionmaker(bind=engine))
 session = Session()
 
