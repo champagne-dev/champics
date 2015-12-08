@@ -3,8 +3,6 @@ import sys, os, urlparse
 
 if 'DATABASE_URL' in os.environ:
     url  = urlparse.urlparse(os.environ['DATABASE_URL'])
-    raise Exception(url)
-    sys.stdout.flush()
     host = url.hostname
     user = url.username
     name = url.path[1:]
@@ -23,6 +21,7 @@ db = dict(
 ,   name         = name
 ,   pw           = pw
 ,	port 		 = port  # Has to be a string
+,	url          = os.environ['DATABASE_URL']
 )
 
 
