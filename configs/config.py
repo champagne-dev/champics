@@ -1,11 +1,26 @@
 import sys
 # Override default config if config_local exists (if we are local).
+
+if 'DATABASE_URL' in os.environ:
+    url  = urlparse.urlparse(os.environ['DATABASE_URL'])
+    host = url.hostname
+    user = url.username
+    name = url.path[1:]
+    pw   = url.password
+    port = url.port
+else:
+	host = "localhost"
+	user = "root"
+	name = "champics"
+	pw   = "champagnePapi0"
+	port = "3306"
+
 db = dict(
-    host         = 'localhost'
-,   user         = 'root'
-,   name         = 'champics'
-,   pw           = 'champagnePapi0'
-,	port 		 = '3306'  # Has to be a string
+    host         = host
+,   user         = url.username
+,   name         = url.path[1:]
+,   pw           = url.password
+,	port 		 = url.port  # Has to be a string
 )
 
 
