@@ -19,17 +19,6 @@ engine = create_engine(conn_str, echo=False, pool_recycle=3600)
 Session = scoped_session(sessionmaker(bind=engine))
 session = Session()
 
-def checkout_listener(dbapi_con, con_record, con_proxy):
-    try:
-    	dbapi_con.ping(True)
-    except dbapi_con.OperationalError as exc:
-        if exc.args[0] in (2006, 2013, 2014, 2045, 2055):
-            raise DisconnectionError()
-        else:
-            raise
-
-event.listen(engine, 'checkout', checkout_listener)
-
 def upsertTopic(name, post_count):
 	topic = Topic(name, post_count)
 	session.add(topic)
