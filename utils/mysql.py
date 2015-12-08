@@ -15,12 +15,6 @@ if 'DATABASE_URL' in os.environ:
 else:
 	conn_str = 'mysql://'+config.db["user"]+':'+config.db["pw"]+'@'+config.db["host"]+':'+config.db["port"]+'/'+config.db["name"]
 
-def connect():
-	engine = create_engine(conn_str, echo=False, pool_recycle=3600)
-	Session = scoped_session(sessionmaker(bind=engine))
-	session = Session()
-
-connect()
 def checkout_listener(dbapi_con, con_record, con_proxy):
     try:
         try:
@@ -31,9 +25,15 @@ def checkout_listener(dbapi_con, con_record, con_proxy):
         print "Reconnected"
         sys.stdout.flush()
         connect()
+     
+def connect():
+	engine = create_engine(conn_str, echo=False, pool_recycle=3600)
+	Session = scoped_session(sessionmaker(bind=engine))
+	session = Session()
+	event.listen(engine, 'checkout', checkout_listener)
 
+connect()
 
-event.listen(engine, 'checkout', checkout_listener)
 
 def upsertTopic(name, post_count):
 	topic = Topic(name, post_count)
