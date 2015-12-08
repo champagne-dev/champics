@@ -64,7 +64,8 @@ def frontpageView():
         r = "New"
     else:
         r = "Top"
-    return render_template("frontpage.html", topics=g.topics, posts=mapped_posts, r=r)
+
+    return render_template("frontpage.html", topics=json.dumps(g.topics), posts=json.dumps(mapped_posts), r=r)
 
 @app.route("/c/<topic_name>", methods=["GET"])
 def topicView(topic_name):
@@ -93,7 +94,7 @@ def topicView(topic_name):
     except Exception as e:
         mapped_posts = list()
 
-    return render_template("topic.html", topics=g.topics, current_topic={"name": topic.name, "id": str(topic.id)}, posts=mapped_posts)
+    return render_template("topic.html", topics=json.dumps(g.topics), current_topic=json.dumps({"name": topic.name, "id": str(topic.id)}), posts=json.dumps(mapped_posts))
 
 @app.route("/c/<topic_name>/<post_slug>", methods=["GET"])
 def postView(topic_name, post_slug):
@@ -123,7 +124,7 @@ def postView(topic_name, post_slug):
     except:
         mapped_comments = list()
 
-    return render_template("post.html", topics=g.topics, current_topic={"name": topic.name, "id": str(topic.id)}, current_post=json.dumps({"id": post.id, "name": post.name, "slug": post.slug, "relative_url": post.relative_url, "score": post.score, "created_timestamp": post.created_timestamp, "comments":mapped_comments}, default=defaultDatetimeJSONDump))
+    return render_template("post.html", topics=json.dumps(g.topics), current_topic=json.dumps({"name": topic.name, "id": str(topic.id)}), current_post=json.dumps({"id": post.id, "name": post.name, "slug": post.slug, "relative_url": post.relative_url, "score": post.score, "created_timestamp": post.created_timestamp, "comments":mapped_comments}, default=defaultDatetimeJSONDump))
 
 @app.route("/createTopic", methods=["POST"])
 def createTopic():

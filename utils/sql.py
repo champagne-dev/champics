@@ -40,8 +40,6 @@ def upsertComment(name, text, post_id, replied_id, relative_url, score):
 
 def selectTopics():
 	records = session.query(Topic).all()
-	print records
-	sys.stdout.flush()
 	return records
 
 def selectTopicByName(name):
