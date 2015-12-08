@@ -1,4 +1,4 @@
-import sys
+import sys, os
 # Override default config if config_local exists (if we are local).
 
 if 'DATABASE_URL' in os.environ:
