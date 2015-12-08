@@ -1,7 +1,7 @@
 import time, base64, os, urllib, imghdr, random
 import StringIO
 from flask import Flask, render_template, jsonify, g, request, send_from_directory
-from utils import mysql
+from utils import sql
 from utils import ranking
 from slugify import slugify
 from configs import config
@@ -30,14 +30,14 @@ def defaultDatetimeJSONDump(obj):
 @app.before_request
 def before_request():
     if request.method == "GET":
-        topics = mysql.selectTopics()
+        topics = sql.selectTopics()
         mapped_topics = list(map(lambda x: {"name": x.name, "id": str(x.id)}, topics))
         g.topics = mapped_topics
     
 @app.route("/", methods=["GET"])
 def frontpageView():
     r = request.args.get('r')
-    posts = mysql.selectPosts(20, True)
+    posts = sql.selectPosts(20, True)
 
     try:
         mapped_posts = list(map(lambda x: {
@@ -69,8 +69,8 @@ def frontpageView():
 @app.route("/c/<topic_name>", methods=["GET"])
 def topicView(topic_name):
     r = request.args.get('r')
-    topic = mysql.selectTopicByName(topic_name)
-    posts = mysql.selectPostsByTopic(topic.id)
+    topic = sql.selectTopicByName(topic_name)
+    posts = sql.selectPostsByTopic(topic.id)
 
     try:
         mapped_posts = list(map(lambda x: {
@@ -98,9 +98,9 @@ def topicView(topic_name):
 @app.route("/c/<topic_name>/<post_slug>", methods=["GET"])
 def postView(topic_name, post_slug):
     r = request.args.get('r')
-    topic = mysql.selectTopicByName(topic_name)
-    post = mysql.selectPostBySlug(post_slug)
-    comments = mysql.selectCommentsByPost(post.id)
+    topic = sql.selectTopicByName(topic_name)
+    post = sql.selectPostBySlug(post_slug)
+    comments = sql.selectCommentsByPost(post.id)
 
     try:
         mapped_comments = list(map(lambda x: {
@@ -138,7 +138,7 @@ def createTopic():
         ]
         return jsonify(results=error)
 
-    mysql.upsertTopic(name, 0)
+    sql.upsertTopic(name, 0)
 
     return jsonify(results=success)
 
@@ -150,7 +150,7 @@ def createPost(topic_name):
     topic_id = request.form['topic_id']
     post_file_name = "post.png"
 
-    count = mysql.getPostCount(topic_id)
+    count = sql.getPostCount(topic_id)
     filename = config.dirs["pic_dir"]+topic_name+"/"+str(count)+"/"+post_file_name
 
     if len(name) > 140:
@@ -211,10 +211,10 @@ def createPost(topic_name):
 
     slug = slugify(name)
 
-    if mysql.checkPostSlug(slug):
+    if sql.checkPostSlug(slug):
         slug = slug+str(count)
 
-    mysql.upsertPost(topic_id, name, slug, email, filename, 0)
+    sql.upsertPost(topic_id, name, slug, email, filename, 0)
     return jsonify(results=success)
 
 @app.route("/<topic_name>/<post_slug>/createComment", methods=["POST"])
@@ -247,7 +247,7 @@ def createComment(topic_name, post_slug):
     edit_data = edit_data.replace("data:image/png;base64,", "")
     edit_data = edit_data.replace(" ", "+")
     base64_edit_data = base64.b64decode(edit_data)
-    count = mysql.getCommentCount(post_id)
+    count = sql.getCommentCount(post_id)
     file_name = str(count)+".png"
     print file_name
 
@@ -268,30 +268,30 @@ def createComment(topic_name, post_slug):
         ]
         return jsonify(results=error)
 
-    mysql.upsertComment(text, author, post_id, replied_id, filename, 0)
+    sql.upsertComment(text, author, post_id, replied_id, filename, 0)
     success[0]["relative_url"] = filename
     return jsonify(results=success)
 
 @app.route("/<topic_name>/<post_slug>/createUpvote", methods=["PUT"])
 def createPostUpvote(topic_name, post_slug):
-    post = mysql.selectPostBySlug(post_slug)
-    mysql.incrementPostScore(post.id)
+    post = sql.selectPostBySlug(post_slug)
+    sql.incrementPostScore(post.id)
     return jsonify(results=success)
 
 @app.route("/<topic_name>/<post_slug>/createDownvote", methods=["PUT"])
 def createPostDownvote(topic_name, post_slug):
-    post = mysql.selectPostBySlug(post_slug)
-    mysql.decrementPostScore(post.id)
+    post = sql.selectPostBySlug(post_slug)
+    sql.decrementPostScore(post.id)
     return jsonify(results=success)
 
 @app.route("/<topic_name>/<post_slug>/<comment_id>/createUpvote", methods=["PUT"])
 def createCommentUpvote(topic_name, post_slug, comment_id):
-    mysql.incrementCommentScore(comment_id)
+    sql.incrementCommentScore(comment_id)
     return jsonify(results=success)
 
 @app.route("/<topic_name>/<post_slug>/<comment_id>/createDownvote", methods=["PUT"])
 def createCommentDownvote(topic_name, post_slug, comment_id):
-    mysql.incrementCommentScore(comment_id)
+    sql.incrementCommentScore(comment_id)
     return jsonify(results=success)
 
 @app.route('/pics/<path:path>')
@@ -304,7 +304,7 @@ def send_static(path):
 
 @app.teardown_appcontext
 def shutdown_session(exception=None):
-    mysql.Session.remove()
+    sql.Session.remove()
 
 @app.errorhandler(Exception)
 def all_exception_handler(error):
