@@ -17,12 +17,11 @@ else:
 
 try:
 	engine = create_engine(conn_str, echo=False)
+	Session = scoped_session(sessionmaker(bind=engine))
+	session = Session()
 except Exception as e:
 	print e
 	sys.stdout.flush()
-
-Session = scoped_session(sessionmaker(bind=engine))
-session = Session()
 
 def upsertTopic(name, post_count):
 	topic = Topic(name, post_count)
@@ -41,6 +40,8 @@ def upsertComment(name, text, post_id, replied_id, relative_url, score):
 
 def selectTopics():
 	records = session.query(Topic).all()
+	print records
+	sys.stdout.flush()
 	return records
 
 def selectTopicByName(name):
