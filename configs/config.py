@@ -3,7 +3,6 @@ import sys, os, urlparse
 
 if 'DATABASE_URL' in os.environ:
     DURL = os.environ['DATABASE_URL']
-    url  = urlparse.urlparse(DURL)
     host = url.hostname
     user = url.username
     name = url.path[1:]

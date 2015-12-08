@@ -11,11 +11,15 @@ Topic = Topic.Topic
 Post = Post.Post
 Comment = Comment.Comment
 if 'DATABASE_URL' in os.environ:
-	conn_str = config.db["DURL"]
+	conn_str = config.db["url"]
 else:
 	conn_str = 'mysql://'+config.db["user"]+':'+config.db["pw"]+'@'+config.db["host"]+':'+config.db["port"]+'/'+config.db["name"]
 
-engine = create_engine(conn_str, echo=False)
+try:
+	engine = create_engine(conn_str, echo=False)
+except Exception as e:
+	print e
+	
 Session = scoped_session(sessionmaker(bind=engine))
 session = Session()
 
