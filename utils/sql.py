@@ -20,6 +20,7 @@ try:
 except Exception as e:
 	print e
 	sys.stdout.flush()
+
 Session = scoped_session(sessionmaker(bind=engine))
 session = Session()
 
