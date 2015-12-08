@@ -1,0 +1,101 @@
+[36m2015-12-08T01:15:03.286925+00:00 app[web.1]:[0m   File "/app/.heroku/python/lib/python2.7/site-packages/gunicorn/workers/base.py", line 130, in load_wsgi
+[36m2015-12-08T01:15:03.286921+00:00 app[web.1]:[0m   File "/app/.heroku/python/lib/python2.7/site-packages/gunicorn/arbiter.py", line 515, in spawn_worker
+[36m2015-12-08T01:15:03.286924+00:00 app[web.1]:[0m     self.load_wsgi()
+[36m2015-12-08T01:15:03.286926+00:00 app[web.1]:[0m     self.wsgi = self.app.wsgi()
+[36m2015-12-08T01:15:03.286926+00:00 app[web.1]:[0m   File "/app/.heroku/python/lib/python2.7/site-packages/gunicorn/app/base.py", line 67, in wsgi
+[36m2015-12-08T01:15:03.286928+00:00 app[web.1]:[0m   File "/app/.heroku/python/lib/python2.7/site-packages/gunicorn/app/wsgiapp.py", line 65, in load
+[36m2015-12-08T01:15:03.286928+00:00 app[web.1]:[0m     return self.load_wsgiapp()
+[36m2015-12-08T01:15:03.286929+00:00 app[web.1]:[0m   File "/app/.heroku/python/lib/python2.7/site-packages/gunicorn/app/wsgiapp.py", line 52, in load_wsgiapp
+[36m2015-12-08T01:15:03.286927+00:00 app[web.1]:[0m     self.callable = self.load()
+[36m2015-12-08T01:15:03.286930+00:00 app[web.1]:[0m     return util.import_app(self.app_uri)
+[36m2015-12-08T01:15:03.286930+00:00 app[web.1]:[0m   File "/app/.heroku/python/lib/python2.7/site-packages/gunicorn/util.py", line 354, in import_app
+[36m2015-12-08T01:15:03.286931+00:00 app[web.1]:[0m     __import__(module)
+[36m2015-12-08T01:15:03.286932+00:00 app[web.1]:[0m   File "/app/app.py", line 4, in <module>
+[36m2015-12-08T01:15:03.286932+00:00 app[web.1]:[0m     from utils import mysql
+[36m2015-12-08T01:15:03.286933+00:00 app[web.1]:[0m   File "/app/utils/mysql.py", line 1, in <module>
+[36m2015-12-08T01:15:03.286934+00:00 app[web.1]:[0m     from configs import config
+[36m2015-12-08T01:15:03.286934+00:00 app[web.1]:[0m   File "/app/configs/config.py", line 6, in <module>
+[36m2015-12-08T01:15:03.286935+00:00 app[web.1]:[0m     raise Exception(url)
+[36m2015-12-08T01:15:03.286936+00:00 app[web.1]:[0m Exception: ParseResult(scheme='mysql', netloc='bc9bb7f2d4b52e:238f6a4e@us-cdbr-iron-east-03.cleardb.net', path='/heroku_0954edd6b7d2e76', params='', query='reconnect=true', fragment='')
+[36m2015-12-08T01:15:03.286936+00:00 app[web.1]:[0m Traceback (most recent call last):
+[36m2015-12-08T01:15:03.286937+00:00 app[web.1]:[0m   File "/app/.heroku/python/lib/python2.7/site-packages/gunicorn/arbiter.py", line 515, in spawn_worker
+[36m2015-12-08T01:15:03.286938+00:00 app[web.1]:[0m     worker.init_process()
+[36m2015-12-08T01:15:03.286938+00:00 app[web.1]:[0m   File "/app/.heroku/python/lib/python2.7/site-packages/gunicorn/workers/base.py", line 122, in init_process
+[36m2015-12-08T01:15:03.286939+00:00 app[web.1]:[0m     self.load_wsgi()
+[36m2015-12-08T01:15:03.286940+00:00 app[web.1]:[0m   File "/app/.heroku/python/lib/python2.7/site-packages/gunicorn/workers/base.py", line 130, in load_wsgi
+[36m2015-12-08T01:15:03.286940+00:00 app[web.1]:[0m     self.wsgi = self.app.wsgi()
+[36m2015-12-08T01:15:03.286941+00:00 app[web.1]:[0m   File "/app/.heroku/python/lib/python2.7/site-packages/gunicorn/app/base.py", line 67, in wsgi
+[36m2015-12-08T01:15:03.286942+00:00 app[web.1]:[0m     self.callable = self.load()
+[36m2015-12-08T01:15:03.286942+00:00 app[web.1]:[0m   File "/app/.heroku/python/lib/python2.7/site-packages/gunicorn/app/wsgiapp.py", line 65, in load
+[36m2015-12-08T01:15:03.286943+00:00 app[web.1]:[0m     return self.load_wsgiapp()
+[36m2015-12-08T01:15:03.286944+00:00 app[web.1]:[0m   File "/app/.heroku/python/lib/python2.7/site-packages/gunicorn/app/wsgiapp.py", line 52, in load_wsgiapp
+[36m2015-12-08T01:15:03.286951+00:00 app[web.1]:[0m     return util.import_app(self.app_uri)
+[36m2015-12-08T01:15:03.286951+00:00 app[web.1]:[0m   File "/app/.heroku/python/lib/python2.7/site-packages/gunicorn/util.py", line 354, in import_app
+[36m2015-12-08T01:15:03.286952+00:00 app[web.1]:[0m     __import__(module)
+[36m2015-12-08T01:15:03.286953+00:00 app[web.1]:[0m   File "/app/app.py", line 4, in <module>
+[36m2015-12-08T01:15:03.286953+00:00 app[web.1]:[0m     from utils import mysql
+[36m2015-12-08T01:15:03.286954+00:00 app[web.1]:[0m   File "/app/utils/mysql.py", line 1, in <module>
+[36m2015-12-08T01:15:03.286954+00:00 app[web.1]:[0m     from configs import config
+[36m2015-12-08T01:15:03.286955+00:00 app[web.1]:[0m   File "/app/configs/config.py", line 6, in <module>
+[36m2015-12-08T01:15:03.286955+00:00 app[web.1]:[0m     raise Exception(url)
+[36m2015-12-08T01:15:03.286957+00:00 app[web.1]:[0m Exception: ParseResult(scheme='mysql', netloc='bc9bb7f2d4b52e:238f6a4e@us-cdbr-iron-east-03.cleardb.net', path='/heroku_0954edd6b7d2e76', params='', query='reconnect=true', fragment='')
+[36m2015-12-08T01:15:03.287105+00:00 app[web.1]:[0m [2015-12-08 01:15:03 +0000] [9] [INFO] Worker exiting (pid: 9)
+[36m2015-12-08T01:15:03.316247+00:00 app[web.1]:[0m [2015-12-08 01:15:03 +0000] [3] [INFO] Shutting down: Master
+[36m2015-12-08T01:15:03.316366+00:00 app[web.1]:[0m [2015-12-08 01:15:03 +0000] [3] [INFO] Reason: Worker failed to boot.
+[36m2015-12-08T01:15:04.265161+00:00 heroku[web.1]:[0m Process exited with status 3
+[36m2015-12-08T01:15:04.284272+00:00 heroku[web.1]:[0m State changed from starting to crashed
+[33m2015-12-08T01:15:08.385751+00:00 heroku[router]:[0m at=error code=H10 desc="App crashed" method=GET path="/" host=mighty-gorge-6412.herokuapp.com request_id=6ed7b0d4-6d8b-4046-809c-4f3f765f6194 fwd="74.71.40.4" dyno= connect= service= status=503 bytes=
+[33m2015-12-08T01:15:09.742981+00:00 heroku[router]:[0m at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=mighty-gorge-6412.herokuapp.com request_id=010d1e57-80b7-49e4-bd5b-20fa1f315389 fwd="74.71.40.4" dyno= connect= service= status=503 bytes=
+[33m2015-12-08T01:15:10.317858+00:00 heroku[router]:[0m at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=mighty-gorge-6412.herokuapp.com request_id=a0a6f2c3-af44-49c9-baa4-d9c53e64bef8 fwd="74.71.40.4" dyno= connect= service= status=503 bytes=
+[32m2015-12-08T01:24:52.606938+00:00 heroku[slug-compiler]:[0m Slug compilation started
+[32m2015-12-08T01:24:52.606947+00:00 heroku[slug-compiler]:[0m Slug compilation finished
+[35m2015-12-08T01:24:52.472442+00:00 heroku[api]:[0m Deploy de44510 by jawerty210@gmail.com
+[35m2015-12-08T01:24:52.472576+00:00 heroku[api]:[0m Release v12 created by jawerty210@gmail.com
+[36m2015-12-08T01:24:52.893867+00:00 heroku[web.1]:[0m State changed from crashed to starting
+[36m2015-12-08T01:24:56.790825+00:00 app[web.1]:[0m [2015-12-08 01:24:56 +0000] [3] [INFO] Starting gunicorn 19.4.1
+[36m2015-12-08T01:24:56.791243+00:00 app[web.1]:[0m [2015-12-08 01:24:56 +0000] [3] [INFO] Listening at: http://0.0.0.0:31668 (3)
+[36m2015-12-08T01:24:56.796881+00:00 app[web.1]:[0m [2015-12-08 01:24:56 +0000] [3] [INFO] Using worker: sync
+[36m2015-12-08T01:24:56.796884+00:00 app[web.1]:[0m [2015-12-08 01:24:56 +0000] [9] [INFO] Booting worker with pid: 9
+[36m2015-12-08T01:24:56.875939+00:00 app[web.1]:[0m [2015-12-08 01:24:56 +0000] [10] [INFO] Booting worker with pid: 10
+[36m2015-12-08T01:24:57.226680+00:00 heroku[web.1]:[0m State changed from starting to up
+[36m2015-12-08T01:25:18.255528+00:00 app[web.1]:[0m 'reconnect' is an invalid keyword argument for this function
+[33m2015-12-08T01:25:18.277176+00:00 heroku[router]:[0m at=info method=GET path="/" host=mighty-gorge-6412.herokuapp.com request_id=349abe7d-d406-4183-b943-c1234b7c4fe8 fwd="74.71.40.4" dyno=web.1 connect=1ms service=42ms status=500 bytes=456
+[36m2015-12-08T01:25:19.026389+00:00 app[web.1]:[0m 'reconnect' is an invalid keyword argument for this function
+[33m2015-12-08T01:25:19.033308+00:00 heroku[router]:[0m at=info method=GET path="/favicon.ico" host=mighty-gorge-6412.herokuapp.com request_id=4edba228-d478-4245-afee-7418a89b8d59 fwd="74.71.40.4" dyno=web.1 connect=2ms service=15ms status=500 bytes=456
+[36m2015-12-08T01:25:19.601687+00:00 app[web.1]:[0m 'reconnect' is an invalid keyword argument for this function
+[33m2015-12-08T01:25:19.602442+00:00 heroku[router]:[0m at=info method=GET path="/favicon.ico" host=mighty-gorge-6412.herokuapp.com request_id=dc70d0c7-3061-4e8d-8703-36bd3092c960 fwd="74.71.40.4" dyno=web.1 connect=1ms service=3ms status=500 bytes=456
+[32m2015-12-08T01:30:45.545982+00:00 heroku[slug-compiler]:[0m Slug compilation finished
+[32m2015-12-08T01:30:45.545974+00:00 heroku[slug-compiler]:[0m Slug compilation started
+[35m2015-12-08T01:30:45.362430+00:00 heroku[api]:[0m Deploy 0510e77 by jawerty210@gmail.com
+[35m2015-12-08T01:30:45.362430+00:00 heroku[api]:[0m Release v13 created by jawerty210@gmail.com
+[36m2015-12-08T01:30:45.458534+00:00 heroku[web.1]:[0m State changed from up to starting
+[36m2015-12-08T01:30:48.261915+00:00 heroku[web.1]:[0m Starting process with command `gunicorn app:app --log-file=-`
+[36m2015-12-08T01:30:48.297896+00:00 heroku[web.1]:[0m Stopping all processes with SIGTERM
+[36m2015-12-08T01:30:49.301593+00:00 app[web.1]:[0m [2015-12-08 01:30:49 +0000] [3] [INFO] Shutting down: Master
+[36m2015-12-08T01:30:49.248763+00:00 app[web.1]:[0m [2015-12-08 01:30:49 +0000] [3] [INFO] Handling signal: term
+[36m2015-12-08T01:30:49.253855+00:00 app[web.1]:[0m [2015-12-08 01:30:49 +0000] [9] [INFO] Worker exiting (pid: 9)
+[36m2015-12-08T01:30:49.248181+00:00 app[web.1]:[0m [2015-12-08 01:30:49 +0000] [10] [INFO] Worker exiting (pid: 10)
+[36m2015-12-08T01:30:50.177160+00:00 heroku[web.1]:[0m Process exited with status 0
+[36m2015-12-08T01:30:50.483213+00:00 app[web.1]:[0m [2015-12-08 01:30:50 +0000] [3] [INFO] Listening at: http://0.0.0.0:29813 (3)
+[36m2015-12-08T01:30:50.483337+00:00 app[web.1]:[0m [2015-12-08 01:30:50 +0000] [3] [INFO] Using worker: sync
+[36m2015-12-08T01:30:50.488675+00:00 app[web.1]:[0m [2015-12-08 01:30:50 +0000] [9] [INFO] Booting worker with pid: 9
+[36m2015-12-08T01:30:50.586334+00:00 app[web.1]:[0m [2015-12-08 01:30:50 +0000] [10] [INFO] Booting worker with pid: 10
+[36m2015-12-08T01:30:50.482625+00:00 app[web.1]:[0m [2015-12-08 01:30:50 +0000] [3] [INFO] Starting gunicorn 19.4.1
+[36m2015-12-08T01:30:51.964530+00:00 heroku[web.1]:[0m State changed from starting to up
+[33m2015-12-08T01:30:55.217530+00:00 heroku[router]:[0m at=info method=GET path="/" host=mighty-gorge-6412.herokuapp.com request_id=276d38ae-5c44-47c7-bd98-af60a9c0e1e8 fwd="74.71.40.4" dyno=web.1 connect=0ms service=119ms status=500 bytes=456
+[33m2015-12-08T01:30:55.871479+00:00 heroku[router]:[0m at=info method=GET path="/favicon.ico" host=mighty-gorge-6412.herokuapp.com request_id=2ff046e4-9227-4840-a7f7-afe437235526 fwd="74.71.40.4" dyno=web.1 connect=3ms service=16ms status=500 bytes=456
+[36m2015-12-08T01:30:55.820787+00:00 app[web.1]:[0m (_mysql_exceptions.ProgrammingError) (1146, "Table 'heroku_0954edd6b7d2e76.topic' doesn't exist") [SQL: u'SELECT topic.id AS topic_id, topic.name AS topic_name, topic.post_count AS topic_post_count, topic.created_timestamp AS topic_created_timestamp \nFROM topic']
+[33m2015-12-08T01:30:56.558714+00:00 heroku[router]:[0m at=info method=GET path="/favicon.ico" host=mighty-gorge-6412.herokuapp.com request_id=de088dbb-1d2e-4a29-a5dc-07e24ef65a5c fwd="74.71.40.4" dyno=web.1 connect=4ms service=102ms status=500 bytes=456
+[36m2015-12-08T01:30:56.508945+00:00 app[web.1]:[0m (_mysql_exceptions.ProgrammingError) (1146, "Table 'heroku_0954edd6b7d2e76.topic' doesn't exist") [SQL: u'SELECT topic.id AS topic_id, topic.name AS topic_name, topic.post_count AS topic_post_count, topic.created_timestamp AS topic_created_timestamp \nFROM topic']
+[36m2015-12-08T01:34:36.530602+00:00 app[web.1]:[0m (_mysql_exceptions.OperationalError) (2006, 'MySQL server has gone away') [SQL: u'SELECT topic.id AS topic_id, topic.name AS topic_name, topic.post_count AS topic_post_count, topic.created_timestamp AS topic_created_timestamp \nFROM topic']
+[33m2015-12-08T01:34:36.564532+00:00 heroku[router]:[0m at=info method=GET path="/" host=mighty-gorge-6412.herokuapp.com request_id=ad89185c-1b38-46d5-bd97-1b1cad5359e7 fwd="74.71.40.4" dyno=web.1 connect=2ms service=3ms status=500 bytes=456
+[36m2015-12-08T01:34:37.197723+00:00 app[web.1]:[0m (sqlalchemy.exc.InvalidRequestError) Can't reconnect until invalid transaction is rolled back [SQL: u'SELECT topic.id AS topic_id, topic.name AS topic_name, topic.post_count AS topic_post_count, topic.created_timestamp AS topic_created_timestamp \nFROM topic'] [parameters: [immutabledict({})]]
+[33m2015-12-08T01:34:37.236535+00:00 heroku[router]:[0m at=info method=GET path="/favicon.ico" host=mighty-gorge-6412.herokuapp.com request_id=5b784b8f-759d-46f7-be59-38bd0cb0330f fwd="74.71.40.4" dyno=web.1 connect=1ms service=9ms status=500 bytes=456
+[33m2015-12-08T01:34:37.772044+00:00 heroku[router]:[0m at=info method=GET path="/favicon.ico" host=mighty-gorge-6412.herokuapp.com request_id=c2fe45d7-dccc-4848-bba8-0841a8168ecf fwd="74.71.40.4" dyno=web.1 connect=1ms service=4ms status=500 bytes=456
+[36m2015-12-08T01:34:37.737980+00:00 app[web.1]:[0m (_mysql_exceptions.OperationalError) (2006, 'MySQL server has gone away') [SQL: u'SELECT topic.id AS topic_id, topic.name AS topic_name, topic.post_count AS topic_post_count, topic.created_timestamp AS topic_created_timestamp \nFROM topic']
+[33m2015-12-08T01:35:50.221739+00:00 heroku[router]:[0m at=info method=GET path="/" host=mighty-gorge-6412.herokuapp.com request_id=bf84206a-6d06-4ce2-8561-d323d4a44ad6 fwd="74.71.40.4" dyno=web.1 connect=1ms service=3ms status=500 bytes=456
+[36m2015-12-08T01:35:50.205184+00:00 app[web.1]:[0m (sqlalchemy.exc.InvalidRequestError) Can't reconnect until invalid transaction is rolled back [SQL: u'SELECT topic.id AS topic_id, topic.name AS topic_name, topic.post_count AS topic_post_count, topic.created_timestamp AS topic_created_timestamp \nFROM topic'] [parameters: [immutabledict({})]]
+[33m2015-12-08T01:35:50.872061+00:00 heroku[router]:[0m at=info method=GET path="/favicon.ico" host=mighty-gorge-6412.herokuapp.com request_id=5530089e-5425-4dac-bc73-f3231143f07a fwd="74.71.40.4" dyno=web.1 connect=1ms service=4ms status=500 bytes=456
+[36m2015-12-08T01:35:50.855103+00:00 app[web.1]:[0m (sqlalchemy.exc.InvalidRequestError) Can't reconnect until invalid transaction is rolled back [SQL: u'SELECT topic.id AS topic_id, topic.name AS topic_name, topic.post_count AS topic_post_count, topic.created_timestamp AS topic_created_timestamp \nFROM topic'] [parameters: [immutabledict({})]]
+[33m2015-12-08T01:35:51.537509+00:00 heroku[router]:[0m at=info method=GET path="/favicon.ico" host=mighty-gorge-6412.herokuapp.com request_id=e5e0628b-4bfa-4926-8c5a-29533b94d1f8 fwd="74.71.40.4" dyno=web.1 connect=1ms service=7ms status=500 bytes=456
+[36m2015-12-08T01:35:51.520581+00:00 app[web.1]:[0m (sqlalchemy.exc.InvalidRequestError) Can't reconnect until invalid transaction is rolled back [SQL: u'SELECT topic.id AS topic_id, topic.name AS topic_name, topic.post_count AS topic_post_count, topic.created_timestamp AS topic_created_timestamp \nFROM topic'] [parameters: [immutabledict({})]]
