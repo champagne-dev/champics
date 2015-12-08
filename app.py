@@ -302,6 +302,10 @@ def send_pics(path):
 def send_static(path):
     return send_from_directory('static', path)
 
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    mysql.Session.remove()
+
 @app.errorhandler(Exception)
 def all_exception_handler(error):
     print error

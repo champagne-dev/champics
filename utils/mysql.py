@@ -2,7 +2,7 @@ import os
 from configs import config
 from sqlalchemy import create_engine
 from sqlalchemy import exists
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 from models import Topic
 from models import Post
 from models import Comment
@@ -14,8 +14,8 @@ if 'DATABASE_URL' in os.environ:
 else:
 	conn_str = 'mysql://'+config.db["user"]+':'+config.db["pw"]+'@'+config.db["host"]+':'+config.db["port"]+'/'+config.db["name"]
 
-engine = create_engine(conn_str, echo=False)
-Session = sessionmaker(bind=engine)
+engine = create_engine(conn_str, echo=False, pool_recycle=3600)
+Session = scoped_session(sessionmaker(bind=engine))
 session = Session()
 
 def upsertTopic(name, post_count):
