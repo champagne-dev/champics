@@ -1,11 +1,12 @@
 import os
 from configs import config
-from sqlalchemy import create_engine
-from sqlalchemy import exists
+from sqlalchemy import create_engine, event, exists
 from sqlalchemy.orm import sessionmaker, scoped_session
 from models import Topic
 from models import Post
 from models import Comment
+from sqlalchemy.exc import DisconnectionError
+
 Topic = Topic.Topic
 Post = Post.Post
 Comment = Comment.Comment
@@ -17,6 +18,20 @@ else:
 engine = create_engine(conn_str, echo=False, pool_recycle=3600)
 Session = scoped_session(sessionmaker(bind=engine))
 session = Session()
+
+def checkout_listener(dbapi_con, con_record, con_proxy):
+    try:
+        try:
+            dbapi_con.ping(False)
+        except TypeError:
+            dbapi_con.ping()
+    except dbapi_con.OperationalError as exc:
+        if exc.args[0] in (2006, 2013, 2014, 2045, 2055):
+            raise DisconnectionError()
+        else:
+            raise
+
+event.listen(engine, 'checkout', checkout_listener)
 
 def upsertTopic(name, post_count):
 	topic = Topic(name, post_count)
