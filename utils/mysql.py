@@ -1,4 +1,4 @@
-import os
+import os, sys
 from configs import config
 from sqlalchemy import create_engine, event, exists
 from sqlalchemy.orm import sessionmaker, scoped_session
@@ -15,10 +15,12 @@ if 'DATABASE_URL' in os.environ:
 else:
 	conn_str = 'mysql://'+config.db["user"]+':'+config.db["pw"]+'@'+config.db["host"]+':'+config.db["port"]+'/'+config.db["name"]
 
-engine = create_engine(conn_str, echo=False, pool_recycle=3600)
-Session = scoped_session(sessionmaker(bind=engine))
-session = Session()
+def connect():
+	engine = create_engine(conn_str, echo=False, pool_recycle=3600)
+	Session = scoped_session(sessionmaker(bind=engine))
+	session = Session()
 
+connect()
 def checkout_listener(dbapi_con, con_record, con_proxy):
     try:
         try:
@@ -26,10 +28,10 @@ def checkout_listener(dbapi_con, con_record, con_proxy):
         except TypeError:
             dbapi_con.ping(True)
     except dbapi_con.OperationalError as exc:
-        if exc.args[0] in (2006, 2013, 2014, 2045, 2055):
-            raise DisconnectionError()
-        else:
-            raise
+        print "Reconnected"
+        sys.stdout.flush()
+        connect()
+
 
 event.listen(engine, 'checkout', checkout_listener)
 
