@@ -2,9 +2,9 @@ import datetime, time, sys
 from math import log
 
 def getRank(score, created_time):
-	print created_time
-	sys.stdout.flush()
 	if score < 0 or created_time == None:
+		return score
+	if created_time is None:
 		return score
 
 	created_timestamp = time.mktime(datetime.datetime.strptime(created_time, '%Y-%m-%d %H:%M:%S').timetuple())
